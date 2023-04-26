@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.entity.Rol;
 import com.sistema.examenes.entity.Usuario;
 import com.sistema.examenes.entity.UsuarioRol;
+import com.sistema.examenes.services.RolService;
 import com.sistema.examenes.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private RolService rolService;
 //    @PostMapping("/")
 //    public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
 //        Set<UsuarioRol> usuarioRoles = new HashSet<>();
@@ -38,11 +41,24 @@ public class UsuarioController {
 //    }
 
 
-    @PostMapping("/")
-    public ResponseEntity<Usuario> crear(@RequestBody Usuario r) {
+    @PostMapping("/crear/{rolId}")
+    public ResponseEntity<Usuario> crear(@RequestBody Usuario r, @PathVariable Long rolId) {
         try {
+            // Buscar el rol por ID
+            Rol rol = rolService.findById(rolId);
 
-            return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
+            // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
+            UsuarioRol usuarioRol = new UsuarioRol();
+            usuarioRol.setUsuario(r);
+            usuarioRol.setRol(rol);
+
+            // Agregar el UsuarioRol a la lista de roles del usuario
+            r.getUsuarioRoles().add(usuarioRol);
+
+            // Guardar el usuario en la base de datos
+            Usuario nuevoUsuario = usuarioService.save(r);
+
+            return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
