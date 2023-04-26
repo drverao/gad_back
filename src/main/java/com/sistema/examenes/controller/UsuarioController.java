@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,18 @@ public class UsuarioController {
 
     @Autowired
     private RolService rolService;
+    @PostConstruct
+    public void init() {
+        Rol usuario1 = new Rol(1L, "ADMIN");
+        Rol usuario2 = new Rol(2L, "SUPERADMIN");
+        Rol usuario3 = new Rol(3L, "RESPONSABLE");
+        Rol usuario4 = new Rol(4L, "AUTORIDAD");
+
+        rolService.save(usuario1);
+        rolService.save(usuario2);
+        rolService.save(usuario3);
+        rolService.save(usuario4);
+    }
 //    @PostMapping("/")
 //    public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
 //        Set<UsuarioRol> usuarioRoles = new HashSet<>();
@@ -38,6 +51,7 @@ public class UsuarioController {
 //
 //        usuarioRoles.add(usuarioRol);
 //        return usuarioService.guardarUsuario(usuario,usuarioRoles);
+
 //    }
 
 
