@@ -8,6 +8,7 @@ import com.sistema.examenes.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +26,9 @@ public class UsuarioController {
 
     @Autowired
     private RolService rolService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @PostConstruct
     public void init() {
         Rol usuario1 = new Rol(1L, "ADMIN");
@@ -58,21 +62,25 @@ public class UsuarioController {
     @PostMapping("/crear/{rolId}")
     public ResponseEntity<Usuario> crear(@RequestBody Usuario r, @PathVariable Long rolId) {
         try {
-            // Buscar el rol por ID
-            Rol rol = rolService.findById(rolId);
+            if(usuarioService.obtenerUsuario(r.getUsername())==null){
+                // Buscar el rol por ID
+                Rol rol = rolService.findById(rolId);
+                r.setPassword(this.bCryptPasswordEncoder.encode(r.getPassword()));
+                // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
+                UsuarioRol usuarioRol = new UsuarioRol();
+                usuarioRol.setUsuario(r);
+                usuarioRol.setRol(rol);
 
-            // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
-            UsuarioRol usuarioRol = new UsuarioRol();
-            usuarioRol.setUsuario(r);
-            usuarioRol.setRol(rol);
+                // Agregar el UsuarioRol a la lista de roles del usuario
+                r.getUsuarioRoles().add(usuarioRol);
 
-            // Agregar el UsuarioRol a la lista de roles del usuario
-            r.getUsuarioRoles().add(usuarioRol);
+                // Guardar el usuario en la base de datos
+                Usuario nuevoUsuario = usuarioService.save(r);
 
-            // Guardar el usuario en la base de datos
-            Usuario nuevoUsuario = usuarioService.save(r);
+                return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
 
-            return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -81,23 +89,21 @@ public class UsuarioController {
     @GetMapping("/listar")
     public ResponseEntity<List<Usuario>> obtenerLista() {
         try {
+
             return new ResponseEntity<>(usuarioService.findByAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<Usuario> getById(@PathVariable("id") Long id) {
-        try {
-            return new ResponseEntity<>(usuarioService.findById(id), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/buscar/{username}")
+    public Usuario obtenerUsuario(@PathVariable("username") String username){
+        return usuarioService.obtenerUsuario(username);
     }
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Usuario usuario) {
-        return usuarioService.delete(id);
+
+    @DeleteMapping("/{usuarioId}")
+    public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId){
+        usuarioService.delete(usuarioId);
     }
 
     @PutMapping("/actualizar/{id}")
