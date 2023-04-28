@@ -1,7 +1,7 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.entity.Evaluacion;
-import com.sistema.examenes.services.Evaluacion_Service;
+import com.sistema.examenes.entity.Detalle_Modelo;
+import com.sistema.examenes.services.Detalle_Modelo_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("/api/evaluacion")
-public class Evaluacion_Controller {
+@RequestMapping("/api/detalle_modelo")
+public class Detalle_Modelo_Controller {
     @Autowired
-    Evaluacion_Service Service;
+    Detalle_Modelo_Service Service;
 
     @PostMapping("/crear")
-    public ResponseEntity<Evaluacion> crear(@RequestBody Evaluacion r) {
+    public ResponseEntity<Detalle_Modelo> crear(@RequestBody Detalle_Modelo r) {
         try {
 
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
@@ -27,7 +27,7 @@ public class Evaluacion_Controller {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Evaluacion>> obtenerLista() {
+    public ResponseEntity<List<Detalle_Modelo>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class Evaluacion_Controller {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Evaluacion> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Detalle_Modelo> getById(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -44,13 +44,13 @@ public class Evaluacion_Controller {
         }
     }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Evaluacion evaluacion) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Detalle_Modelo detalle_modelo) {
         return Service.delete(id);
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Evaluacion> actualizar(@PathVariable Long id,@RequestBody Evaluacion p) {
-        Evaluacion a = Service.findById(id);
+    public ResponseEntity<Detalle_Modelo> actualizar(@PathVariable Long id, @RequestBody Detalle_Modelo p) {
+        Detalle_Modelo a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

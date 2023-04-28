@@ -1,11 +1,13 @@
 package com.sistema.examenes.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,4 +24,16 @@ public class Evidencia implements Serializable {
     private String nombre;
     @Column(name = "estado")
     private String estado;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Actividad actividad;
+
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
+    @JsonIgnore
+    private Set<Detalle_Evaluacion> detalleEvaluaciones = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
+    @JsonIgnore
+    private Set<Detalle_Evidencia> detalleEvidencias = new HashSet<>();
 }

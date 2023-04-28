@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements UserDetails {
+public class  Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,15 @@ public class Usuario implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
-
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Actividad> actividades = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Detalle_Evaluacion> detalleEvaluacions = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Modelo> lista_modelo = new HashSet<>();
     public Usuario(){
 
     }

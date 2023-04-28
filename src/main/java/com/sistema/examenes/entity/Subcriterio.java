@@ -1,10 +1,13 @@
 package com.sistema.examenes.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,4 +26,10 @@ public class Subcriterio implements Serializable {
     private int peso;
     @Column(name = "estado")
     private String estado;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Criterio criterio;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "subcriterio")
+    @JsonIgnore
+    private Set<Indicador> lista_indicadores = new HashSet<>();
 }

@@ -1,7 +1,7 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.entity.Indicador;
-import com.sistema.examenes.services.Indicador_Service;
+import com.sistema.examenes.entity.Formula;
+import com.sistema.examenes.services.Formula_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("/api/indicadores")
-public class Indicadores_Controller {
+@RequestMapping("/api/formula")
+public class Formula_Controller {
     @Autowired
-    Indicador_Service Service;
+    Formula_Service Service;
 
     @PostMapping("/crear")
-    public ResponseEntity<Indicador> crear(@RequestBody Indicador r) {
+    public ResponseEntity<Formula> crear(@RequestBody Formula r) {
         try {
 
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
@@ -27,7 +27,7 @@ public class Indicadores_Controller {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Indicador>> obtenerLista() {
+    public ResponseEntity<List<Formula>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class Indicadores_Controller {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Indicador> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Formula> getById(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -44,18 +44,18 @@ public class Indicadores_Controller {
         }
     }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Indicador indicador) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Formula formula) {
         return Service.delete(id);
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Indicador> actualizar(@PathVariable Long id, @RequestBody Indicador p) {
-        Indicador indicador = Service.findById(id);
-        if (indicador == null) {
+    public ResponseEntity<Formula> actualizar(@PathVariable Long id, @RequestBody Formula p) {
+        Formula a = Service.findById(id);
+        if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                return new ResponseEntity<>(Service.save(indicador), HttpStatus.CREATED);
+                return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
