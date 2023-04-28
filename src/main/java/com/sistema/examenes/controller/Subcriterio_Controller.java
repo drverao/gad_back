@@ -1,9 +1,7 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.entity.Criterio;
 import com.sistema.examenes.entity.Subcriterio;
-import com.sistema.examenes.security.Criterio_Service;
-import com.sistema.examenes.security.Subcriterio_Service;
+import com.sistema.examenes.services.Subcriterio_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Persona;
-import com.sistema.examenes.security.Persona_Service;
+import com.sistema.examenes.services.Persona_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,6 @@
-package com.sistema.examenes.security;
+package com.sistema.examenes.services;
 
-import com.sistema.examenes.entity.Actividades;
 import com.sistema.examenes.entity.Evaluacion;
-import com.sistema.examenes.repository.Actividad_repository;
 import com.sistema.examenes.repository.Evaluacion_repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
