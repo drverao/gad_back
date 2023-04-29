@@ -24,5 +24,5 @@ public class Formula implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "formula")
     @JsonIgnore
-    private Set<Evaluar_Indicador> listaEvaluacion = new HashSet<>();
+    private Set<Encabezado_Evaluar> lista_enc_eva = new HashSet<>();
 }
