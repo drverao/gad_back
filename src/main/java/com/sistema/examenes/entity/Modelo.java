@@ -28,5 +28,11 @@ public class Modelo implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
     @JsonIgnore
-    private Set<Detalle_Modelo> lista_det_modelo = new HashSet<>();
+    private Set<Asignacion> lista_det_modelo = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
+    @JsonIgnore
+    private Set<Ponderacion> ponderacion = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
+    @JsonIgnore
+    private Set<Reporte> list_reporte = new HashSet<>();
 }

@@ -23,5 +23,5 @@ public class Cuantitativa implements Serializable {
     private String abreviatura;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "cuantitativa")
     @JsonIgnore
-    private Set<Evaluar_Indicador> lista_eva_indicador = new HashSet<>();
+    private Set<Evaluar_Cuantitativa> lista_eva_indicador = new HashSet<>();
 }

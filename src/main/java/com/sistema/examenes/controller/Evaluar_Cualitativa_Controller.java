@@ -1,7 +1,7 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.entity.Detalle_Modelo;
-import com.sistema.examenes.services.Detalle_Modelo_Service;
+import com.sistema.examenes.entity.Evaluar_Cualitativa;
+import com.sistema.examenes.services.Evaluar_Cualitativa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("/api/detalle_modelo")
-public class Detalle_Modelo_Controller {
+@RequestMapping("/api/evaluar_cualitativa")
+public class Evaluar_Cualitativa_Controller {
     @Autowired
-    Detalle_Modelo_Service Service;
+    Evaluar_Cualitativa_Service Service;
 
     @PostMapping("/crear")
-    public ResponseEntity<Detalle_Modelo> crear(@RequestBody Detalle_Modelo r) {
+    public ResponseEntity<Evaluar_Cualitativa> crear(@RequestBody Evaluar_Cualitativa r) {
         try {
 
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
@@ -27,7 +27,7 @@ public class Detalle_Modelo_Controller {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Detalle_Modelo>> obtenerLista() {
+    public ResponseEntity<List<Evaluar_Cualitativa>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class Detalle_Modelo_Controller {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Detalle_Modelo> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Evaluar_Cualitativa> getById(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -44,13 +44,13 @@ public class Detalle_Modelo_Controller {
         }
     }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Detalle_Modelo detalle_modelo) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Evaluar_Cualitativa evaluar_cualitativa) {
         return Service.delete(id);
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Detalle_Modelo> actualizar(@PathVariable Long id, @RequestBody Detalle_Modelo p) {
-        Detalle_Modelo a = Service.findById(id);
+    public ResponseEntity<Evaluar_Cualitativa> actualizar(@PathVariable Long id, @RequestBody Evaluar_Cualitativa p) {
+        Evaluar_Cualitativa a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

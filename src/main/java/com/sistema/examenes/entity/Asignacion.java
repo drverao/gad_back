@@ -9,19 +9,18 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(name = "evaluar_indicador")
-public class Evaluar_Indicador implements Serializable {
+@Table(name = "asignacion")
+public class Asignacion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_Evaluar_Indicador")
-    private Long id_Evaluar_Indicador;
-
-    private double valor;
+    @Column(name = "id_asignacion")
+    private Long id_asignacion;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Indicador indicador;
+    private Usuario usuario ;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    private Formula formula;
+    private Criterio criterio ;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Cuantitativa cuantitativa;
+    private Modelo modelo ;
 }

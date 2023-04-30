@@ -5,21 +5,21 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "detalle_modelo")
-public class Detalle_Modelo implements Serializable {
+@Table(name = "reporte")
+public class Reporte implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_detalle_modelo")
-    private Long id_detalle_modelo;
+    @Column(name = "id_reporte")
+    private Long id_reporte;
 
-    private double peso_total;
+    private String enlace;
+    private Date fecha;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Criterio criterio ;
     @ManyToOne(fetch = FetchType.EAGER)
     private Modelo modelo ;
 }

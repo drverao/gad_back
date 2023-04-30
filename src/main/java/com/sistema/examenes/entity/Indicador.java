@@ -24,16 +24,22 @@ public class Indicador implements Serializable {
     private String escala;
     @Column(name = "estado")
     private String estado;
-
+    //
     @ManyToOne(fetch = FetchType.EAGER)
     private Subcriterio subcriterio;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
-    @JsonIgnore
-    private Set<Detalle_Evidencia> lista_det_evidencias = new HashSet<>();
+
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
     @JsonIgnore
-    private Set<Cualitativa> lista_cualitativas = new HashSet<>();
+    private Set<Evaluar_Cualitativa> lista_eva_cual = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
+    @JsonIgnore
+    private Set<Detalle_Evidencia> lista_det_evi = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
+    @JsonIgnore
+    private Set<Encabezado_Evaluar> lista_enc_eva = new HashSet<>();
+
 
 
 }
