@@ -35,20 +35,44 @@ public class Actividad_Controller {
         }
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
+    @GetMapping("/buscar/")
+    public ResponseEntity<List<?>> buscar(@RequestParam("nombre") String nombre) {
         try {
-            return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
+            if (nombre.trim().isEmpty()) {
+                List<Actividad> actividads = this.Service.findByAll();
+                return new ResponseEntity<>(actividads, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /* @GetMapping("/buscar/{id}")
+     public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
+         try {
+             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
+         } catch (Exception e) {
+             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+         }
+     }*/
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Actividad actividad) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
     }
 
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("actualizar/{id}")
+    public ResponseEntity<?> actualizar(@RequestBody Actividad t, @PathVariable(value = "id")  Long id) {
+        Actividad current = Service.findById(id);
+        current.setNombre(t.getNombre());
+        current.setDescripcion(t.getDescripcion());
+        current.setFecha_inicio(t.getFecha_inicio());
+        current.setFecha_fin(t.getFecha_fin());
+        return new ResponseEntity<>(Service.save(current), HttpStatus.OK);
+    }
+
+    /*@PutMapping("/actualizar/{id}")
     public ResponseEntity<Actividad> actualizar(@PathVariable Long id, @RequestBody Actividad p) {
         Actividad a = Service.findById(id);
         if (a == null) {
@@ -61,5 +85,5 @@ public class Actividad_Controller {
             }
 
         }
-    }
+    }*/
 }
