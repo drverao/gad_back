@@ -23,4 +23,16 @@ public class Asignacion implements Serializable {
     private Criterio criterio ;
     @ManyToOne(fetch = FetchType.EAGER)
     private Modelo modelo ;
+
+    public Asignacion() {
+    }
+
+    public Asignacion(Long id_asignacion, Usuario usuario, Criterio criterio, Modelo modelo) {
+        this.id_asignacion = id_asignacion;
+        this.usuario = usuario;
+        this.criterio = criterio;
+        this.modelo = modelo;
+    }
+    
+    
 }

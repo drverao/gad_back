@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.entity.Rol;
 import com.sistema.examenes.entity.Usuario;
 import com.sistema.examenes.entity.UsuarioRol;
+import com.sistema.examenes.repository.UsuarioRepository;
 import com.sistema.examenes.services.RolService;
 import com.sistema.examenes.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class UsuarioController {
 
     @Autowired
     private RolService rolService;
+    
+    @Autowired
+    private UsuarioRepository uR;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -91,6 +95,17 @@ public class UsuarioController {
         try {
 
             return new ResponseEntity<>(usuarioService.findByAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    //listar solo los responsables
+    @GetMapping("/listarResponsable")
+    public ResponseEntity<List<Usuario>> obtenerListaResponsables() {
+        try {     
+           //List<Usuario> responsables = uR.listaResponsables();
+            return new ResponseEntity<>(uR.listaResponsables(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
