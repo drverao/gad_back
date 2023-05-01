@@ -44,7 +44,7 @@ public class Asignacion_Controller {
         }
     }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Asignacion asignacion) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
     }
 
@@ -55,6 +55,9 @@ public class Asignacion_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                a.setUsuario(p.getUsuario());
+                a.setCriterio(p.getCriterio());
+                a.setModelo(p.getModelo());
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

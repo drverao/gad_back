@@ -35,4 +35,14 @@ public class Modelo implements Serializable {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
     @JsonIgnore
     private Set<Reporte> list_reporte = new HashSet<>();
+    
+    public Modelo(Long id){
+        super();
+        this.id_modelo=id;
+    }
+
+    public Modelo() {
+    }
+    
+    
 }

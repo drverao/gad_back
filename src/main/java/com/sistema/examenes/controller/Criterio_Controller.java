@@ -44,7 +44,7 @@ public class Criterio_Controller {
         }
     }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Criterio criterio) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
     }
 
@@ -55,6 +55,9 @@ public class Criterio_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                criterio.setId_criterio(id);
+                criterio.setNombre(p.getNombre());
+                criterio.setDescripcion(p.getDescripcion());
                 return new ResponseEntity<>(Service.save(criterio), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
