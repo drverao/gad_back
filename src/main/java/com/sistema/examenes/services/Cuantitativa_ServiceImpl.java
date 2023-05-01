@@ -16,4 +16,6 @@ public class Cuantitativa_ServiceImpl extends GenericServiceImpl<Cuantitativa, L
     }
 
 
+
+
 }
