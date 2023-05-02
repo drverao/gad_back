@@ -44,7 +44,7 @@ public class Subcriterio_Controller {
         }
     }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Subcriterio subcriterio) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
     }
 
@@ -52,9 +52,12 @@ public class Subcriterio_Controller {
     public ResponseEntity<Subcriterio> actualizar(@PathVariable Long id,@RequestBody Subcriterio p) {
         Subcriterio subcriterio = Service.findById(id);
         if (subcriterio == null) {
+
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                subcriterio.setNombre(p.getNombre());
+                subcriterio.setDescripcion(p.getDescripcion());
                 return new ResponseEntity<>(Service.save(subcriterio), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
