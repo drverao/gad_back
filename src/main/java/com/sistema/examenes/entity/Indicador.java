@@ -24,8 +24,10 @@ public class Indicador implements Serializable {
     private String descripcion;
     @Column(name = "escala")
     private double peso;
-    @Column(name = "estado")
+    @Column(name = "tipo")
     private String tipo;
+    @Column(name = "visible")
+    private boolean visible;
     //
     @ManyToOne(fetch = FetchType.EAGER)
     private Subcriterio subcriterio;

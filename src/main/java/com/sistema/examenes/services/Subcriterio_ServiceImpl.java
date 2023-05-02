@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class Subcriterio_ServiceImpl extends GenericServiceImpl<Subcriterio, Long> implements Subcriterio_Service {
     @Autowired
@@ -16,5 +18,9 @@ public class Subcriterio_ServiceImpl extends GenericServiceImpl<Subcriterio, Lon
         return repository;
     }
 
+    @Override
+    public List<Subcriterio> listar() {
+        return repository.listarSubcriterio();
+    }
 
 }
