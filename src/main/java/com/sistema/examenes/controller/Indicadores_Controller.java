@@ -44,7 +44,7 @@ public class Indicadores_Controller {
         }
     }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Indicador indicador) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
     }
 
@@ -55,6 +55,10 @@ public class Indicadores_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                indicador.setNombre(p.getNombre());
+                indicador.setDescripcion(p.getDescripcion());
+                indicador.setPeso(p.getPeso());
+                indicador.setTipo(p.getTipo());
                 return new ResponseEntity<>(Service.save(indicador), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
