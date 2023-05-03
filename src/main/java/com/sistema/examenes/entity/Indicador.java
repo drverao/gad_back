@@ -18,12 +18,16 @@ public class Indicador implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_indicardores")
     private Long id_indicadores;
+    @Column(name = "nombre")
+    private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
     @Column(name = "escala")
-    private String escala;
-    @Column(name = "estado")
-    private String estado;
+    private double peso;
+    @Column(name = "tipo")
+    private String tipo;
+    @Column(name = "visible")
+    private boolean visible;
     //
     @ManyToOne(fetch = FetchType.EAGER)
     private Subcriterio subcriterio;

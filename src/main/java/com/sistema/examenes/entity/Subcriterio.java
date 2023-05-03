@@ -27,7 +27,12 @@ public class Subcriterio implements Serializable {
     @Column(name = "estado")
     private String estado;
 
+    //Columna para el eliminado logico no borrar
+    @Column(name = "visible")
+    private boolean visible;
+
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_criterio")
     private Criterio criterio;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "subcriterio")
     @JsonIgnore
