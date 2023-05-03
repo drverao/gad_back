@@ -115,6 +115,18 @@ public class UsuarioController {
     public Usuario obtenerUsuario(@PathVariable("username") String username){
         return usuarioService.obtenerUsuario(username);
     }
+    
+    
+     @GetMapping("/buscarUsua/{id}")
+    public ResponseEntity<Usuario> getById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(usuarioService.findById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    
 
     @DeleteMapping("/{usuarioId}")
     public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId){
