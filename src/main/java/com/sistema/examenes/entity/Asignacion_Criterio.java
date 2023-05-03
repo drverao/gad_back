@@ -9,20 +9,17 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(name = "evaluar_cualitativa")
-public class Evaluar_Cualitativa implements Serializable {
+@Table(name = "asignacion_criterio")
+public class Asignacion_Criterio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_evaluar_cualitativa")
-    private Long id_evaluar_cualitativa;
+    @Column(name = "id_asignacio_criterio")
+    private Long id_asignacio_criterio;
     //Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    private Cualitativa cualitativa ;
+    private Criterio criterio;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Ponderacion ponderacion ;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Indicador indicador ;
+    private Modelo modelo;
 }

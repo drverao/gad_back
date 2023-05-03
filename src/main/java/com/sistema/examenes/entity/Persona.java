@@ -1,10 +1,13 @@
 package com.sistema.examenes.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,8 +35,10 @@ public class Persona implements Serializable {
     private String direccion;
     @Column(name = "celular")
     private String celular;
-    @Column(name = "estado")
-    private String estado;
-  //  @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
-//    private Usuario usuario;
+    //Columna para el eliminado logico no borrar
+    @Column(name = "visible")
+    private boolean visible;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "persona")
+    @JsonIgnore
+    private Set<Usuario> listausuarios = new HashSet<>();
 }

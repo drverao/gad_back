@@ -29,10 +29,12 @@ public class Actividad implements Serializable {
     private Date fecha_fin;
     @Column(name = "estado")
     private String estado;
+    //Columna para el eliminado logico no borrar
+    @Column(name = "visible")
+    private boolean visible;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "actividad")
-    @JsonIgnore
-    private Set<Evidencia> listaEvidencias = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Evidencia evidencia;
 }
