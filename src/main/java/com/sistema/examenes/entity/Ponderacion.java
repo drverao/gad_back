@@ -19,11 +19,26 @@ public class Ponderacion implements Serializable {
     @Column(name = "id_ponderacion")
     private Long id_ponderacion;
 
+    @Column(name = "nivel_maximo")
     private double nivel_maximo;
+
+    @Column(name = "nivel_obtenido")
     private double nivel_obtenido;
+
+    @Column(name = "nivel_obt_utilidad")
     private  double nivel_obt_utilidad;
-    private double poro_indicador;
-    private double poro_util_obt;
+
+    @Column(name = "porc_indicador")
+   private double porc_indicador;
+
+    @Column(name = "porc_util_obt")
+    private double porc_util_obt;
+
+    @Column(name = "poso_criterio")
+    private double poso_indicador;
+
+    @Column(name = "poso_crit_obt")
+    private double poso_crit_obt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Modelo modelo;
@@ -34,7 +49,6 @@ public class Ponderacion implements Serializable {
 
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "ponderacion")
-    @JsonIgnore
+        @JsonIgnore
     private Set<Evaluar_Cualitativa> lista_eva_cual = new HashSet<>();
-
 }

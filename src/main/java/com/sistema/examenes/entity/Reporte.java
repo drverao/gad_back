@@ -16,8 +16,9 @@ public class Reporte implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reporte")
     private Long id_reporte;
-
+    @Column(name = "enlace")
     private String enlace;
+    @Column(name = "fecha")
     private Date fecha;
 
     @ManyToOne(fetch = FetchType.EAGER)

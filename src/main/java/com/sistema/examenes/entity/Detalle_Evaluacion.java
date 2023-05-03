@@ -17,7 +17,9 @@ public class Detalle_Evaluacion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle_evaluacion")
     private Long id_detalle_evaluacion;
+    @Column(name = "estado")
     private boolean estado;
+    @Column(name = "observacion")
     private String observacion;
 
     @ManyToOne(fetch = FetchType.EAGER)

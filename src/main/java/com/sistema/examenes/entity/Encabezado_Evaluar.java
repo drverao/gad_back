@@ -21,6 +21,7 @@ public class Encabezado_Evaluar implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Ponderacion ponderacion;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Formula formula;
 

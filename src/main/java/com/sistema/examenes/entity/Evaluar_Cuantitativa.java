@@ -15,7 +15,7 @@ public class Evaluar_Cuantitativa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evaluar_cuantitativa")
     private Long id_evaluar_cuantitativa;
-
+    @Column(name = "valor")
     private double valor;
 
     @ManyToOne(fetch = FetchType.EAGER)

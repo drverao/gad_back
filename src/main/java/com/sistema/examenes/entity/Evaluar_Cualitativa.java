@@ -16,7 +16,6 @@ public class Evaluar_Cualitativa implements Serializable {
     @Column(name = "id_evaluar_cualitativa")
     private Long id_evaluar_cualitativa;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Cualitativa cualitativa ;
     @ManyToOne(fetch = FetchType.EAGER)

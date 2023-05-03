@@ -18,8 +18,9 @@ public class Cuantitativa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cuantitativa")
     private Long id_cuantitativa;
-
+    @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "abreviatura")
     private String abreviatura;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "cuantitativa")
     @JsonIgnore

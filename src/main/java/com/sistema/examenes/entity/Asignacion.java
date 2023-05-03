@@ -21,9 +21,10 @@ public class Asignacion implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Criterio criterio ;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Modelo modelo ;
-
+ 
     public Asignacion() {
     }
 

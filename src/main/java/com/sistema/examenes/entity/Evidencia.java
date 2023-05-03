@@ -37,3 +37,4 @@ public class Evidencia implements Serializable {
     @JsonIgnore
     private Set<Detalle_Evidencia> detalleEvidencias = new HashSet<>();
 }
+
