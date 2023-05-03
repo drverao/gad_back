@@ -24,10 +24,6 @@ public class Criterio implements Serializable {
     private String descripcion;
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "peso")
-    private int peso;
-    @Column(name = "estado")
-    private String estado;
     //Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;

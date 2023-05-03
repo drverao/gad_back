@@ -18,8 +18,11 @@ public class Cualitativa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cualitativa")
     private Long id_cualitativa;
+    @Column(name = "valor")
     private double valor;
+    @Column(name = "escala")
     private String escala;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Indicador indicador;

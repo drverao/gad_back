@@ -15,6 +15,8 @@ public class Detalle_Evidencia  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle_evidencia")
     private Long id_detalle_evidencia;
+    @Column(name = "fecha_evidencia")
+    private Long fecha_evidencia;
 
 
     @ManyToOne(fetch = FetchType.EAGER)

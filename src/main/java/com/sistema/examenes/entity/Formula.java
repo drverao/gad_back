@@ -18,8 +18,9 @@ public class Formula implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_formula")
     private Long id_formula;
-
+    @Column(name = "formula")
     private String formula;
+    @Column(name = "descripcion")
     private String descripcion;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "formula")

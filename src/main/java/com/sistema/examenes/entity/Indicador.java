@@ -22,10 +22,11 @@ public class Indicador implements Serializable {
     private String nombre;
     @Column(name = "descripcion")
     private String descripcion;
-    @Column(name = "escala")
+    @Column(name = "peso")
     private double peso;
     @Column(name = "tipo")
     private String tipo;
+    //
     @Column(name = "visible")
     private boolean visible;
     //

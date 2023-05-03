@@ -18,12 +18,20 @@ public class Persona implements Serializable {
     private Long id_persona;
     @Column(name = "cedula")
     private String cedula;
-    @Column(name = "nombre")
-    private String nombre;
-    @Column(name = "apellido")
-    private String apellido;
-    @Column(name = "cargo")
-    private String cargo;
+    @Column(name = "primer_nombre")
+    private String primer_nombre;
+    @Column(name = "segundo_nombre")
+    private String segundo_nombre;
+    @Column(name = "primer_apellido")
+    private String primer_apellido;
+    @Column(name = "segundo_apellido")
+    private String segundo_apellido;
+    @Column(name = "correo")
+    private String correo;
+    @Column(name = "direccion")
+    private String direccion;
+    @Column(name = "celular")
+    private String celular;
     @Column(name = "estado")
     private String estado;
   //  @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
