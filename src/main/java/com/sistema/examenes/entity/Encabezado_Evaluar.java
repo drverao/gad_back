@@ -13,11 +13,14 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "encabezado_evaluar")
-public class Encabezado_Evaluar implements Serializable {
+public class  Encabezado_Evaluar implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_encabezado_evaluar")
     private Long id_encabezado_evaluar;
+    //Columna para el eliminado logico no borrar
+    @Column(name = "visible")
+    private boolean visible;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Ponderacion ponderacion;
