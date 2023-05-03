@@ -20,7 +20,7 @@ public class Criterio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_criterio")
     private Long id_criterio;
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 10000 )
     private String descripcion;
     @Column(name = "nombre")
     private String nombre;

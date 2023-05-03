@@ -20,7 +20,7 @@ public class Evidencia implements Serializable {
     private Long id_evidencia;
     @Column(name = "enlace")
     private String enlace;
-    @Column(name = "nombre")
+    @Column(name = "nombre", length = 10000)
     private String nombre;
     //Columna para el eliminado logico no borrar
     @Column(name = "visible")

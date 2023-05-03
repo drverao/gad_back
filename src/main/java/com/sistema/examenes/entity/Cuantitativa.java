@@ -18,7 +18,7 @@ public class Cuantitativa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cuantitativa")
     private Long id_cuantitativa;
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 10000 )
     private String descripcion;
     @Column(name = "abreviatura")
     private String abreviatura;
