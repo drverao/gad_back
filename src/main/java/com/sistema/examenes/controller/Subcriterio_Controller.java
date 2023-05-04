@@ -19,7 +19,7 @@ public class Subcriterio_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Subcriterio> crear(@RequestBody Subcriterio r) {
         try {
-
+            r.setVisible(true);
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -29,7 +29,7 @@ public class Subcriterio_Controller {
     @GetMapping("/listar")
     public ResponseEntity<List<Subcriterio>> obtenerLista() {
         try {
-            return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -43,18 +43,33 @@ public class Subcriterio_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Subcriterio subcriterio) {
-        return Service.delete(id);
+    @PutMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        Subcriterio subcriterio = Service.findById(id);
+        if (subcriterio == null) {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                subcriterio.setVisible(false);
+                return new ResponseEntity<>(Service.save(subcriterio), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
     }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Subcriterio> actualizar(@PathVariable Long id,@RequestBody Subcriterio p) {
         Subcriterio subcriterio = Service.findById(id);
         if (subcriterio == null) {
+
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                subcriterio.setNombre(p.getNombre());
+                subcriterio.setDescripcion(p.getDescripcion());
                 return new ResponseEntity<>(Service.save(subcriterio), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

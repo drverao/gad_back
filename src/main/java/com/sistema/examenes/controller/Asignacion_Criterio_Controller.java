@@ -1,7 +1,7 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.entity.Asignacion;
-import com.sistema.examenes.services.Asignacion_Service;
+import com.sistema.examenes.entity.Asignacion_Criterio;
+import com.sistema.examenes.services.Asignacion_Criterio_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("/api/detalle_modelo")
-public class Asignacion_Controller {
+@RequestMapping("/api/asignacion_criterio")
+public class Asignacion_Criterio_Controller {
     @Autowired
-    Asignacion_Service Service;
+    Asignacion_Criterio_Service Service;
 
     @PostMapping("/crear")
-    public ResponseEntity<Asignacion> crear(@RequestBody Asignacion r) {
+    public ResponseEntity<Asignacion_Criterio> crear(@RequestBody Asignacion_Criterio r) {
         try {
 
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
@@ -27,7 +27,7 @@ public class Asignacion_Controller {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Asignacion>> obtenerLista() {
+    public ResponseEntity<List<Asignacion_Criterio>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class Asignacion_Controller {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Asignacion> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Asignacion_Criterio> getById(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -49,15 +49,14 @@ public class Asignacion_Controller {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Asignacion> actualizar(@PathVariable Long id, @RequestBody Asignacion p) {
-        Asignacion a = Service.findById(id);
+    public ResponseEntity<Asignacion_Criterio> actualizar(@PathVariable Long id, @RequestBody Asignacion_Criterio p) {
+        Asignacion_Criterio a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setUsuario(p.getUsuario());
-                a.setCriterio(p.getCriterio());
                 a.setModelo(p.getModelo());
+                a.setCriterio(p.getCriterio());
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

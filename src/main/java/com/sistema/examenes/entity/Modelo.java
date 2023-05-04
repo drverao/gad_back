@@ -19,16 +19,17 @@ public class Modelo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_modelo")
     private Long id_modelo;
-
+    @Column(name = "fecha_inicio")
     private Date fecha_inicio;
+    @Column(name = "fecha_fin")
     private Date fecha_fin;
+    @Column(name = "fecha_final_act")
     private Date fecha_final_act;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
     @JsonIgnore
-    private Set<Asignacion> lista_det_modelo = new HashSet<>();
+    private Set<Asignacion_Criterio> lista_criterios = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
     @JsonIgnore
     private Set<Ponderacion> ponderacion = new HashSet<>();
@@ -40,9 +41,6 @@ public class Modelo implements Serializable {
         super();
         this.id_modelo=id;
     }
-
     public Modelo() {
     }
-    
-    
 }

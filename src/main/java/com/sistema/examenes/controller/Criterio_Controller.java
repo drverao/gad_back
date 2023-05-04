@@ -19,7 +19,7 @@ public class Criterio_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Criterio> crear(@RequestBody Criterio r) {
         try {
-
+            r.setVisible(true);
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -29,7 +29,7 @@ public class Criterio_Controller {
     @GetMapping("/listar")
     public ResponseEntity<List<Criterio>> obtenerLista() {
         try {
-            return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -43,9 +43,20 @@ public class Criterio_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @DeleteMapping("/eliminar/{id}")
+    @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
-        return Service.delete(id);
+        Criterio criterio = Service.findById(id);
+        if (criterio == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                criterio.setVisible(false);
+                return new ResponseEntity<>(Service.save(criterio), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
     }
 
     @PutMapping("/actualizar/{id}")

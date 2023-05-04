@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> implements Indicador_Service {
     @Autowired
@@ -16,5 +18,8 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
         return repository;
     }
 
-
+    @Override
+    public List<Indicador> listar() {
+        return repository.listarIndicador();
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,14 +20,27 @@ public class Ponderacion implements Serializable {
     @Column(name = "id_ponderacion")
     private Long id_ponderacion;
 
-    private double nivel_maximo;
-    private double nivel_obtenido;
-    private  double nivel_obt_utilidad;
-    private double poro_indicador;
-    private double poro_util_obt;
 
+    @Column(name = "valor_obtenido")
+    private double valor_obtenido;
+
+    @Column(name = "porc_obtenido")
+    private  double porc_obtenido;
+
+
+    @Column(name = "porc_utilidad_obtenida")
+    private double porc_utilidad_obtenida;
+
+
+    @Column(name = "fecha")
+    private Date fecha;
+    //Columna para el eliminado logico no borrar
+    @Column(name = "visible")
+    private boolean visible;
     @ManyToOne(fetch = FetchType.EAGER)
     private Modelo modelo;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Indicador indicador;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "ponderacion")
     @JsonIgnore
@@ -34,7 +48,6 @@ public class Ponderacion implements Serializable {
 
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "ponderacion")
-    @JsonIgnore
+        @JsonIgnore
     private Set<Evaluar_Cualitativa> lista_eva_cual = new HashSet<>();
-
 }
