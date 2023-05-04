@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements UserDetails {
+public class  Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +20,35 @@ public class Usuario implements UserDetails {
     private String username;
     private String password;
     private boolean enabled = true;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Persona persona;
+
+    //Columna para el eliminado logico no borrar
+    @Column(name = "visible")
+    private boolean visible;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
-
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Actividad> actividades = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Detalle_Evaluacion> detalleEvaluacions = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Modelo> lista_modelo = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Asignacion_Admin> lista_asignacion = new HashSet<>();
+    
     public Usuario(){
-
+    }
+    
+    public Usuario(Long id){
+        super();
+        this.id=id;
     }
 
     public Usuario(Long id, String username, String password, boolean enabled) {

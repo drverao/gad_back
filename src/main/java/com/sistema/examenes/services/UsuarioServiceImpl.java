@@ -17,9 +17,6 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private RolRepository rolRepository;
-
 
     @Override
     public CrudRepository<Usuario, Long> getDao() {
