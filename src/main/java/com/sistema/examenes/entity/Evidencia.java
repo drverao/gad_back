@@ -28,6 +28,11 @@ public class Evidencia implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Indicador indicador;
 
+    public Evidencia(String enlace, String nombre, boolean visible) {
+        this.enlace = enlace;
+        this.nombre = nombre;
+        this.visible = visible;
+    }
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
     @JsonIgnore
