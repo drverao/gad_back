@@ -18,13 +18,19 @@ public class Indicador implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_indicardores")
     private Long id_indicadores;
-    @Column(name = "descripcion")
+    @Column(name = "nombre")
+    private String nombre;
+    @Column(name = "descripcion", length = 10000 )
     private String descripcion;
-    @Column(name = "escala")
-    private String escala;
-    @Column(name = "estado")
-    private String estado;
+    @Column(name = "peso")
+    private double peso;
+    @Column(name = "estandar")
+    private double estandar;
+    @Column(name = "tipo")
+    private String tipo;
     //
+    @Column(name = "visible")
+    private boolean visible;
     @ManyToOne(fetch = FetchType.EAGER)
     private Subcriterio subcriterio;
 
@@ -34,11 +40,14 @@ public class Indicador implements Serializable {
     private Set<Evaluar_Cualitativa> lista_eva_cual = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
     @JsonIgnore
-    private Set<Detalle_Evidencia> lista_det_evi = new HashSet<>();
+    private Set<Evidencia> lista_evidencia = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
     @JsonIgnore
     private Set<Encabezado_Evaluar> lista_enc_eva = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
+    @JsonIgnore
+    private Set<Ponderacion> lista_ponderacion = new HashSet<>();
 
 
 
