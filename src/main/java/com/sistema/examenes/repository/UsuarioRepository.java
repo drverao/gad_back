@@ -9,9 +9,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     public Usuario findByUsername(String username);
     
-     @Query(value = "SELECT u.id,u.enabled,u.password,u.username\n" +
-"FROM usuarios u, usuario_rol ur\n" +
-"WHERE ur.usuario_id=u.id and ur.rol_rol_id=3;", nativeQuery = true)
+     @Query(value = "SELECT * FROM usuarios;", nativeQuery = true)
     public abstract List<Usuario> listaResponsables();
 
 }
