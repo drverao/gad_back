@@ -27,13 +27,6 @@ public class Evidencia implements Serializable {
     private boolean visible;
     @ManyToOne(fetch = FetchType.EAGER)
     private Indicador indicador;
-
-    public Evidencia(String enlace, String nombre, boolean visible) {
-        this.enlace = enlace;
-        this.nombre = nombre;
-        this.visible = visible;
-    }
-
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
     @JsonIgnore
     private Set<Detalle_Evaluacion> detalleEvaluaciones = new HashSet<>();
@@ -41,5 +34,17 @@ public class Evidencia implements Serializable {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
     @JsonIgnore
     private Set<Actividad> listaactividades = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
+    @JsonIgnore
+    private Set<Asignacion_Evidencia> lista_evidencias = new HashSet<>();
+
+    public Evidencia() {
+
+    }
+    public Evidencia(String enlace, String nombre, boolean visible) {
+        this.enlace = enlace;
+        this.nombre = nombre;
+        this.visible = visible;
+    }
 }
 

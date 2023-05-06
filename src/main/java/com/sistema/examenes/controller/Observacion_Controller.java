@@ -1,8 +1,8 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.entity.Criterio;
-import com.sistema.examenes.entity.Detalle_Evaluacion;
-import com.sistema.examenes.services.Detalle_Evaluacion_Service;
+import com.sistema.examenes.entity.Encabezado_Evaluar;
+import com.sistema.examenes.entity.Observacion;
+import com.sistema.examenes.services.Observacion_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +12,13 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("/api/detalle_evaluacion")
-public class Detalle_Evaluacion_Controller {
+@RequestMapping("/api/observacion")
+public class Observacion_Controller {
     @Autowired
-    Detalle_Evaluacion_Service Service;
+    Observacion_Service Service;
 
     @PostMapping("/crear")
-    public ResponseEntity<Detalle_Evaluacion> crear(@RequestBody Detalle_Evaluacion r) {
+    public ResponseEntity<Observacion> crear(@RequestBody Observacion r) {
         try {
             r.setVisible(true);
 
@@ -29,7 +29,7 @@ public class Detalle_Evaluacion_Controller {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Detalle_Evaluacion>> obtenerLista() {
+    public ResponseEntity<List<Observacion>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class Detalle_Evaluacion_Controller {
         }
     }
     @GetMapping("/listarv")
-    public ResponseEntity<List<Detalle_Evaluacion>> obtenerListav() {
+    public ResponseEntity<List<Observacion>> obtenerListav() {
         try {
             return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class Detalle_Evaluacion_Controller {
         }
     }
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Detalle_Evaluacion> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Observacion> getById(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -53,12 +53,12 @@ public class Detalle_Evaluacion_Controller {
         }
     }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Detalle_Evaluacion detalle_evaluacion) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Observacion observacion) {
         return Service.delete(id);
     }
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
-        Detalle_Evaluacion a = Service.findById(id);
+        Observacion a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -72,8 +72,8 @@ public class Detalle_Evaluacion_Controller {
         }
     }
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Detalle_Evaluacion> actualizar(@PathVariable Long id, @RequestBody Detalle_Evaluacion p) {
-        Detalle_Evaluacion a = Service.findById(id);
+    public ResponseEntity<Observacion> actualizar(@PathVariable Long id, @RequestBody Observacion p) {
+        Observacion a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

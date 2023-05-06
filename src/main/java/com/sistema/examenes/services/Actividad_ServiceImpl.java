@@ -1,10 +1,13 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.entity.Actividad;
+import com.sistema.examenes.entity.Actividad;
 import com.sistema.examenes.repository.Actividad_repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> implements Actividad_Service {
@@ -15,5 +18,8 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
         return repository;
     }
 
-
+    @Override
+    public List<Actividad> listar() {
+        return repository.listarActividad();
+    }
 }
