@@ -30,11 +30,7 @@ public class Criterio implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "criterio")
     @JsonIgnore
-    private List<Subcriterio> lista_subcriterios = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "criterio")
-    @JsonIgnore
-    private Set<Asignacion_Criterio> lista_criterio = new HashSet<>();
+    private Set<Subcriterio> lista_subcriterios = new HashSet<>();
 
     public Criterio() {
     }
