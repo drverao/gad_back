@@ -12,12 +12,12 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "indicadores")
+@Table(name = "indicador")
 public class Indicador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_indicardores")
-    private Long id_indicadores;
+    @Column(name = "id_indicador")
+    private Long id_indicador;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "descripcion", length = 10000 )
@@ -47,8 +47,10 @@ public class Indicador implements Serializable {
     private Set<Encabezado_Evaluar> lista_enc_eva = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
     @JsonIgnore
+    private Set<Asignacion_Indicador> lista_asignacion = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "indicador")
+    @JsonIgnore
     private Set<Ponderacion> lista_ponderacion = new HashSet<>();
-
 
 
 }

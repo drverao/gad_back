@@ -1,6 +1,7 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.entity.Actividad;
+import com.sistema.examenes.entity.Actividad;
 import com.sistema.examenes.repository.Actividad_repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -21,5 +22,8 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
         return repository.findByNombreContainingIgnoreCase(nombre);
     }
 
-
+    @Override
+    public List<Actividad> listar() {
+        return repository.listarActividad();
+    }
 }
