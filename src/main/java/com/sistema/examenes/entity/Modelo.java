@@ -23,6 +23,9 @@ public class Modelo implements Serializable {
     private Date fecha_fin;
     @Column(name = "fecha_final_act")
     private Date fecha_final_act;
+    @Column(name = "visible")
+    private boolean visible;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
