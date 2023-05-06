@@ -67,7 +67,7 @@ public class Actividad_Controller {
         Actividad current = Service.findById(id);
         current.setNombre(t.getNombre());
         current.setDescripcion(t.getDescripcion());
-        current.setFecha_inicio(t.getFecha_inicio());
+        current.setFeha_inicio(t.getFeha_inicio());
         current.setFecha_fin(t.getFecha_fin());
         return new ResponseEntity<>(Service.save(current), HttpStatus.OK);
     }
