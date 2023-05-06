@@ -20,6 +20,7 @@ public class Reporte implements Serializable {
     private String enlace;
     @Column(name = "fecha")
     private Date fecha;
+    private boolean visible;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Modelo modelo ;

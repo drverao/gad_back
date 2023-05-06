@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.entity.Criterio;
 import com.sistema.examenes.entity.Cualitativa;
 import com.sistema.examenes.services.Cualitativa_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class Cualitativa_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Cualitativa> crear(@RequestBody Cualitativa r) {
         try {
+            r.setVisible(true);
 
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -34,7 +36,14 @@ public class Cualitativa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/listarv")
+    public ResponseEntity<List<Cualitativa>> obtenerListav() {
+        try {
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Cualitativa> getById(@PathVariable("id") Long id) {
         try {
@@ -46,6 +55,21 @@ public class Cualitativa_Controller {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Cualitativa cualitativa) {
         return Service.delete(id);
+    }
+    @PutMapping("/eliminarlogic/{id}")
+    public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
+        Cualitativa a = Service.findById(id);
+        if (a == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                a.setVisible(false);
+                return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
     }
 
     @PutMapping("/actualizar/{id}")
