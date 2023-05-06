@@ -6,9 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -29,14 +27,13 @@ public class Modelo implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
     @JsonIgnore
-    private Set<Asignacion_Criterio> lista_criterios = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
-    @JsonIgnore
-    private Set<Ponderacion> ponderacion = new HashSet<>();
+    private Set<Asignacion_Indicador> lista_criterios = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
     @JsonIgnore
     private Set<Reporte> list_reporte = new HashSet<>();
-    
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "modelo")
+    @JsonIgnore
+    private Set<Ponderacion> ponderacion = new HashSet<>();
     public Modelo(Long id){
         super();
         this.id_modelo=id;

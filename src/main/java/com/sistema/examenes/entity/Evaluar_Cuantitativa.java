@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(name = "Evaluar_Cuantitativa")
+@Table(name = "evaluar_cuantitativa")
 public class Evaluar_Cuantitativa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

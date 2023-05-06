@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,8 +24,6 @@ public class  Encabezado_Evaluar implements Serializable {
     @Column(name = "visible")
     private boolean visible;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Ponderacion ponderacion;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Formula formula;
