@@ -51,8 +51,17 @@ public class FenixController {
     }
 
     // metodo para buscar docente por cedula
-    @GetMapping(path = { "/buscar/{cedula}" })
-    public Docentesfenix findByCedula(@PathVariable("cedula") String cedula) {
+    @GetMapping(path = { "/{cedula}" })
+    public List<Docentesfenix> findByCedula(@PathVariable("cedula") String cedula) {
         return docentefenixRepository.findByCedula(cedula);
     }
+
+    // metodo para buscar doscentes por cedula y apellidos
+    @GetMapping(path = { "/{cedula}/{primer_apellido}/{segundo_apellido}" })
+    public List<Docentesfenix> findByCedulaAndApellidos(@PathVariable("cedula") String cedula,
+            @PathVariable("primer_apellido") String primer_apellido,
+            @PathVariable("segundo_apellido") String segundo_apellido) {
+        return docentefenixRepository.findByCedulaAndApellidos(cedula, primer_apellido, segundo_apellido);
+    }
+
 }
