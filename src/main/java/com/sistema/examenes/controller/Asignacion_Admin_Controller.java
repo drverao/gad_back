@@ -16,6 +16,7 @@ import java.util.List;
 public class Asignacion_Admin_Controller {
     @Autowired
     Asignacion_Admin_Service Service;
+    
 
     @PostMapping("/crear")
     public ResponseEntity<Asignacion_Admin> crear(@RequestBody Asignacion_Admin r) {
