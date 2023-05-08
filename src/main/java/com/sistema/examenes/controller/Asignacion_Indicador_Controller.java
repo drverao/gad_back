@@ -2,11 +2,13 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Asignacion_Indicador;
 import com.sistema.examenes.entity.Criterio;
+import com.sistema.examenes.entity.Usuario;
 import com.sistema.examenes.services.Asignacion_Indicador_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.sistema.examenes.repository.Asignacion_Indicador_repository;
 
 import java.util.List;
 
@@ -16,8 +18,25 @@ import java.util.List;
 public class Asignacion_Indicador_Controller {
     @Autowired
     Asignacion_Indicador_Service Service;
+    
+    
+   
+  
+    @Autowired
+   Asignacion_Indicador_repository asignacion_Rep;
+    
+    
+      @GetMapping("/listarIndicador")
+    public ResponseEntity<List<Asignacion_Indicador>> obtenerListaIndicadores() {
+        try {     
+           //List<Usuario> responsables = uR.listaResponsables();
+            return new ResponseEntity<>(asignacion_Rep.listaIndicador(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-    @PostMapping("/crear")
+    @GetMapping("/crear")
     public ResponseEntity<Asignacion_Indicador> crear(@RequestBody Asignacion_Indicador r) {
         try {
             r.setVisible(true);
