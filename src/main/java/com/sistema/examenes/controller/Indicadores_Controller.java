@@ -35,6 +35,15 @@ public class Indicadores_Controller {
         }
     }
 
+    @GetMapping("/buscarindicador/{id}")
+    public ResponseEntity <List<Indicador>> obtenerCriterios(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.obtenerIndicadores(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Indicador> getById(@PathVariable("id") Long id) {
         try {

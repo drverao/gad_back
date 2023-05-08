@@ -35,6 +35,15 @@ public class Criterio_Controller {
         }
     }
 
+    @GetMapping("/listarcriterios")
+    public ResponseEntity<List<Criterio>> obtenerCriterio() {
+        try {
+            return new ResponseEntity<>(Service.obtenerCriterios(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Criterio> getById(@PathVariable("id") Long id) {
         try {

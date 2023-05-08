@@ -22,4 +22,9 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
     public List<Indicador> listar() {
         return repository.listarIndicador();
     }
+
+    @Override
+    public List<Indicador> obtenerIndicadores(Long id) {
+        return repository.obtenerIndicadores(id);
+    }
 }
