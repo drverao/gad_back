@@ -78,4 +78,15 @@ public class Indicadores_Controller {
 
         }
     }
+
+    // consumir metodo listarPorSubcriterio
+    @GetMapping("/listarPorSubcriterio/{id_subcriterio}")
+    public ResponseEntity<List<Indicador>> listarPorSubcriterio(@PathVariable("id_subcriterio") Long id_subcriterio) {
+        try {
+            return new ResponseEntity<>(Service.listarPorSubcriterio(id_subcriterio), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
