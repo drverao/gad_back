@@ -12,8 +12,9 @@ import java.util.List;
 public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> implements Indicador_Service {
     @Autowired
     private Indicador_repository repository;
+
     @Override
-    public CrudRepository<Indicador, Long > getDao() {
+    public CrudRepository<Indicador, Long> getDao() {
 
         return repository;
     }
@@ -22,4 +23,15 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
     public List<Indicador> listar() {
         return repository.listarIndicador();
     }
+
+    @Override
+    public List<Indicador> listarPorSubcriterio(Long id_subcriterio) {
+        return repository.listarIndicadorPorSubcriterio(id_subcriterio);
+    }
+
+    @Override
+    public List<Indicador> obtenerIndicadores(Long id) {
+        return repository.obtenerIndicadores(id);
+    }
+
 }
