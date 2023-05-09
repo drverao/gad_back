@@ -46,6 +46,7 @@ public class Actividad_Controller {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Actividad actividad) {
         return Service.delete(id);
+
     }
 
     @PutMapping("/actualizar/{id}")
