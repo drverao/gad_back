@@ -13,8 +13,9 @@ import java.util.List;
 public class Modelo_ServiceImpl extends GenericServiceImpl<Modelo, Long> implements Modelo_Service {
     @Autowired
     private Modelo_repository repository;
+
     @Override
-    public CrudRepository<Modelo, Long > getDao() {
+    public CrudRepository<Modelo, Long> getDao() {
         return repository;
     }
 

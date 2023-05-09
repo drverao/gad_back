@@ -29,7 +29,7 @@ public class Indicadores_Controller {
     @GetMapping("/listar")
     public ResponseEntity<List<Indicador>> obtenerLista() {
         try {
-            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
+            return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -52,6 +52,7 @@ public class Indicadores_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Indicador indicador = Service.findById(id);
@@ -86,4 +87,15 @@ public class Indicadores_Controller {
 
         }
     }
+
+    // consumir metodo listarPorSubcriterio
+    @GetMapping("/listarPorSubcriterio/{id_subcriterio}")
+    public ResponseEntity<List<Indicador>> listarPorSubcriterio(@PathVariable("id_subcriterio") Long id_subcriterio) {
+        try {
+            return new ResponseEntity<>(Service.listarPorSubcriterio(id_subcriterio), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
