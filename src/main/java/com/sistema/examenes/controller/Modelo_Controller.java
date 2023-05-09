@@ -36,6 +36,9 @@ public class Modelo_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
     @GetMapping("/listarv")
     public ResponseEntity<List<Modelo>> obtenerListav() {
         try {
