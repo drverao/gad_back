@@ -14,22 +14,18 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("/api/asignacion_criterio")
+@RequestMapping("/api/asignacion_indicador")
 public class Asignacion_Indicador_Controller {
     @Autowired
     Asignacion_Indicador_Service Service;
-    
-    
-   
-  
+
     @Autowired
-   Asignacion_Indicador_repository asignacion_Rep;
-    
-    
-      @GetMapping("/listarIndicador")
+    Asignacion_Indicador_repository asignacion_Rep;
+
+    @GetMapping("/listarIndicador")
     public ResponseEntity<List<Asignacion_Indicador>> obtenerListaIndicadores() {
-        try {     
-           //List<Usuario> responsables = uR.listaResponsables();
+        try {
+            // List<Usuario> responsables = uR.listaResponsables();
             return new ResponseEntity<>(asignacion_Rep.listaIndicador(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,6 +51,7 @@ public class Asignacion_Indicador_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/listarv")
     public ResponseEntity<List<Asignacion_Indicador>> obtenerListav() {
         try {
@@ -72,10 +69,12 @@ public class Asignacion_Indicador_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
     }
+
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Asignacion_Indicador a = Service.findById(id);
@@ -91,6 +90,7 @@ public class Asignacion_Indicador_Controller {
 
         }
     }
+
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Asignacion_Indicador> actualizar(@PathVariable Long id, @RequestBody Asignacion_Indicador p) {
         Asignacion_Indicador a = Service.findById(id);
@@ -105,6 +105,17 @@ public class Asignacion_Indicador_Controller {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+    }
+
+    // metodo post para crear un nuevo Asignacion_Indicador
+    @PostMapping("/crearAsignacion")
+    public ResponseEntity<Asignacion_Indicador> crearAsignacion(@RequestBody Asignacion_Indicador r) {
+        try {
+            r.setVisible(true);
+            return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
