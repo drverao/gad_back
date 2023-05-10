@@ -29,7 +29,7 @@ public class Indicadores_Controller {
     @GetMapping("/listar")
     public ResponseEntity<List<Indicador>> obtenerLista() {
         try {
-            return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -80,6 +80,7 @@ public class Indicadores_Controller {
                 indicador.setDescripcion(p.getDescripcion());
                 indicador.setPeso(p.getPeso());
                 indicador.setTipo(p.getTipo());
+                indicador.setEstandar(p.getEstandar());
                 return new ResponseEntity<>(Service.save(indicador), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
