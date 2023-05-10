@@ -26,6 +26,12 @@ public class Indicador implements Serializable {
     private double peso;
     @Column(name = "estandar")
     private double estandar;
+    @Column(name = "valor_obtenido")
+    private double valor_obtenido;
+    @Column(name = "porc_obtenido")
+    private double porc_obtenido;
+    @Column(name = "porc_utilida_obtenida")
+    private double porc_utilida_obtenida;
     @Column(name = "tipo")
     private String tipo;
     //

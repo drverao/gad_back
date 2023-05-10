@@ -13,8 +13,9 @@ import java.util.List;
 public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> implements Actividad_Service {
     @Autowired
     private Actividad_repository repository;
+
     @Override
-    public CrudRepository<Actividad, Long > getDao() {
+    public CrudRepository<Actividad, Long> getDao() {
         return repository;
     }
     @Override

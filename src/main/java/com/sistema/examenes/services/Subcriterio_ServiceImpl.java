@@ -12,8 +12,9 @@ import java.util.List;
 public class Subcriterio_ServiceImpl extends GenericServiceImpl<Subcriterio, Long> implements Subcriterio_Service {
     @Autowired
     private Subcriterio_repository repository;
+
     @Override
-    public CrudRepository<Subcriterio, Long > getDao() {
+    public CrudRepository<Subcriterio, Long> getDao() {
 
         return repository;
     }
@@ -21,6 +22,11 @@ public class Subcriterio_ServiceImpl extends GenericServiceImpl<Subcriterio, Lon
     @Override
     public List<Subcriterio> listar() {
         return repository.listarSubcriterio();
+    }
+
+    @Override
+    public List<Subcriterio> listarPorCriterio(Long id_criterio) {
+        return repository.listarSubcriterioPorCriterio(id_criterio);
     }
 
 }
