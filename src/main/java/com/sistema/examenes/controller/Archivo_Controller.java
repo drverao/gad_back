@@ -1,8 +1,10 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Archivo;
+import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.entity.Evidencia;
 import com.sistema.examenes.mensajes.Archivosmensajes;
+import com.sistema.examenes.services.Archivo_Service;
 import com.sistema.examenes.services.Archivoservices;
 import com.sistema.examenes.services.Evidencia_Service;
 import lombok.AllArgsConstructor;
@@ -21,10 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = { "*" })
@@ -35,29 +34,40 @@ public class Archivo_Controller {
     Archivoservices servis;
 @Autowired
     Evidencia_Service eviservis;
+    @Autowired
+    Archivo_Service archivoservis;
+
  @Autowired
   HttpServletRequest request;
+
     @PostMapping("/upload")
-    public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files) {
+    public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files,
+                                                   @RequestParam("descripcion") String describcion,
+                                                   @RequestParam("id_evidencia") Long id_evidencia) {
         String meNsaje = "";
         try {
+            Evidencia evidencia = eviservis.findById(id_evidencia);
+            if (evidencia == null) {
+                meNsaje = "No se encontró la evidencia con id " + id_evidencia;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
+            }
             List<String> fileNames = new ArrayList<>();
             Arrays.asList(files).stream().forEach(file -> {
                 servis.guardar(file);
                 fileNames.add(file.getOriginalFilename());
-
-             });
+            });
             String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
             String url = ServletUriComponentsBuilder.fromHttpUrl(host)
                     .path("/archivo/").path(fileNames.get(0)).toUriString();
-            eviservis.save(new Evidencia(""+url,""+fileNames,true));
-            meNsaje = "se subieron correctamente" + fileNames;
+            archivoservis.save(new Archivo_s(""+url,""+fileNames,describcion, true,evidencia));
+            meNsaje = "Se subieron correctamente " + fileNames;
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje+"url:"+url));
         } catch (Exception e) {
-            meNsaje = " fallo al subir";
+            meNsaje = "Fallo al subir";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
         }
     }
+
 
     @GetMapping("/listar")
     public ResponseEntity<List<Archivo>> getFiles() {
