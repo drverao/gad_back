@@ -1,6 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Persona;
+import com.sistema.examenes.entity.Usuario;
 import com.sistema.examenes.services.Persona_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,15 @@ public class Persona_Controller {
         }
     }
 
+
+    @GetMapping("/buscarpersona/{username}")
+    public ResponseEntity<Persona> obtenerPersona(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(Service.obtenerPersona(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Persona> getById(@PathVariable("id") Long id) {
         try {

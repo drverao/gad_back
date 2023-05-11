@@ -3,6 +3,9 @@ package com.sistema.examenes.services;
 
 import com.sistema.examenes.entity.Actividad;
 
-public interface Actividad_Service extends GenericService<Actividad, Long>{
+import java.util.List;
 
+public interface Actividad_Service extends GenericService<Actividad, Long>{
+    public List<Actividad> listar() ;
+    public List<Actividad> listarporusuario(Long usuario) ;
 }

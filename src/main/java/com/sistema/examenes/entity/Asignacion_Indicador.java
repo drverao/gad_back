@@ -9,17 +9,18 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(name = "asignacion_criterio")
-public class Asignacion_Criterio implements Serializable {
+@Table(name = "asignacion_indicador")
+public class Asignacion_Indicador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_asignacio_criterio")
-    private Long id_asignacio_criterio;
-    //Columna para el eliminado logico no borrar
+    @Column(name = "id_asignacion_indicador")
+    private Long id_asignacion_indicador;
+    // Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Criterio criterio;
+    private Indicador indicador;
     @ManyToOne(fetch = FetchType.EAGER)
     private Modelo modelo;
+
 }

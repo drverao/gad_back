@@ -6,9 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -42,12 +40,6 @@ public class Ponderacion implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Indicador indicador;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "ponderacion")
-    @JsonIgnore
-    private Set<Encabezado_Evaluar> lista_enc_eva = new HashSet<>();
 
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "ponderacion")
-        @JsonIgnore
-    private Set<Evaluar_Cualitativa> lista_eva_cual = new HashSet<>();
 }

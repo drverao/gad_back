@@ -22,7 +22,5 @@ public class Evaluar_Cualitativa implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Cualitativa cualitativa ;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Ponderacion ponderacion ;
-    @ManyToOne(fetch = FetchType.EAGER)
     private Indicador indicador ;
 }

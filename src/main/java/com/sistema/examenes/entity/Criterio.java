@@ -20,27 +20,23 @@ public class Criterio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_criterio")
     private Long id_criterio;
-    @Column(name = "descripcion", length = 10000 )
+    @Column(name = "descripcion", length = 10000)
     private String descripcion;
     @Column(name = "nombre")
     private String nombre;
-    //Columna para el eliminado logico no borrar
+    // Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "criterio")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "criterio")
     @JsonIgnore
-    private List<Subcriterio> lista_subcriterios = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "criterio")
-    @JsonIgnore
-    private Set<Asignacion_Criterio> lista_criterio = new HashSet<>();
+    private Set<Subcriterio> lista_subcriterios = new HashSet<>();
 
     public Criterio() {
     }
-    
-    public Criterio(Long id){
+
+    public Criterio(Long id) {
         super();
-        this.id_criterio=id;
+        this.id_criterio = id;
     }
 }

@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.entity.Encabezado_Evaluar;
 import com.sistema.examenes.entity.Modelo;
 import com.sistema.examenes.services.Modelo_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class Modelo_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Modelo> crear(@RequestBody Modelo r) {
         try {
+            r.setVisible(true);
 
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -34,7 +36,14 @@ public class Modelo_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/listarv")
+    public ResponseEntity<List<Modelo>> obtenerListav() {
+        try {
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Modelo> getById(@PathVariable("id") Long id) {
         try {
@@ -47,7 +56,21 @@ public class Modelo_Controller {
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Modelo modelo) {
         return Service.delete(id);
     }
+    @PutMapping("/eliminarlogic/{id}")
+    public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
+        Modelo a = Service.findById(id);
+        if (a == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                a.setVisible(false);
+                return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
+        }
+    }
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Modelo> actualizar(@PathVariable Long id, @RequestBody Modelo p) {
         Modelo a = Service.findById(id);

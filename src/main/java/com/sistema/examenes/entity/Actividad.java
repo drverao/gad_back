@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "actividades")
+@Table(name = "actividad")
 public class Actividad implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +24,9 @@ public class Actividad implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "fecha_inicio")
-    private Date feha_inicio;
+    private Date fecha_inicio;
     @Column(name = "fecha_fin ")
     private Date fecha_fin;
-    @Column(name = "estado")
-    private String estado;
     //Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;
@@ -37,4 +35,7 @@ public class Actividad implements Serializable {
     private Usuario usuario;
     @ManyToOne(fetch = FetchType.EAGER)
     private Evidencia evidencia;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "actividad")
+    @JsonIgnore
+    private Set<Observacion> lista_observaciones = new HashSet<>();
 }

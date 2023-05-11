@@ -25,5 +25,4 @@ public class Docentesfenix {
     private String correo;
     private String direccion;
     private String celular;
-
 }

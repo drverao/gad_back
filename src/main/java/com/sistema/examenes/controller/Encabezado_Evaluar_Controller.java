@@ -1,5 +1,6 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.entity.Criterio;
 import com.sistema.examenes.entity.Encabezado_Evaluar;
 import com.sistema.examenes.services.Encabezado_Evaluar_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class Encabezado_Evaluar_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Encabezado_Evaluar> crear(@RequestBody Encabezado_Evaluar r) {
         try {
+            r.setVisible(true);
 
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -34,7 +36,14 @@ public class Encabezado_Evaluar_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/listarv")
+    public ResponseEntity<List<Encabezado_Evaluar>> obtenerListav() {
+        try {
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Encabezado_Evaluar> getById(@PathVariable("id") Long id) {
         try {
@@ -47,7 +56,21 @@ public class Encabezado_Evaluar_Controller {
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Encabezado_Evaluar encabezado_evaluar) {
         return Service.delete(id);
     }
+    @PutMapping("/eliminarlogic/{id}")
+    public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
+        Encabezado_Evaluar a = Service.findById(id);
+        if (a == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                a.setVisible(false);
+                return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
+        }
+    }
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Encabezado_Evaluar> actualizar(@PathVariable Long id, @RequestBody Encabezado_Evaluar p) {
         Encabezado_Evaluar a = Service.findById(id);
@@ -55,6 +78,7 @@ public class Encabezado_Evaluar_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                a.setFormula(p.getFormula());
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

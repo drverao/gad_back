@@ -43,6 +43,7 @@ public class Subcriterio_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Subcriterio subcriterio = Service.findById(id);
@@ -61,7 +62,7 @@ public class Subcriterio_Controller {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Subcriterio> actualizar(@PathVariable Long id,@RequestBody Subcriterio p) {
+    public ResponseEntity<Subcriterio> actualizar(@PathVariable Long id, @RequestBody Subcriterio p) {
         Subcriterio subcriterio = Service.findById(id);
         if (subcriterio == null) {
 
@@ -75,6 +76,15 @@ public class Subcriterio_Controller {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+    }
+
+    @GetMapping("/listarPorCriterio/{id_criterio}")
+    public ResponseEntity<List<Subcriterio>> listarPorCriterio(@PathVariable("id_criterio") Long id_criterio) {
+        try {
+            return new ResponseEntity<>(Service.listarPorCriterio(id_criterio), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

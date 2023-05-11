@@ -1,6 +1,7 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.entity.Persona;
+import com.sistema.examenes.entity.Usuario;
 import com.sistema.examenes.repository.Persona_repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +16,9 @@ public class Persona_ServiceImpl extends GenericServiceImpl<Persona, Long> imple
 
         return repository;
     }
-
+    @Override
+    public Persona obtenerPersona(String username) {
+        return repository.obtenerPersona(username);
+    }
 
 }
