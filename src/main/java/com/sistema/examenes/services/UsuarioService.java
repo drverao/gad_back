@@ -7,4 +7,6 @@ import java.util.Set;
 
 public interface UsuarioService extends GenericService<Usuario, Long>{
     public Usuario obtenerUsuario(String username);
+
+    public Usuario obtenerId(String username);
 }

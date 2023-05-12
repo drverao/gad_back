@@ -52,6 +52,14 @@ public class Evidencia_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/buscarev/{username}")
+    public ResponseEntity<List<Evidencia>> buscarEvidencia(@PathVariable("id") String username) {
+        try {
+            return new ResponseEntity<>(Service.evidenciaUsuario(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Evidencia evidencia) {
         return Service.delete(id);

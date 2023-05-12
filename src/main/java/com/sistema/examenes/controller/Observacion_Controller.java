@@ -52,6 +52,14 @@ public class Observacion_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/buscarobs/{username}")
+    public ResponseEntity<List<Observacion>> getByUsuario(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(Service.observacionUsuario(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Observacion observacion) {
         return Service.delete(id);
