@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = { "*" })
 @RestController
-@RequestMapping("/api/evaluar_indicador")
+@RequestMapping("/api/evaluar_cuantitativa")
 public class Evaluar_Cuantitativa_Controller {
     @Autowired
     Evaluar_Cuantitativa_Service Service;
