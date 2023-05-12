@@ -53,7 +53,7 @@ public class Evidencia_Controller {
         }
     }
     @GetMapping("/buscarev/{username}")
-    public ResponseEntity<List<Evidencia>> buscarEvidencia(@PathVariable("id") String username) {
+    public ResponseEntity<List<Evidencia>> buscarEvidencia(@PathVariable("username") String username) {
         try {
             return new ResponseEntity<>(Service.evidenciaUsuario(username), HttpStatus.OK);
         } catch (Exception e) {
