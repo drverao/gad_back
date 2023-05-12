@@ -13,5 +13,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 "FROM usuarios u, usuario_rol ur\n" +
 "WHERE ur.usuario_id=u.id and ur.rol_rol_id=3;", nativeQuery = true)
     public abstract List<Usuario> listaResponsables();
-
+    @Query(value = "SELECT * FROM usuarios WHERE username=:user", nativeQuery = true)
+     public Usuario buscarId(String user);
 }
