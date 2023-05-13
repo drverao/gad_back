@@ -52,9 +52,18 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/buscarusuario/{id}")
+    public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.listarporusuario(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Actividad actividad) {
         return Service.delete(id);
+
     }
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
@@ -79,6 +88,11 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                a.setNombre(p.getNombre());
+                a.setDescripcion(p.getDescripcion());
+                a.setFecha_inicio(p.getFecha_inicio());
+                a.setFecha_fin(p.getFecha_fin());
+
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

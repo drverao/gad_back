@@ -52,9 +52,19 @@ public class Observacion_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/buscarobs/{username}")
+    public ResponseEntity<List<Observacion>> getByUsuario(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(Service.observacionUsuario(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Observacion observacion) {
-        return Service.delete(id);
+    public ResponseEntity<Observacion> eliminar(@PathVariable Long id) {
+        //public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Observacion observacion) {
+        Service.eliminar(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
@@ -78,6 +88,7 @@ public class Observacion_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                a.setObservacion(p.getObservacion());
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

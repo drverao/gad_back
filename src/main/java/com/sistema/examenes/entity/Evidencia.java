@@ -22,9 +22,12 @@ public class Evidencia implements Serializable {
     private String enlace;
     @Column(name = "nombre", length = 10000)
     private String nombre;
+    @Column(name = "descripcion", length = 10000)
+    private String descripcion;
     //Columna para el eliminado logico no borrar
     @Column(name = "visible")
-    private boolean visible;
+    private Boolean visible;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Indicador indicador;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
@@ -34,9 +37,14 @@ public class Evidencia implements Serializable {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
     @JsonIgnore
     private Set<Actividad> listaactividades = new HashSet<>();
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
     @JsonIgnore
     private Set<Asignacion_Evidencia> lista_evidencias = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
+    @JsonIgnore
+    private Set<Archivo_s> lista_archivo = new HashSet<>();
 
     public Evidencia() {
 
