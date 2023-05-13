@@ -36,7 +36,7 @@ public class Indicadores_Controller {
     }
 
     @GetMapping("/buscarindicador/{id}")
-    public ResponseEntity <List<Indicador>> obtenerCriterios(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Indicador>> obtenerCriterios(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.obtenerIndicadores(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -93,6 +93,17 @@ public class Indicadores_Controller {
     public ResponseEntity<List<Indicador>> listarPorSubcriterio(@PathVariable("id_subcriterio") Long id_subcriterio) {
         try {
             return new ResponseEntity<>(Service.listarPorSubcriterio(id_subcriterio), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // consumir metodo obtenerIndicadoresPorCriterio
+    @GetMapping("/obtenerIndicadoresPorCriterio/{id_criterio}")
+    public ResponseEntity<List<Indicador>> obtenerIndicadoresPorCriterio(
+            @PathVariable("id_criterio") Long id_criterio) {
+        try {
+            return new ResponseEntity<>(Service.obtenerIndicadoresPorCriterio(id_criterio), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
