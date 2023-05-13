@@ -44,7 +44,7 @@ public class Archivo_Controller {
  @Autowired
   HttpServletRequest request;
 
-    /*@PostMapping("/upload")
+    @PostMapping("/upload")
     public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files,
                                                    @RequestParam("descripcion") String describcion,
                                                    @RequestParam("id_evidencia") Long id_actividad) {
@@ -70,32 +70,7 @@ public class Archivo_Controller {
             meNsaje = "Fallo al subir";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
         }
-    }*/
-    @PostMapping("/upload")
-    public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files,
-    @RequestParam("descripcion") String describcion
-                                                   ) {
-        String meNsaje = "";
-        try {
-            List<String> fileNames = new ArrayList<>();
-            Arrays.asList(files).stream().forEach(file -> {
-                servis.guardar(file);
-                fileNames.add(file.getOriginalFilename());
-
-        });
-        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-        String url = ServletUriComponentsBuilder.fromHttpUrl(host)
-                .path("/archivo/").path(fileNames.get(0)).toUriString();
-            archivoservis.save(new Archivo_s(url.toString(),fileNames.toString(),describcion, true));
-
-            //eviservis.save(new Evidencia(""+url,""+fileNames,true));
-        meNsaje = "se subieron correctamente" + fileNames;
-        return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje+"url:"+url));
-    } catch (Exception e) {
-        meNsaje = " fallo al subir";
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
     }
-}
 
     @GetMapping("/listarv")
     public ResponseEntity<List<Archivo_s>> obtenerListav() {
