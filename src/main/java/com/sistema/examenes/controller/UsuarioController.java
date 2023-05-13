@@ -13,9 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -109,6 +108,17 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/listarResDatos")
+    public ResponseEntity<List<Usuario>> obtenerListaRespoDatos() {
+        try {
+            // List<Usuario> responsables = uR.listaResponsables();
+            return new ResponseEntity<>(uR.listaResponsablesDatos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
     @GetMapping("/buscar/{username}")
     public Usuario obtenerUsuario(@PathVariable("username") String username) {
