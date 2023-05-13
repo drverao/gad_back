@@ -34,17 +34,17 @@ import java.util.stream.Collectors;
 public class Archivo_Controller {
     @Autowired
     Archivoservices servis;
-@Autowired
+    @Autowired
     Evidencia_Service eviservis;
     @Autowired
     Archivo_Service archivoservis;
     @Autowired
     Actividad_Service actiservis;
 
- @Autowired
-  HttpServletRequest request;
+    @Autowired
+    HttpServletRequest request;
 
-    /*@PostMapping("/upload")
+    @PostMapping("/upload")
     public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files,
                                                    @RequestParam("descripcion") String describcion,
                                                    @RequestParam("id_evidencia") Long id_actividad) {
@@ -55,7 +55,7 @@ public class Archivo_Controller {
                 meNsaje = "No se encontró la evidencia con id " + id_actividad;
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
             }
-             List<String> fileNames = new ArrayList<>();
+            List<String> fileNames = new ArrayList<>();
             Arrays.asList(files).stream().forEach(file -> {
                 servis.guardar(file);
                 fileNames.add(file.getOriginalFilename());
@@ -63,39 +63,14 @@ public class Archivo_Controller {
             String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
             String url = ServletUriComponentsBuilder.fromHttpUrl(host)
                     .path("/archivo/").path(fileNames.get(0)).toUriString();
-            archivoservis.save(new Archivo_s(url.toString(),fileNames.toString(),describcion, true,actividad));
+            archivoservis.save(new Archivo_s(url.toString(), fileNames.toString().join(",",fileNames), describcion, true, actividad));
             meNsaje = "Se subieron correctamente " + fileNames;
-            return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje+"url:"+url));
+            return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje + "url:" + url));
         } catch (Exception e) {
             meNsaje = "Fallo al subir";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
         }
-    }*/
-    @PostMapping("/upload")
-    public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files,
-    @RequestParam("descripcion") String describcion
-                                                   ) {
-        String meNsaje = "";
-        try {
-            List<String> fileNames = new ArrayList<>();
-            Arrays.asList(files).stream().forEach(file -> {
-                servis.guardar(file);
-                fileNames.add(file.getOriginalFilename());
-
-        });
-        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-        String url = ServletUriComponentsBuilder.fromHttpUrl(host)
-                .path("/archivo/").path(fileNames.get(0)).toUriString();
-            archivoservis.save(new Archivo_s(url.toString(),fileNames.toString(),describcion, true));
-
-            //eviservis.save(new Evidencia(""+url,""+fileNames,true));
-        meNsaje = "se subieron correctamente" + fileNames;
-        return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje+"url:"+url));
-    } catch (Exception e) {
-        meNsaje = " fallo al subir";
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
     }
-}
 
     @GetMapping("/listarv")
     public ResponseEntity<List<Archivo_s>> obtenerListav() {
@@ -118,31 +93,51 @@ public class Archivo_Controller {
         }).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(archivos);
     }
-@GetMapping ("{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename){
-        Resource file=servis.load(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION
-        ,"attachment; filename=\""+file.getFilename()+ "\"").body(file);
-        }
 
-    @GetMapping ("/borrar/{filename:.+}")
-    public ResponseEntity<Archivosmensajes> borrar(@PathVariable String filename)
-    {
-        String mensaje="";
+    @GetMapping("{filename:.+}")
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+        Resource file = servis.load(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION
+                , "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+    @GetMapping("/borrar/{filename:.+}")
+    public ResponseEntity<Archivosmensajes> borrar(@PathVariable String filename) {
+        String mensaje = "";
         try {
-            mensaje= servis.borrar(filename);
+            mensaje = servis.borrar(filename);
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(mensaje));
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(mensaje));
         }
     }
+
+
+    @GetMapping("/buscarev/{username}")
+    public ResponseEntity<List<Archivo_s>> listararchi(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(archivoservis.listararchivouser(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/eliminarlogic/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        Archivo_s as = archivoservis.findById(id);
+        if (as == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                as.setVisible(false);
+                return new ResponseEntity<>(archivoservis.save(as), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
+
 }
-
-
-
-
-
-
 
 
 
