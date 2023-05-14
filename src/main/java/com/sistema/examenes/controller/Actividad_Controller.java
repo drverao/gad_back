@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Actividad;
 import com.sistema.examenes.entity.Criterio;
+import com.sistema.examenes.repository.Actividad_repository;
 import com.sistema.examenes.services.Actividad_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 public class Actividad_Controller {
     @Autowired
     Actividad_Service Service;
+
 
     @PostMapping("/crear")
     public ResponseEntity<Actividad> crear(@RequestBody Actividad r) {
@@ -60,6 +62,17 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/buscarporEvide/{idEviden}")
+    public ResponseEntity <List<Actividad>> listarporEvidencia(@PathVariable("idEviden") Long idEvidencia) {
+        try {
+            return new ResponseEntity<>(Service.listarporEvidencia(idEvidencia), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Actividad actividad) {
         return Service.delete(id);
