@@ -17,10 +17,7 @@ public class Evidencia implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evidencia")
     private Long id_evidencia;
-    @Column(name = "enlace")
-    private String enlace;
-    @Column(name = "nombre", length = 10000)
-    private String nombre;
+
     @Column(name = "descripcion", length = 10000)
     private String descripcion;
     //Columna para el eliminado logico no borrar
@@ -29,26 +26,21 @@ public class Evidencia implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Indicador indicador;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "evidencia")
     @JsonIgnore
     private Set<Detalle_Evaluacion> detalleEvaluaciones = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "evidencia")
     @JsonIgnore
     private Set<Actividad> listaactividades = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "evidencia")
     @JsonIgnore
     private Set<Asignacion_Evidencia> lista_evidencias = new HashSet<>();
 
 
     public Evidencia() {
 
-    }
-    public Evidencia(String enlace, String nombre, boolean visible) {
-        this.enlace = enlace;
-        this.nombre = nombre;
-        this.visible = visible;
     }
 }
 
