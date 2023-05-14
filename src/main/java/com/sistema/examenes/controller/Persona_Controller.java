@@ -36,6 +36,15 @@ public class Persona_Controller {
         }
     }
 
+    @GetMapping("/listarcoorreos")
+    public ResponseEntity<List<Persona>> liat() {
+        try {
+            return new ResponseEntity<>(Service.listarcorreos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping("/buscarpersona/{username}")
     public ResponseEntity<Persona> obtenerPersona(@PathVariable("username") String username) {
