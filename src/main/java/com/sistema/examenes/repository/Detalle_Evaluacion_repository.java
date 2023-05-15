@@ -11,8 +11,10 @@ public interface Detalle_Evaluacion_repository extends JpaRepository<Detalle_Eva
     @Query(value = "SELECT * from detalle_evaluacion where visible =true",nativeQuery = true)
     List<Detalle_Evaluacion> listarDetalleEvaluacion();
 
-    @Query("SELECT d FROM Detalle_Evaluacion d WHERE d.visible = true AND d.evidencia.id_evidencia = :idEvidencia AND d.estado = false AND d.usuario.id = :idUsuario")
-    List<Detalle_Evaluacion> listarDetalleEvaluacionRechazada(Long idEvidencia, Long idUsuario);
+    @Query(value = "    SELECT * FROM detalle_evaluacion\n" +
+            "    WHERE visible = true AND evidencia_id_evidencia = :idEvidencia AND estado = false AND usuario_id = :idUsuario",nativeQuery = true)
+    List<Detalle_Evaluacion> listarDetalleEvaluacionRechazada(  Long idEvidencia, Long idUsuario);
+
 
 
 }
