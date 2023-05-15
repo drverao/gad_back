@@ -89,6 +89,24 @@ public class Indicadores_Controller {
         }
     }
 
+    @PutMapping("/ponderacion/{id}")
+    public ResponseEntity<Indicador> actualizarPonderacion(@PathVariable Long id, @RequestBody Indicador p) {
+        Indicador indicador = Service.findById(id);
+        if (indicador == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                indicador.setValor_obtenido(p.getValor_obtenido());
+                indicador.setPorc_obtenido(p.getPorc_obtenido());
+                indicador.setPorc_utilida_obtenida(p.getPorc_utilida_obtenida());
+                return new ResponseEntity<>(Service.save(indicador), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
+
     // consumir metodo listarPorSubcriterio
     @GetMapping("/listarPorSubcriterio/{id_subcriterio}")
     public ResponseEntity<List<Indicador>> listarPorSubcriterio(@PathVariable("id_subcriterio") Long id_subcriterio) {
