@@ -3,6 +3,7 @@ package com.sistema.examenes.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -41,6 +42,9 @@ public class Evidencia implements Serializable {
     @JsonIgnore
     private Set<Asignacion_Evidencia> lista_evidencias = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "evidencia")
+    @JsonIgnore
+    private Set<Archivo_s> lista_archivo = new HashSet<>();
 
     public Evidencia() {
 

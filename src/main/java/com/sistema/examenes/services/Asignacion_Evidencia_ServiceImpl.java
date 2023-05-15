@@ -17,10 +17,7 @@ public class Asignacion_Evidencia_ServiceImpl extends GenericServiceImpl<Asignac
     public CrudRepository<Asignacion_Evidencia, Long > getDao() {
         return repository;
     }
-    @Override
-    public List<Asignacion_Evidencia> listarporUsuario(String usuario) {
-        return repository.listarporAsignacionUsuario (usuario);
-    }
+
     @Override
     public List<Asignacion_Evidencia> listar() {
         return repository.listarAsignacionEvidencia();
