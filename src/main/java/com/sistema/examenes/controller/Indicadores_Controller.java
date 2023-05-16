@@ -127,13 +127,14 @@ public class Indicadores_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/indicadoresPorCriterio/{id_criterio}")
-    public ResponseEntity<List<Indicador>> indicadoresPorCriterio(
-            @PathVariable("id_criterio") Long id_criterio) {
+    @GetMapping("/indicadoresPorCriterios")
+    public ResponseEntity<List<Indicador>> indicadoresPorCriterios(
+            @RequestParam("idCriterios") List<Long> idCriterios) {
         try {
-            return new ResponseEntity<>(Service.indicadoresPorCriterio(id_criterio), HttpStatus.OK);
+            return new ResponseEntity<>(Service.indicadoresPorCriterios(idCriterios), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
