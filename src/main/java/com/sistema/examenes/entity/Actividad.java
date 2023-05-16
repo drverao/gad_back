@@ -48,7 +48,6 @@ public class Actividad implements Serializable {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "actividad")
     @JsonIgnore
     private Set<Archivo_s> lista_archivo = new HashSet<>();
-    private Set<Evidencia> listaEvidencias = new HashSet<>();
 
 
 }

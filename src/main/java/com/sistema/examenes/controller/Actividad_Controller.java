@@ -82,7 +82,7 @@ public class Actividad_Controller {
 
     }
     @PutMapping("/eliminarlogic/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+    public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Actividad a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
