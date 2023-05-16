@@ -32,5 +32,6 @@ public interface Indicador_repository extends JpaRepository<Indicador, Long> {
 
     @Query(value = "SELECT DISTINCT(i.*) FROM public.modelo m join public.asignacion_indicador a ON a.modelo_id_modelo = m.id_modelo JOIN public.indicador i on a.indicador_id_indicador = i.id_indicador JOIN public.subcriterio s ON s.id_subcriterio = i.subcriterio_id_subcriterio JOIN public.criterio c ON c.id_criterio = s.id_criterio WHERE c.id_criterio=:id_criterio ORDER BY i.nombre", nativeQuery = true)
     public List<Indicador> obtenerIndicadoresPorCriterio(Long id_criterio);
-
+    @Query(value = "SELECT i FROM Indicador i JOIN i.subcriterio s JOIN s.criterio c WHERE c.id_criterio = :idCriterio")
+    public List<Indicador> indicadoresPorCriterio(Long idCriterio);
 }
