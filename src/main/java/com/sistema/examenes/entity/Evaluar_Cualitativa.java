@@ -15,12 +15,14 @@ public class Evaluar_Cualitativa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evaluar_cualitativa")
     private Long id_evaluar_cualitativa;
-    //Columna para el eliminado logico no borrar
+    // Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Cualitativa cualitativa ;
+    @JoinColumn(name = "id_cualitativa")
+    private Cualitativa cualitativa;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Indicador indicador ;
+    @JoinColumn(name = "id_indicador")
+    private Indicador indicador;
 }

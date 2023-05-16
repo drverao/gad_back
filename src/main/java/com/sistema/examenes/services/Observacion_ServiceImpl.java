@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -25,6 +26,11 @@ public class Observacion_ServiceImpl extends GenericServiceImpl<Observacion, Lon
     @Override
     public List<Observacion> observacionUsuario(String user) {
         return repository.observacionUsuario(user);
+    }
+
+    @Transactional
+    public void eliminar(Long id) {
+        repository.borrar(id);
     }
 
 }
