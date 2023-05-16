@@ -3,6 +3,7 @@ package com.sistema.examenes.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,8 +24,12 @@ public class Actividad implements Serializable {
     private String descripcion;
     @Column(name = "nombre")
     private String nombre;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_inicio")
     private Date fecha_inicio;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_fin ")
     private Date fecha_fin;
     //Columna para el eliminado logico no borrar
@@ -43,4 +48,7 @@ public class Actividad implements Serializable {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "actividad")
     @JsonIgnore
     private Set<Archivo_s> lista_archivo = new HashSet<>();
+    private Set<Evidencia> listaEvidencias = new HashSet<>();
+
+
 }
