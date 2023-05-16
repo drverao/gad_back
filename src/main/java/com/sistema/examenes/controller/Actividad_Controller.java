@@ -1,6 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Actividad;
+import com.sistema.examenes.entity.Criterio;
 import com.sistema.examenes.services.Actividad_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class Actividad_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Actividad> crear(@RequestBody Actividad r) {
         try {
-
+            r.setVisible(true);
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,6 +33,14 @@ public class Actividad_Controller {
     public ResponseEntity<List<Actividad>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/listarv")
+    public ResponseEntity<List<Actividad>> obtenerListav() {
+        try {
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -50,6 +59,14 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/buscarusuario/{usenname}")
+    public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
+        try {
+            return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     /* @GetMapping("/buscar/{id}")
      public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
@@ -62,6 +79,22 @@ public class Actividad_Controller {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
+
+    }
+    @PutMapping("/eliminarlogic/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        Actividad a = Service.findById(id);
+        if (a == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                a.setVisible(false);
+                return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
     }
 
     @PutMapping("actualizar/{id}")
@@ -81,6 +114,11 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                a.setNombre(p.getNombre());
+                a.setDescripcion(p.getDescripcion());
+                a.setFecha_inicio(p.getFecha_inicio());
+                a.setFecha_fin(p.getFecha_fin());
+
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

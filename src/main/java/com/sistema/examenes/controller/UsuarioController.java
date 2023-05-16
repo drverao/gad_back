@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.entity.Rol;
 import com.sistema.examenes.entity.Usuario;
 import com.sistema.examenes.entity.UsuarioRol;
+import com.sistema.examenes.repository.UsuarioRepository;
 import com.sistema.examenes.services.RolService;
 import com.sistema.examenes.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,11 @@ public class UsuarioController {
     private RolService rolService;
 
     @Autowired
+    private UsuarioRepository uR;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @PostConstruct
     public void init() {
         Rol usuario1 = new Rol(1L, "ADMIN");
@@ -41,28 +46,27 @@ public class UsuarioController {
         rolService.save(usuario3);
         rolService.save(usuario4);
     }
-//    @PostMapping("/")
-//    public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
-//        Set<UsuarioRol> usuarioRoles = new HashSet<>();
-//
-//        Rol rol = new Rol();
-//        rol.setRolId(2L);
-//        rol.setRolNombre("NORMAL");
-//
-//        UsuarioRol usuarioRol = new UsuarioRol();
-//        usuarioRol.setUsuario(usuario);
-//        usuarioRol.setRol(rol);
-//
-//        usuarioRoles.add(usuarioRol);
-//        return usuarioService.guardarUsuario(usuario,usuarioRoles);
+    // @PostMapping("/")
+    // public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
+    // Set<UsuarioRol> usuarioRoles = new HashSet<>();
+    //
+    // Rol rol = new Rol();
+    // rol.setRolId(2L);
+    // rol.setRolNombre("NORMAL");
+    //
+    // UsuarioRol usuarioRol = new UsuarioRol();
+    // usuarioRol.setUsuario(usuario);
+    // usuarioRol.setRol(rol);
+    //
+    // usuarioRoles.add(usuarioRol);
+    // return usuarioService.guardarUsuario(usuario,usuarioRoles);
 
-//    }
-
+    // }
 
     @PostMapping("/crear/{rolId}")
     public ResponseEntity<Usuario> crear(@RequestBody Usuario r, @PathVariable Long rolId) {
         try {
-            if(usuarioService.obtenerUsuario(r.getUsername())==null){
+            if (usuarioService.obtenerUsuario(r.getUsername()) == null) {
                 // Buscar el rol por ID
                 Rol rol = rolService.findById(rolId);
                 r.setPassword(this.bCryptPasswordEncoder.encode(r.getPassword()));
@@ -75,9 +79,8 @@ public class UsuarioController {
                 r.getUsuarioRoles().add(usuarioRol);
 
                 // Guardar el usuario en la base de datos
-                Usuario nuevoUsuario = usuarioService.save(r);
-
-                return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
+                // Usuario nuevoUsuario = usuarioService.save(r);
+                return new ResponseEntity<>(usuarioService.save(r), HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.CONFLICT);
 
@@ -96,18 +99,33 @@ public class UsuarioController {
         }
     }
 
+    // listar solo los responsables
+    @GetMapping("/listarResponsable")
+    public ResponseEntity<List<Usuario>> obtenerListaResponsables() {
+        try {
+            // List<Usuario> responsables = uR.listaResponsables();
+            return new ResponseEntity<>(uR.listaResponsables(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/buscar/{username}")
-    public Usuario obtenerUsuario(@PathVariable("username") String username){
+    public Usuario obtenerUsuario(@PathVariable("username") String username) {
         return usuarioService.obtenerUsuario(username);
     }
 
+    @GetMapping("/buscaruser/{username}")
+    public Usuario obtenerIdUsuario(@PathVariable("username") String username) {
+        return usuarioService.obtenerId(username);
+    }
     @DeleteMapping("/{usuarioId}")
-    public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId){
+    public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId) {
         usuarioService.delete(usuarioId);
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Usuario> actualizarCliente(@PathVariable Long id,@RequestBody Usuario p) {
+    public ResponseEntity<Usuario> actualizarCliente(@PathVariable Long id, @RequestBody Usuario p) {
         Usuario usu = usuarioService.findById(id);
         if (usu == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
