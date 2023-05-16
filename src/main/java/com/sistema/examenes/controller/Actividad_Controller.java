@@ -52,10 +52,10 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/buscarusuario/{usenname}")
-    public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
+    @GetMapping("/buscarusuario/{id}")
+    public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("id") Long id) {
         try {
-            return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
+            return new ResponseEntity<>(Service.listarporusuario(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

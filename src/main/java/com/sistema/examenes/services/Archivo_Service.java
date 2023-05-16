@@ -9,7 +9,5 @@ import java.util.List;
 public interface Archivo_Service extends GenericService<Archivo_s, Long>{
     public List<Archivo_s> listar() ;
 
-    public List<Archivo_s> listararchivouser(String username);
-
 
 }
