@@ -34,4 +34,10 @@ public class Indicador_ServiceImpl extends GenericServiceImpl<Indicador, Long> i
         return repository.obtenerIndicadores(id);
     }
 
+    @Override
+    public List<Indicador> obtenerIndicadoresPorCriterio(Long id_criterio) {
+
+        return repository.obtenerIndicadoresPorCriterio(id_criterio);
+    }
+
 }

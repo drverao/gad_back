@@ -36,6 +36,7 @@ public class Evaluar_Cuantitativa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/listarv")
     public ResponseEntity<List<Evaluar_Cuantitativa>> obtenerListav() {
         try {
@@ -44,6 +45,7 @@ public class Evaluar_Cuantitativa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Evaluar_Cuantitativa> getById(@PathVariable("id") Long id) {
         try {
@@ -52,10 +54,12 @@ public class Evaluar_Cuantitativa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Evaluar_Cuantitativa evaluar_cuantitativa) {
         return Service.delete(id);
     }
+
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Evaluar_Cuantitativa a = Service.findById(id);
@@ -71,6 +75,7 @@ public class Evaluar_Cuantitativa_Controller {
 
         }
     }
+
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Evaluar_Cuantitativa> actualizar(@PathVariable Long id, @RequestBody Evaluar_Cuantitativa p) {
         Evaluar_Cuantitativa a = Service.findById(id);
@@ -78,11 +83,21 @@ public class Evaluar_Cuantitativa_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                a.setValor(p.getValor());
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+    }
+
+    @GetMapping("/listarPorEncabezado/{id}")
+    public ResponseEntity<List<Evaluar_Cuantitativa>> listarPorEncabezado(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.listarEvaluarCuantitativaPorIndicador(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

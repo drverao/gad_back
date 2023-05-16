@@ -121,18 +121,6 @@ public class Archivo_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping("/buscararchivo/{idActi}")
-    public ResponseEntity<List<Archivo_s>> listararchiActividad(@PathVariable("idActi") Long idActividad) {
-        try {
-            return new ResponseEntity<>(archivoservis.listararchivoActividad(idActividad), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Archivo_s as = archivoservis.findById(id);

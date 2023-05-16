@@ -5,8 +5,10 @@ import com.sistema.examenes.entity.Actividad;
 
 import java.util.List;
 
+
 public interface Actividad_Service extends GenericService<Actividad, Long>{
     public List<Actividad> listar() ;
     public List<Actividad> listarporusuario(String username) ;
-    public List<Actividad>listarporEvidencia(Long idEvidencia );
+    List<Actividad> findByNombreContainingIgnoreCase(String nombre);
 }
+

@@ -13,6 +13,7 @@ public interface GenericService <T, ID extends Serializable> {
 
     public T findById(ID id);
 
+
     public ResponseEntity<?> delete(ID id);
 
 }
