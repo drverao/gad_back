@@ -62,17 +62,11 @@ public class Actividad_Controller {
     }
     @GetMapping("/buscarusuario/{usenname}")
     public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
-            try {
-                if (username.trim().isEmpty()) {
-                    List<Actividad> actividads = this.Service.findByAll();
-                    return new ResponseEntity<>(actividads, HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(username), HttpStatus.OK);
-                }
-
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+        try {
+            return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
