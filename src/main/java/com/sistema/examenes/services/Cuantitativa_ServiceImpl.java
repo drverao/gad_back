@@ -22,4 +22,8 @@ public class Cuantitativa_ServiceImpl extends GenericServiceImpl<Cuantitativa, L
     public List<Cuantitativa> listar() {
         return repository.listarCuantitativa();
     }
+
+
+
+
 }

@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface Observacion_Service extends GenericService<Observacion, Long>{
     public List<Observacion> listar() ;
-
+    List<Observacion> observacionUsuario(String user);
+    public void eliminar(Long id);
 }

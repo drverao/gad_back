@@ -11,5 +11,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     
      @Query(value = "SELECT * FROM usuarios;", nativeQuery = true)
     public abstract List<Usuario> listaResponsables();
-
+    @Query(value = "SELECT * FROM usuarios WHERE username=:user", nativeQuery = true)
+     public Usuario buscarId(String user);
 }
