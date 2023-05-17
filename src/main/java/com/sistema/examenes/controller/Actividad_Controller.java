@@ -60,23 +60,20 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/buscarusuario/{usenname}")
-    public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
+    @GetMapping("/buscarusuario/{username}")
+    public ResponseEntity<List<Actividad>> listarporUsuario(@PathVariable("username") String username) {
         try {
-            return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
-
-        try {
-            if (nombre.trim().isEmpty()) {
+            if (username.trim().isEmpty()) {
                 List<Actividad> actividads = this.Service.findByAll();
                 return new ResponseEntity<>(actividads, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
+                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(username), HttpStatus.OK);
             }
-
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     /* @GetMapping("/buscar/{id}")
      public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
