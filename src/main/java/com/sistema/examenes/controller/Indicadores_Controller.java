@@ -129,5 +129,13 @@ public class Indicadores_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/indicadoresPorCriterios")
+    public ResponseEntity<List<Indicador>> indicadoresPorCriterios(
+            @RequestParam("idCriterios") List<Long> idCriterios) {
+        try {
+        return new ResponseEntity<>(Service.indicadoresPorCriterios(idCriterios), HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
+    }
