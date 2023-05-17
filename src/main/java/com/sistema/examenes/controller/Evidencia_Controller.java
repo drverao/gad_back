@@ -44,6 +44,14 @@ public class Evidencia_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/listarvAsigna")
+    public ResponseEntity<List<Evidencia>> obtenerListavAsigna() {
+        try {
+            return new ResponseEntity<>(Service.listarEvidenciaAsigna(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Evidencia> getById(@PathVariable("id") Long id) {
         try {

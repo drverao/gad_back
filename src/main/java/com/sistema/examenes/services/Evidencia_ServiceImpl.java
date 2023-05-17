@@ -27,4 +27,8 @@ public class Evidencia_ServiceImpl extends GenericServiceImpl<Evidencia, Long> i
     public List<Evidencia> evidenciaUsuario(String username) {
         return repository.evidenciaUsuario(username);
     }
+    @Override
+    public List<Evidencia> listarEvidenciaAsigna() {
+        return repository.listarEvidenciaAsigna();
+    }
 }

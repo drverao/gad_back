@@ -12,4 +12,6 @@ public interface Archivo_repository extends JpaRepository<Archivo_s, Long> {
     @Query(value = "select * from archivo ar join actividad ac on ar.id_actividad=ac.id_actividad\n" +
     "JOIN usuarios u ON ac.usuario_id = u.id where u.username=:username and ar.visible =true",nativeQuery = true)
     public List<Archivo_s> listararchivouser(String username);
+    @Query(value = "SELECT * FROM archivo WHERE visible = true AND  id_actividad=:idActividad",nativeQuery = true)
+    public List<Archivo_s> listararchivoActividad(Long idActividad);
 }
