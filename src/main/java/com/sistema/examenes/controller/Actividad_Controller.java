@@ -67,7 +67,7 @@ public class Actividad_Controller {
                     List<Actividad> actividads = this.Service.findByAll();
                     return new ResponseEntity<>(actividads, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(username), HttpStatus.OK);
+                    return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
                 }
 
             } catch (Exception e) {
