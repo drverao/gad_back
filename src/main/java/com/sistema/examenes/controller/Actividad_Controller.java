@@ -48,6 +48,7 @@ public class Actividad_Controller {
 
     @GetMapping("/buscar/")
     public ResponseEntity<List<?>> buscar(@RequestParam("nombre") String nombre) {
+
         try {
             if (nombre.trim().isEmpty()) {
                 List<Actividad> actividads = this.Service.findByAll();
@@ -61,21 +62,14 @@ public class Actividad_Controller {
     }
     @GetMapping("/buscarusuario/{usenname}")
     public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
+
         try {
             return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
 
-    /* @GetMapping("/buscar/{id}")
-     public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
-         try {
-             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
-         } catch (Exception e) {
-             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-         }
-     }*/
+    }
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);

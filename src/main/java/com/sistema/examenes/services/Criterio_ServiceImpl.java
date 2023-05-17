@@ -26,5 +26,9 @@ public class Criterio_ServiceImpl extends GenericServiceImpl<Criterio, Long> imp
     public List<Criterio> obtenerCriterios() {
         return repository.obtenerCriterios();
     }
+    @Override
+    public List<Criterio> obtenerCriteriosUltimoModelo() {
+        return repository.obtenerCriteriosUltimoModelo();
+    }
 
 }
