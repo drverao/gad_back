@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @CrossOrigin(origins = { "*" })
@@ -16,6 +17,7 @@ import java.util.List;
 public class Detalle_Evaluacion_Controller {
     @Autowired
     Detalle_Evaluacion_Service Service;
+
 
     @PostMapping("/crear")
     public ResponseEntity<Detalle_Evaluacion> crear(@RequestBody Detalle_Evaluacion r) {
@@ -52,6 +54,15 @@ public class Detalle_Evaluacion_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/listarporEviRecha/{idEvi}/{idUsua}")
+    public ResponseEntity<List<Detalle_Evaluacion>> listarPorUsuarioYEvidencia(@PathVariable("idEvi") Long idEvidencia,  @PathVariable("idUsua") Long idUsuario) {
+        try {
+            return new ResponseEntity<>(Service.listarDetalleEvaluacionRechazada(idEvidencia, idUsuario), HttpStatus.OK);
+        } catch (Exception e) {;
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Detalle_Evaluacion detalle_evaluacion) {
         return Service.delete(id);

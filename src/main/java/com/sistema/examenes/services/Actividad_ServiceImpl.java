@@ -18,6 +18,10 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
     public CrudRepository<Actividad, Long> getDao() {
         return repository;
     }
+    @Override
+    public List<Actividad> findByNombreContainingIgnoreCase(String nombre) {
+        return repository.findByNombreContainingIgnoreCase(nombre);
+    }
 
     @Override
     public List<Actividad> listar() {
@@ -25,7 +29,7 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
     }
 
     @Override
-    public List<Actividad> listarporusuario(Long usuario) {
-        return repository.listarporusuario(usuario);
+    public List<Actividad> listarporusuario(String username) {
+        return repository.listarporusuario(username);
     }
 }
