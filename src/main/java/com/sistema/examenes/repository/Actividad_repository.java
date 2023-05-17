@@ -17,4 +17,9 @@ public interface Actividad_repository extends JpaRepository<Actividad, Long> {
     List<Actividad>listarporusuario(String username);
     List<Actividad> findByNombreContainingIgnoreCase(String nombre);
 
+    @Query(value = "SELECT * FROM actividad WHERE visible= true AND id_evidencia=:idEvidendicia ;",nativeQuery = true)
+    List<Actividad>listarporEvidencia(Long idEvidendicia);
+
+
+
 }

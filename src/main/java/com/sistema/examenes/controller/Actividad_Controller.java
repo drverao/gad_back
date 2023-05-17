@@ -75,6 +75,14 @@ public class Actividad_Controller {
         return Service.delete(id);
 
     }
+    @GetMapping("/buscarporEvide/{idEviden}")
+    public ResponseEntity <List<Actividad>> listarporEvidencia(@PathVariable("idEviden") Long idEvidencia) {
+        try {
+            return new ResponseEntity<>(Service.listarporEvidencia(idEvidencia), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Actividad a = Service.findById(id);

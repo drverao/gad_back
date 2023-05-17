@@ -14,7 +14,7 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
             "ON s.id_subcriterio = i.subcriterio_id_subcriterio JOIN criterio c " +
             "ON c.id_criterio = s.id_criterio where c.visible =true GROUP BY c.id_criterio, c.nombre ORDER BY c.id_criterio;", nativeQuery = true)
     public List<Criterio> obtenerCriterios();
-    @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, c.visible " +
+    @Query(value = "SELECT DISTINCT c.id_criterio, c.nombre, c.descripcion, c.visible " +
             "FROM criterio c " +
             "JOIN subcriterio s ON c.id_criterio = s.id_criterio " +
             "JOIN indicador i ON s.id_subcriterio = i.subcriterio_id_subcriterio " +
