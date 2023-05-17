@@ -17,6 +17,8 @@ public class Actividad_Controller {
     @Autowired
     Actividad_Service Service;
 
+
+
     @PostMapping("/crear")
     public ResponseEntity<Actividad> crear(@RequestBody Actividad r) {
         try {
@@ -44,29 +46,53 @@ public class Actividad_Controller {
         }
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
+    @GetMapping("/buscar/")
+    public ResponseEntity<List<?>> buscar(@RequestParam("nombre") String nombre) {
+
         try {
-            return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
+            if (nombre.trim().isEmpty()) {
+                List<Actividad> actividads = this.Service.findByAll();
+                return new ResponseEntity<>(actividads, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/buscarusuario/{id}")
-    public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("id") Long id) {
+    @GetMapping("/buscarusuario/{usenname}")
+    public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
         try {
-            return new ResponseEntity<>(Service.listarporusuario(id), HttpStatus.OK);
+            return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
+
+        try {
+            if (nombre.trim().isEmpty()) {
+                List<Actividad> actividads = this.Service.findByAll();
+                return new ResponseEntity<>(actividads, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
+            }
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /* @GetMapping("/buscar/{id}")
+     public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
+         try {
+             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
+         } catch (Exception e) {
+             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+         }
+     }*/
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Actividad actividad) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
 
     }
     @PutMapping("/eliminarlogic/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+    public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Actividad a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -81,7 +107,17 @@ public class Actividad_Controller {
         }
     }
 
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("actualizar/{id}")
+    public ResponseEntity<?> actualizar(@RequestBody Actividad t, @PathVariable(value = "id")  Long id) {
+        Actividad current = Service.findById(id);
+        current.setNombre(t.getNombre());
+        current.setDescripcion(t.getDescripcion());
+        current.setFecha_inicio(t.getFecha_inicio());
+        current.setFecha_fin(t.getFecha_fin());
+        return new ResponseEntity<>(Service.save(current), HttpStatus.OK);
+    }
+
+    /*@PutMapping("/actualizar/{id}")
     public ResponseEntity<Actividad> actualizar(@PathVariable Long id, @RequestBody Actividad p) {
         Actividad a = Service.findById(id);
         if (a == null) {
@@ -99,5 +135,5 @@ public class Actividad_Controller {
             }
 
         }
-    }
+    }*/
 }
