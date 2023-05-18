@@ -18,6 +18,9 @@ public class Ponderacion implements Serializable {
     @Column(name = "id_ponderacion")
     private Long id_ponderacion;
 
+    
+    @Column(name = "peso")
+    private double peso;
 
     @Column(name = "valor_obtenido")
     private double valor_obtenido;
