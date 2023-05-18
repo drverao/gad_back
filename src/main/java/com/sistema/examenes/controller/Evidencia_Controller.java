@@ -36,6 +36,7 @@ public class Evidencia_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/listarv")
     public ResponseEntity<List<Evidencia>> obtenerListav() {
         try {
@@ -44,6 +45,18 @@ public class Evidencia_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listarvAsigna")
+    public ResponseEntity<List<Evidencia>> obtenerListavAsigna() {
+        try {
+            return new ResponseEntity<>(Service.listarEvidenciaAsigna(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Evidencia> getById(@PathVariable("id") Long id) {
         try {
@@ -52,10 +65,21 @@ public class Evidencia_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/buscarev/{username}")
+    public ResponseEntity<List<Evidencia>> buscarEvidencia(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(Service.evidenciaUsuario(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Evidencia evidencia) {
         return Service.delete(id);
     }
+
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Evidencia a = Service.findById(id);
@@ -71,18 +95,30 @@ public class Evidencia_Controller {
 
         }
     }
+
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Evidencia> actualizar(@PathVariable Long id,@RequestBody Evidencia p) {
+    public ResponseEntity<Evidencia> actualizar(@PathVariable Long id, @RequestBody Evidencia p) {
         Evidencia a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                a.setDescripcion(p.getDescripcion());
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+    }
+
+    @GetMapping("/listarEvidenciaPorIndicador/{id_indicador}")
+    public ResponseEntity<List<Evidencia>> listarEvidenciaPorIndicador(
+            @PathVariable("id_indicador") Long id_indicador) {
+        try {
+            return new ResponseEntity<>(Service.listarEvidenciaPorIndicador(id_indicador), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

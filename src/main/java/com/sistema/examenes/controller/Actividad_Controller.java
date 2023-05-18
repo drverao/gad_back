@@ -17,6 +17,8 @@ public class Actividad_Controller {
     @Autowired
     Actividad_Service Service;
 
+
+
     @PostMapping("/crear")
     public ResponseEntity<Actividad> crear(@RequestBody Actividad r) {
         try {
@@ -43,15 +45,18 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     
     @GetMapping("/listaratrasa")
     public ResponseEntity<List<Actividad>> obtenerListaAtra() {
+
         try {
             return new ResponseEntity<>(Service.listaAtrasada(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     
     @GetMapping("/listarCumpli")
     public ResponseEntity<List<Actividad>> obtenerListaCump() {
@@ -84,12 +89,32 @@ public class Actividad_Controller {
              return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
          }
      }*/
-//    @DeleteMapping("/eliminar/{id}")
-//    public ResponseEntity<?> eliminar(@PathVariable Long id) {
-//        return Service.delete(id);
-//    }
-    @PutMapping("/eliminarlogic/{id}")
+    @GetMapping("/buscarusuario/{usenname}")
+    public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
+
+        try {
+            return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        return Service.delete(id);
+
+    }
+    @GetMapping("/buscarporEvide/{idEviden}")
+    public ResponseEntity <List<Actividad>> listarporEvidencia(@PathVariable("idEviden") Long idEvidencia) {
+        try {
+            return new ResponseEntity<>(Service.listarporEvidencia(idEvidencia), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/eliminarlogic/{id}")
+    public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Actividad a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

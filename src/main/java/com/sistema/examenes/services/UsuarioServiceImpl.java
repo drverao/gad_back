@@ -27,4 +27,14 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
     public Usuario obtenerUsuario(String username) {
         return usuarioRepository.findByUsername(username);
     }
+    @Override
+    public Usuario findAllByUsername(String username) {
+        return usuarioRepository.findAllByUsername(username);
+    }
+
+
+    @Override
+    public Usuario obtenerId(String username) {
+        return usuarioRepository.buscarId(username);
+    }
 }

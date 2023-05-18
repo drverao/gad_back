@@ -1,6 +1,5 @@
 package com.sistema.examenes.services;
 
-import com.sistema.examenes.entity.Actividad;
 import com.sistema.examenes.entity.Evidencia;
 import com.sistema.examenes.repository.Evidencia_repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,30 @@ import java.util.List;
 public class Evidencia_ServiceImpl extends GenericServiceImpl<Evidencia, Long> implements Evidencia_Service {
     @Autowired
     private Evidencia_repository repository;
+
     @Override
-    public CrudRepository<Evidencia, Long > getDao() {
+    public CrudRepository<Evidencia, Long> getDao() {
         return repository;
     }
 
     @Override
     public List<Evidencia> listar() {
         return repository.listarEvidencia();
+    }
+
+    @Override
+    public List<Evidencia> evidenciaUsuario(String username) {
+        return repository.evidenciaUsuario(username);
+    }
+
+    @Override
+    public List<Evidencia> listarEvidenciaAsigna() {
+        return repository.listarEvidenciaAsigna();
+    }
+
+    @Override
+    public List<Evidencia> listarEvidenciaPorIndicador(Long id_indicador) {
+        return repository.listarEvidenciaPorIndicador(id_indicador);
+
     }
 }

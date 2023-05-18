@@ -29,14 +29,14 @@ public class Indicadores_Controller {
     @GetMapping("/listar")
     public ResponseEntity<List<Indicador>> obtenerLista() {
         try {
-            return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/buscarindicador/{id}")
-    public ResponseEntity <List<Indicador>> obtenerCriterios(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Indicador>> obtenerCriterios(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.obtenerIndicadores(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -80,6 +80,25 @@ public class Indicadores_Controller {
                 indicador.setDescripcion(p.getDescripcion());
                 indicador.setPeso(p.getPeso());
                 indicador.setTipo(p.getTipo());
+                indicador.setEstandar(p.getEstandar());
+                return new ResponseEntity<>(Service.save(indicador), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
+
+    @PutMapping("/ponderacion/{id}")
+    public ResponseEntity<Indicador> actualizarPonderacion(@PathVariable Long id, @RequestBody Indicador p) {
+        Indicador indicador = Service.findById(id);
+        if (indicador == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                indicador.setValor_obtenido(p.getValor_obtenido());
+                indicador.setPorc_obtenido(p.getPorc_obtenido());
+                indicador.setPorc_utilida_obtenida(p.getPorc_utilida_obtenida());
                 return new ResponseEntity<>(Service.save(indicador), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -98,4 +117,25 @@ public class Indicadores_Controller {
         }
     }
 
+    // consumir metodo listarIndicadorPorCriterioModelo
+    @GetMapping("/listarIndicadorPorCriterioModelo/{id_criterio}/{id_modelo}")
+    public ResponseEntity<List<Indicador>> listarIndicadorPorCriterioModelo(
+            @PathVariable("id_criterio") Long id_criterio,
+            @PathVariable("id_modelo") Long id_modelo) {
+        try {
+            return new ResponseEntity<>(Service.listarIndicadorPorCriterioModelo(id_criterio, id_modelo),
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/indicadoresPorCriterios")
+    public ResponseEntity<List<Indicador>> indicadoresPorCriterios(
+            @RequestParam("idCriterios") List<Long> idCriterios) {
+        try {
+        return new ResponseEntity<>(Service.indicadoresPorCriterios(idCriterios), HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
+    }

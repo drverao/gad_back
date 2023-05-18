@@ -7,10 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface Actividad_repository extends JpaRepository<Actividad, Long> {
 
     @Query(value = "SELECT * from actividad where visible =true", nativeQuery = true)
     List<Actividad> listarActividad();
+
 
     @Query(value = "SELECT ac.id_actividad, ac.descripcion, ac.fecha_fin, ac.fecha_inicio, ac.nombre, ac.visible, ac.evidencia_id_evidencia, ac.usuario_id\n"
             + "FROM actividad ac \n"
@@ -31,4 +34,13 @@ public interface Actividad_repository extends JpaRepository<Actividad, Long> {
 "JOIN ponderacion po ON i.id_indicador = po.indicador_id_indicador\n" +
 "WHERE ag.modelo_id_modelo = (SELECT MAX(id_modelo) FROM modelo);", nativeQuery = true)
     List<Actividad> listarActividadCumplidas();
+
+    @Query(value = "select * from  actividad ac JOIN usuarios u ON ac.usuario_id = u.id where u.username=:username and ac.visible =true",nativeQuery = true)
+    List<Actividad>listarporusuario(String username);
+    List<Actividad> findByNombreContainingIgnoreCase(String nombre);
+
+    @Query(value = "SELECT * FROM actividad WHERE visible= true AND id_evidencia=:idEvidendicia ;",nativeQuery = true)
+    List<Actividad>listarporEvidencia(Long idEvidendicia);
+
+
 }

@@ -16,6 +16,7 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
             + "ON c.id_criterio = s.id_criterio where c.visible =true GROUP BY c.id_criterio, c.nombre ORDER BY c.id_criterio;", nativeQuery = true)
     public List<Criterio> obtenerCriterios();
 
+
     @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, c.visible FROM asignacion_indicador ag\n"
             + "JOIN indicador i ON ag.indicador_id_indicador = i.id_indicador\n"
             + "JOIN subcriterio s ON s.id_subcriterio = i.subcriterio_id_subcriterio \n"
@@ -31,4 +32,13 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
             + "WHERE ag.modelo_id_modelo = :modelo\n"
             + "GROUP BY c.id_criterio, c.nombre ORDER BY c.id_criterio;", nativeQuery = true)
     public List<Criterio> obtenerCriteriosModeloId(Long modelo);
+
+    @Query(value = "SELECT DISTINCT c.id_criterio, c.nombre, c.descripcion, c.visible " +
+            "FROM criterio c " +
+            "JOIN subcriterio s ON c.id_criterio = s.id_criterio " +
+            "JOIN indicador i ON s.id_subcriterio = i.subcriterio_id_subcriterio " +
+            "JOIN asignacion_indicador ai ON i.id_indicador = ai.indicador_id_indicador " +
+            "WHERE ai.modelo_id_modelo = (SELECT MAX(m.id_modelo) FROM modelo m)", nativeQuery = true)
+    List<Criterio> obtenerCriteriosUltimoModelo();
+
 }

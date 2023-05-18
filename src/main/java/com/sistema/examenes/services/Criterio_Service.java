@@ -11,4 +11,6 @@ public interface Criterio_Service extends GenericService<Criterio, Long>{
     public List<Criterio> obtenerCriterios();
     public List<Criterio> obtenerCriterioModelo();
     public List<Criterio> obtenerCriterioIdModelo(Long id);
+    public List<Criterio> obtenerCriteriosUltimoModelo();
+
 }

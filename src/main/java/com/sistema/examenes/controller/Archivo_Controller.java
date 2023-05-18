@@ -1,8 +1,12 @@
 package com.sistema.examenes.controller;
 
+import com.sistema.examenes.entity.Actividad;
 import com.sistema.examenes.entity.Archivo;
+import com.sistema.examenes.entity.Archivo_s;
 import com.sistema.examenes.entity.Evidencia;
 import com.sistema.examenes.mensajes.Archivosmensajes;
+import com.sistema.examenes.services.Actividad_Service;
+import com.sistema.examenes.services.Archivo_Service;
 import com.sistema.examenes.services.Archivoservices;
 import com.sistema.examenes.services.Evidencia_Service;
 import lombok.AllArgsConstructor;
@@ -21,10 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = { "*" })
@@ -33,29 +34,50 @@ import java.util.stream.Collectors;
 public class Archivo_Controller {
     @Autowired
     Archivoservices servis;
-@Autowired
+    @Autowired
     Evidencia_Service eviservis;
- @Autowired
-  HttpServletRequest request;
+    @Autowired
+    Archivo_Service archivoservis;
+    @Autowired
+    Actividad_Service actiservis;
+
+    @Autowired
+    HttpServletRequest request;
+
     @PostMapping("/upload")
-    public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files) {
+    public ResponseEntity<Archivosmensajes> upload(@RequestParam("file") MultipartFile[] files,
+                                                   @RequestParam("descripcion") String describcion,
+                                                   @RequestParam("id_evidencia") Long id_actividad) {
         String meNsaje = "";
         try {
+            Actividad actividad = actiservis.findById(id_actividad);
+            if (actividad == null) {
+                meNsaje = "No se encontró la evidencia con id " + id_actividad;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Archivosmensajes(meNsaje));
+            }
             List<String> fileNames = new ArrayList<>();
             Arrays.asList(files).stream().forEach(file -> {
                 servis.guardar(file);
                 fileNames.add(file.getOriginalFilename());
-
-             });
+            });
             String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
             String url = ServletUriComponentsBuilder.fromHttpUrl(host)
                     .path("/archivo/").path(fileNames.get(0)).toUriString();
-            eviservis.save(new Evidencia(""+url,""+fileNames,true));
-            meNsaje = "se subieron correctamente" + fileNames;
-            return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje+"url:"+url));
+            archivoservis.save(new Archivo_s(url.toString(), fileNames.toString().join(",",fileNames), describcion, true, actividad));
+            meNsaje = "Se subieron correctamente " + fileNames;
+            return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(meNsaje + "url:" + url));
         } catch (Exception e) {
-            meNsaje = " fallo al subir";
+            meNsaje = "Fallo al subir";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(meNsaje));
+        }
+    }
+
+    @GetMapping("/listarv")
+    public ResponseEntity<List<Archivo_s>> obtenerListav() {
+        try {
+            return new ResponseEntity<>(archivoservis.listar(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -71,33 +93,59 @@ public class Archivo_Controller {
         }).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(archivos);
     }
-@GetMapping ("{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename){
-        Resource file=servis.load(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION
-        ,"attachment; filename=\""+file.getFilename()+ "\"").body(file);
-        }
 
-    @GetMapping ("/borrar/{filename:.+}")
-    public ResponseEntity<Archivosmensajes> borrar(@PathVariable String filename)
-    {
-        String mensaje="";
+    @GetMapping("{filename:.+}")
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+        Resource file = servis.load(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION
+                , "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+    @GetMapping("/borrar/{filename:.+}")
+    public ResponseEntity<Archivosmensajes> borrar(@PathVariable String filename) {
+        String mensaje = "";
         try {
-            mensaje= servis.borrar(filename);
+            mensaje = servis.borrar(filename);
             return ResponseEntity.status(HttpStatus.OK).body(new Archivosmensajes(mensaje));
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new Archivosmensajes(mensaje));
         }
     }
 
 
+    @GetMapping("/buscarev/{username}")
+    public ResponseEntity<List<Archivo_s>> listararchi(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(archivoservis.listararchivouser(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/buscararchivo/{idActi}")
+    public ResponseEntity<List<Archivo_s>> listararchiActividad(@PathVariable("idActi") Long idActividad) {
+        try {
+            return new ResponseEntity<>(archivoservis.listararchivoActividad(idActividad), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/eliminarlogic/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        Archivo_s as = archivoservis.findById(id);
+        if (as == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                as.setVisible(false);
+                return new ResponseEntity<>(archivoservis.save(as), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
+
 }
-
-
-
-
-
-
 
 
 
