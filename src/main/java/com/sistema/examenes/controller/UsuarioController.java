@@ -68,6 +68,7 @@ public class UsuarioController {
                 // Buscar el rol por ID
                 Rol rol = rolService.findById(rolId);
                 r.setPassword(this.bCryptPasswordEncoder.encode(r.getPassword()));
+                r.setVisible(true);
                 // Crear un nuevo UsuarioRol y establecer las referencias correspondientes
                 UsuarioRol usuarioRol = new UsuarioRol();
                 usuarioRol.setUsuario(r);
