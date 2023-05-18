@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     public Usuario findByUsername(String username);
+    @Query(value = "SELECT *\n" +
+            "\tFROM usuarios WHERE enabled = true AND visible=true", nativeQuery = true)
+    public abstract List<Usuario> listar();
     
      @Query(value = "SELECT * FROM usuarios;", nativeQuery = true)
     public abstract List<Usuario> listaResponsables();
