@@ -10,13 +10,16 @@ import java.util.List;
 
 @Service
 public class Criterio_ServiceImpl extends GenericServiceImpl<Criterio, Long> implements Criterio_Service {
+
     @Autowired
     private Criterio_repository repository;
+
     @Override
-    public CrudRepository<Criterio, Long > getDao() {
+    public CrudRepository<Criterio, Long> getDao() {
 
         return repository;
     }
+
     @Override
     public List<Criterio> listar() {
         return repository.listarCriterio();
@@ -25,6 +28,16 @@ public class Criterio_ServiceImpl extends GenericServiceImpl<Criterio, Long> imp
     @Override
     public List<Criterio> obtenerCriterios() {
         return repository.obtenerCriterios();
+    }
+
+    @Override
+    public List<Criterio> obtenerCriterioModelo() {
+        return repository.obtenerCriteriosModelo();
+    }
+
+    @Override
+    public List<Criterio> obtenerCriterioIdModelo(Long id) {
+        return repository.obtenerCriteriosModeloId(id);
     }
 
 }

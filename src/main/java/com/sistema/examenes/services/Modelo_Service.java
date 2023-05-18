@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface Modelo_Service extends GenericService<Modelo, Long>{
     public List<Modelo> listar() ;
+    
+    public Modelo listarMaximo();
 
 }

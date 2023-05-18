@@ -43,20 +43,38 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping("/buscar/")
-    public ResponseEntity<List<?>> buscar(@RequestParam("nombre") String nombre) {
+    
+    @GetMapping("/listaratrasa")
+    public ResponseEntity<List<Actividad>> obtenerListaAtra() {
         try {
-            if (nombre.trim().isEmpty()) {
-                List<Actividad> actividads = this.Service.findByAll();
-                return new ResponseEntity<>(actividads, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
-            }
+            return new ResponseEntity<>(Service.listaAtrasada(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/listarCumpli")
+    public ResponseEntity<List<Actividad>> obtenerListaCump() {
+        try {
+            return new ResponseEntity<>(Service.listaCumplida(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+//    @GetMapping("/buscar/")
+//    public ResponseEntity<List<?>> buscar(@RequestParam("nombre") String nombre) {
+//        try {
+//            if (nombre.trim().isEmpty()) {
+//                List<Actividad> actividads = this.Service.findByAll();
+//                return new ResponseEntity<>(actividads, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
+//            }
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
     /* @GetMapping("/buscar/{id}")
      public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
@@ -66,10 +84,10 @@ public class Actividad_Controller {
              return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
          }
      }*/
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
-        return Service.delete(id);
-    }
+//    @DeleteMapping("/eliminar/{id}")
+//    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+//        return Service.delete(id);
+//    }
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Actividad a = Service.findById(id);

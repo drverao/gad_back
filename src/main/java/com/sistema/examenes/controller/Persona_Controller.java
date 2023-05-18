@@ -72,4 +72,13 @@ public class Persona_Controller {
 
         }
     }
+    
+    @GetMapping("/buscarpersonaId/{id}")
+    public ResponseEntity<Persona> obtenerPersonaUsuarioId(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.obtenerPersonaPorIdUsuario(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

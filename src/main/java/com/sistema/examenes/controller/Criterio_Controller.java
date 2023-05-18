@@ -43,6 +43,24 @@ public class Criterio_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/listarcriteriosMode")
+    public ResponseEntity<List<Criterio>> obtenerCriterioModelo() {
+        try {
+            return new ResponseEntity<>(Service.obtenerCriterioModelo(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/listarcriteriosMId/{id}")
+    public ResponseEntity<List<Criterio>> obtenerCriterioModeloId(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.obtenerCriterioIdModelo(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Criterio> getById(@PathVariable("id") Long id) {

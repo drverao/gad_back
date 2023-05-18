@@ -7,11 +7,28 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface Criterio_repository extends JpaRepository<Criterio, Long> {
-    @Query(value = "SELECT * from criterio where visible =true",nativeQuery = true)
+
+    @Query(value = "SELECT * from criterio where visible =true", nativeQuery = true)
     List<Criterio> listarCriterio();
 
-    @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, c.visible FROM indicador i JOIN subcriterio s " +
-            "ON s.id_subcriterio = i.subcriterio_id_subcriterio JOIN criterio c " +
-            "ON c.id_criterio = s.id_criterio where c.visible =true GROUP BY c.id_criterio, c.nombre ORDER BY c.id_criterio;", nativeQuery = true)
+    @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, c.visible FROM indicador i JOIN subcriterio s "
+            + "ON s.id_subcriterio = i.subcriterio_id_subcriterio JOIN criterio c "
+            + "ON c.id_criterio = s.id_criterio where c.visible =true GROUP BY c.id_criterio, c.nombre ORDER BY c.id_criterio;", nativeQuery = true)
     public List<Criterio> obtenerCriterios();
+
+    @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, c.visible FROM asignacion_indicador ag\n"
+            + "JOIN indicador i ON ag.indicador_id_indicador = i.id_indicador\n"
+            + "JOIN subcriterio s ON s.id_subcriterio = i.subcriterio_id_subcriterio \n"
+            + "JOIN criterio c ON c.id_criterio = s.id_criterio \n"
+            + "WHERE ag.modelo_id_modelo = (SELECT MAX(id_modelo) FROM modelo)\n"
+            + "GROUP BY c.id_criterio, c.nombre ORDER BY c.id_criterio;", nativeQuery = true)
+    public List<Criterio> obtenerCriteriosModelo();
+    
+    @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, c.visible FROM asignacion_indicador ag\n"
+            + "JOIN indicador i ON ag.indicador_id_indicador = i.id_indicador\n"
+            + "JOIN subcriterio s ON s.id_subcriterio = i.subcriterio_id_subcriterio \n"
+            + "JOIN criterio c ON c.id_criterio = s.id_criterio \n"
+            + "WHERE ag.modelo_id_modelo = :modelo\n"
+            + "GROUP BY c.id_criterio, c.nombre ORDER BY c.id_criterio;", nativeQuery = true)
+    public List<Criterio> obtenerCriteriosModeloId(Long modelo);
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 public class Modelo_ServiceImpl extends GenericServiceImpl<Modelo, Long> implements Modelo_Service {
+
     @Autowired
     private Modelo_repository repository;
 
@@ -22,5 +23,10 @@ public class Modelo_ServiceImpl extends GenericServiceImpl<Modelo, Long> impleme
     @Override
     public List<Modelo> listar() {
         return repository.listarModelo();
+    }
+
+    @Override
+    public Modelo listarMaximo() {
+        return repository.listarModeloMaximo();
     }
 }

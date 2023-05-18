@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> implements Actividad_Service {
+
     @Autowired
     private Actividad_repository repository;
 
@@ -18,13 +19,23 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
     public CrudRepository<Actividad, Long> getDao() {
         return repository;
     }
-    @Override
-    public List<Actividad> findByNombreContainingIgnoreCase(String nombre) {
-        return repository.findByNombreContainingIgnoreCase(nombre);
-    }
+//    @Override
+//    public List<Actividad> findByNombreContainingIgnoreCase(String nombre) {
+//        return repository.findByNombreContainingIgnoreCase(nombre);
+//    }
 
     @Override
     public List<Actividad> listar() {
         return repository.listarActividad();
+    }
+
+    @Override
+    public List<Actividad> listaAtrasada() {
+        return repository.listarActividadAtrasadas();
+    }
+
+    @Override
+    public List<Actividad> listaCumplida() {
+        return repository.listarActividadCumplidas();
     }
 }
