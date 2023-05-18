@@ -1,8 +1,6 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.entity.Rol;
-import com.sistema.examenes.entity.Usuario;
-import com.sistema.examenes.entity.UsuarioRol;
+import com.sistema.examenes.entity.*;
 import com.sistema.examenes.repository.UsuarioRepository;
 import com.sistema.examenes.services.RolService;
 import com.sistema.examenes.services.UsuarioService;
@@ -109,6 +107,16 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/listarv")
+    public ResponseEntity<List<Usuario>> obtenerListav() {
+        try {
+            return new ResponseEntity<>(uR.listar(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @GetMapping("/listarResponsableAdmin")
     public ResponseEntity<List<Usuario>> obtenerListaResponsableAdmin() {
         try {
@@ -155,5 +163,23 @@ public class UsuarioController {
 
         }
     }
+
+    @PutMapping("/eliminarlogic/{id}")
+    public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
+        Usuario a = usuarioService.findById(id);
+        if (a == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                a.setVisible(false);
+                return new ResponseEntity<>(usuarioService.save(a), HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+    }
+
+
 
 }
