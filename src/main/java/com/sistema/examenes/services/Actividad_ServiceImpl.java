@@ -32,4 +32,8 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
     public List<Actividad> listarporusuario(String username) {
         return repository.listarporusuario(username);
     }
+    @Override
+    public List<Actividad>listarporEvidencia(Long idEvidencia ) {
+        return repository.listarporEvidencia(idEvidencia);
+    }
 }

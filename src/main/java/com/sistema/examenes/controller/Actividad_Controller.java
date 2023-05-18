@@ -62,34 +62,26 @@ public class Actividad_Controller {
     }
     @GetMapping("/buscarusuario/{usenname}")
     public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
+
         try {
             return new ResponseEntity<>(Service.listarporusuario(username), HttpStatus.OK);
-
-        try {
-            if (nombre.trim().isEmpty()) {
-                List<Actividad> actividads = this.Service.findByAll();
-                return new ResponseEntity<>(actividads, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
-            }
-
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
 
-    /* @GetMapping("/buscar/{id}")
-     public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
-         try {
-             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
-         } catch (Exception e) {
-             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-         }
-     }*/
+    }
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return Service.delete(id);
 
+    }
+    @GetMapping("/buscarporEvide/{idEviden}")
+    public ResponseEntity <List<Actividad>> listarporEvidencia(@PathVariable("idEviden") Long idEvidencia) {
+        try {
+            return new ResponseEntity<>(Service.listarporEvidencia(idEvidencia), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {

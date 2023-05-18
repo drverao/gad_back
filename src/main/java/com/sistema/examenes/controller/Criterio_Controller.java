@@ -85,4 +85,15 @@ public class Criterio_Controller {
 
         }
     }
+
+
+
+    @GetMapping("/obtenerCriteriosUltimoModelo")
+    public ResponseEntity<List<Criterio>> obtenerCriteriosUltimoModelo() {
+        try {
+            return new ResponseEntity<>(Service.obtenerCriteriosUltimoModelo(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
