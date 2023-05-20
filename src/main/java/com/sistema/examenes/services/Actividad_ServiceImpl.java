@@ -19,10 +19,10 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
     public CrudRepository<Actividad, Long> getDao() {
         return repository;
     }
-//    @Override
-//    public List<Actividad> findByNombreContainingIgnoreCase(String nombre) {
-//        return repository.findByNombreContainingIgnoreCase(nombre);
-//    }
+    @Override
+    public List<Actividad> findByNombreContainingIgnoreCase(String nombre) {
+        return repository.findByNombreContainingIgnoreCase(nombre);
+    }
 
     @Override
     public List<Actividad> listar() {
@@ -39,6 +39,8 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
     public List<Actividad> listaCumplida() {
         return repository.listarActividadCumplidas();
 
+    }
+    @Override
     public List<Actividad> listarporusuario(String username) {
         return repository.listarporusuario(username);
     }
@@ -47,4 +49,10 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
         return repository.listarporEvidencia(idEvidencia);
 
     }
+    
+     @Override
+    public List<Actividad> listaEvidAtrasada() {
+        return repository.listarEvideRechazadasFecha();
+    }
+    
 }

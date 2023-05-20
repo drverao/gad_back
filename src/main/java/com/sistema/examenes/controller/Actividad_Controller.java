@@ -66,6 +66,17 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/listarActAtrasa")
+    public ResponseEntity<List<Actividad>> obtenerListaEviAtras() {
+        try {
+            System.out.println(Service.listaEvidAtrasada());
+            return new ResponseEntity<>(Service.listaEvidAtrasada(), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage().toString());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 //    @GetMapping("/buscar/")
 //    public ResponseEntity<List<?>> buscar(@RequestParam("nombre") String nombre) {
