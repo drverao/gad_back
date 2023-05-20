@@ -21,4 +21,9 @@ public class Persona_ServiceImpl extends GenericServiceImpl<Persona, Long> imple
         return repository.obtenerPersona(username);
     }
 
+    @Override
+    public Persona obtenerPersonaPorIdUsuario(Long id) {
+        return repository.obtenerPersonaUsuario(id);    
+    }
+
 }

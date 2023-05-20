@@ -52,6 +52,15 @@ public class Modelo_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/listarMax")
+    public ResponseEntity<Modelo> getByIdMaximo() {
+        try {
+            return new ResponseEntity<>(Service.listarMaximo(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    } 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Modelo modelo) {
         return Service.delete(id);

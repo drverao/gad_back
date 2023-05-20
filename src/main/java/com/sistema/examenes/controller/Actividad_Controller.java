@@ -46,20 +46,60 @@ public class Actividad_Controller {
         }
     }
 
-    @GetMapping("/buscar/")
-    public ResponseEntity<List<?>> buscar(@RequestParam("nombre") String nombre) {
+    
+    @GetMapping("/listaratrasa")
+    public ResponseEntity<List<Actividad>> obtenerListaAtra() {
 
         try {
-            if (nombre.trim().isEmpty()) {
-                List<Actividad> actividads = this.Service.findByAll();
-                return new ResponseEntity<>(actividads, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
-            }
+            return new ResponseEntity<>(Service.listaAtrasada(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    
+    @GetMapping("/listarCumpli")
+    public ResponseEntity<List<Actividad>> obtenerListaCump() {
+        try {
+            return new ResponseEntity<>(Service.listaCumplida(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/listarActAtrasa")
+    public ResponseEntity<List<Actividad>> obtenerListaEviAtras() {
+        try {
+            System.out.println(Service.listaEvidAtrasada());
+            return new ResponseEntity<>(Service.listaEvidAtrasada(), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage().toString());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+//    @GetMapping("/buscar/")
+//    public ResponseEntity<List<?>> buscar(@RequestParam("nombre") String nombre) {
+//        try {
+//            if (nombre.trim().isEmpty()) {
+//                List<Actividad> actividads = this.Service.findByAll();
+//                return new ResponseEntity<>(actividads, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(Service.findByNombreContainingIgnoreCase(nombre), HttpStatus.OK);
+//            }
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    /* @GetMapping("/buscar/{id}")
+     public ResponseEntity<Actividad> getById(@PathVariable("id") Long id) {
+         try {
+             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
+         } catch (Exception e) {
+             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+         }
+     }*/
     @GetMapping("/buscarusuario/{usenname}")
     public ResponseEntity <List<Actividad>> listarporUsuario(@PathVariable("usenname") String username) {
 
@@ -83,6 +123,7 @@ public class Actividad_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Actividad a = Service.findById(id);

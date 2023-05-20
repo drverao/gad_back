@@ -1,5 +1,6 @@
 package com.sistema.examenes.repository;
 
+import com.sistema.examenes.entity.Actividad;
 import com.sistema.examenes.entity.Criterio;
 import com.sistema.examenes.entity.Evidencia;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,5 +31,5 @@ public interface Evidencia_repository extends JpaRepository<Evidencia, Long> {
     // WHERE evidencia.indicador_id_indicador=6 And evidencia.visible=true;
     @Query(value = "SELECT evidencia.* FROM public.indicador join public.evidencia ON evidencia.indicador_id_indicador = indicador.id_indicador WHERE evidencia.indicador_id_indicador=:id_indicador And evidencia.visible=true", nativeQuery = true)
     List<Evidencia> listarEvidenciaPorIndicador(Long id_indicador);
-
+    
 }
