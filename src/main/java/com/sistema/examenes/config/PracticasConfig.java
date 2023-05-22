@@ -1,6 +1,8 @@
 package com.sistema.examenes.config;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -44,8 +46,8 @@ public class PracticasConfig {
 
     @Bean(name = "entityManagerPracticas")
     @Primary
-    public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
-        return entityManagerFactoryPrimary(builder).getObject().createEntityManager();
+    public EntityManager entityManager(EntityManagerFactoryBuilder builder, EntityManagerFactory object) {
+        return object.createEntityManager();
     }
 
     @Bean(name = "transactionManagerPracticas")
