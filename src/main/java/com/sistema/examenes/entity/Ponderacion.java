@@ -29,7 +29,7 @@ public class Ponderacion implements Serializable {
     private  double porc_obtenido;
 
 
-    @Column(name = "porc_utilidad_obtenida")
+    @Column(name = "porc_utilida_obtenida")
     private double porc_utilidad_obtenida;
 
 
