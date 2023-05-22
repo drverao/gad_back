@@ -9,7 +9,8 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(name = "asignacion_admin")
+@Table(name = "asignacion_admin", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "usuario_id", "criterio_id_criterio" }) })
 public class Asignacion_Admin implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,22 +18,47 @@ public class Asignacion_Admin implements Serializable {
     private Long id_asignacion;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Usuario usuario ;
+    private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Criterio criterio ;
-    //Columna para el eliminado logico no borrar
+    private Criterio criterio;
+    // Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private boolean visible;
- 
+
     public Asignacion_Admin() {
     }
 
-    public Asignacion_Admin(Long id_asignacion, Usuario usuario, Criterio criterio, Modelo modelo) {
+    public Long getId_asignacion() {
+        return id_asignacion;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public Criterio getCriterio() {
+        return criterio;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setId_asignacion(Long id_asignacion) {
         this.id_asignacion = id_asignacion;
+    }
+
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public void setCriterio(Criterio criterio) {
         this.criterio = criterio;
     }
-    
-    
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
 }
