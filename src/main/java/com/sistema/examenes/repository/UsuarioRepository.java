@@ -7,14 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-<<<<<<< Updated upstream
-    public Usuario findByUsername(String username);
-    
-     @Query(value = "SELECT * FROM usuarios;", nativeQuery = true)
-    public abstract List<Usuario> listaResponsables();
-    @Query(value = "SELECT * FROM usuarios WHERE username=:user", nativeQuery = true)
-     public Usuario buscarId(String user);
-=======
         public Usuario findByUsername(String username);
 
         @Query(value = "SELECT * FROM usuarios;", nativeQuery = true)
@@ -43,5 +35,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
                         "WHERE ur.rol_rolid = 1\n" +
                         "AND u.visible=true;", nativeQuery = true)
         public List<Usuario> listaAdminDatos();
->>>>>>> Stashed changes
 }

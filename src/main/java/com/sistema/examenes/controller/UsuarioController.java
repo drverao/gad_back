@@ -107,8 +107,6 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-<<<<<<< Updated upstream
-=======
 
     @GetMapping("/listarResponsableAdmin")
     public ResponseEntity<List<Usuario>> obtenerListaResponsableAdmin() {
@@ -128,7 +126,6 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
->>>>>>> Stashed changes
 
     @GetMapping("/buscar/{username}")
     public Usuario obtenerUsuario(@PathVariable("username") String username) {
