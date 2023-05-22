@@ -1,13 +1,13 @@
 package com.sistema.examenes.repository;
 
-import com.sistema.examenes.entity.Indicador;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import com.sistema.examenes.entity.Indicador;
 
 public interface Indicador_repository extends JpaRepository<Indicador, Long> {
-
     // un query para buscar por id_subcriterio
     @Query(value = "SELECT * from indicador where subcriterio_id_subcriterio = :id_subcriterio", nativeQuery = true)
     List<Indicador> listarIndicadorPorSubcriterio(Long id_subcriterio);

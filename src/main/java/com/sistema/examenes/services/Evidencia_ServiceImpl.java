@@ -30,8 +30,8 @@ public class Evidencia_ServiceImpl extends GenericServiceImpl<Evidencia, Long> i
     }
 
     @Override
-    public List<Evidencia> listarEvidenciaAsigna() {
-        return repository.listarEvidenciaAsigna();
+    public List<Evidencia> listarEvidenciaAsigna(Long idUsuario) {
+        return repository.listarEvidenciaAsigna(idUsuario);
     }
 
     @Override

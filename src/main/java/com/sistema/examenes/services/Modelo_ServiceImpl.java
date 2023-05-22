@@ -29,4 +29,9 @@ public class Modelo_ServiceImpl extends GenericServiceImpl<Modelo, Long> impleme
     public Modelo listarMaximo() {
         return repository.listarModeloMaximo();
     }
+
+    @Override
+    public List<Modelo> listarModeloExcepto(Long id_modelo) {
+        return repository.listarModeloExcepto(id_modelo);
+    }
 }

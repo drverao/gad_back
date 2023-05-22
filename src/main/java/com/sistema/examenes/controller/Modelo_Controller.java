@@ -31,11 +31,12 @@ public class Modelo_Controller {
     @GetMapping("/listar")
     public ResponseEntity<List<Modelo>> obtenerLista() {
         try {
-            return new ResponseEntity<>(Service.findByAll(), HttpStatus.OK);
+            return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/listarv")
     public ResponseEntity<List<Modelo>> obtenerListav() {
         try {
@@ -44,6 +45,7 @@ public class Modelo_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Modelo> getById(@PathVariable("id") Long id) {
         try {
@@ -52,7 +54,7 @@ public class Modelo_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @GetMapping("/listarMax")
     public ResponseEntity<Modelo> getByIdMaximo() {
         try {
@@ -60,11 +62,13 @@ public class Modelo_Controller {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    } 
+    }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Modelo modelo) {
         return Service.delete(id);
     }
+
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Modelo a = Service.findById(id);
@@ -80,6 +84,7 @@ public class Modelo_Controller {
 
         }
     }
+
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Modelo> actualizar(@PathVariable Long id, @RequestBody Modelo p) {
         Modelo a = Service.findById(id);
@@ -92,6 +97,15 @@ public class Modelo_Controller {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+    }
+
+    @GetMapping("/listarModeloExcepto/{id}")
+    public ResponseEntity<List<Modelo>> listarModeloExcepto(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.listarModeloExcepto(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
