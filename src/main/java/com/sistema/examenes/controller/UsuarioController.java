@@ -116,15 +116,6 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/listarResponsableAdmin")
-    public ResponseEntity<List<Usuario>> obtenerListaResponsableAdmin() {
-        try {
-            return new ResponseEntity<>(uR.listaResponsablesAdmin(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/listarResDatos")
     public ResponseEntity<List<Usuario>> obtenerListaRespoDatos() {
         try {
@@ -139,16 +130,6 @@ public class UsuarioController {
     public ResponseEntity<List<Usuario>> obtenerListaResponsableAdmin() {
         try {
             return new ResponseEntity<>(uR.listaResponsablesAdmin(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/listarResDatos")
-    public ResponseEntity<List<Usuario>> obtenerListaRespoDatos() {
-        try {
-
-            return new ResponseEntity<>(uR.listaResponsablesDatos(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
