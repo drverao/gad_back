@@ -30,7 +30,7 @@ public class Ponderacion implements Serializable {
 
 
     @Column(name = "porc_utilida_obtenida")
-    private double porc_utilidad_obtenida;
+    private double porc_utilida_obtenida;
 
 
     @Column(name = "fecha")
