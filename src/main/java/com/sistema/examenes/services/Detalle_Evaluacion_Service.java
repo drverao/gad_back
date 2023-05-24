@@ -7,5 +7,5 @@ import java.util.List;
 public interface Detalle_Evaluacion_Service extends GenericService<Detalle_Evaluacion, Long>{
     public List<Detalle_Evaluacion> listar() ;
     public List<Detalle_Evaluacion> listarDetalleEvaluacionRechazada( Long idEvidencia,  Long idUsuario);
-
+    public List<Detalle_Evaluacion> listarDetalleEvaluacionAprobada( Long idEvidencia,  Long idUsuario);
 }
