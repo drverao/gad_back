@@ -1,22 +1,18 @@
 package com.sistema.examenes.services;
 
 import com.sistema.examenes.entity.Usuario;
-import com.sistema.examenes.entity.UsuarioRol;
-import com.sistema.examenes.repository.RolRepository;
 import com.sistema.examenes.repository.UsuarioRepository;
-import com.sistema.examenes.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
 
     @Override
     public CrudRepository<Usuario, Long> getDao() {
@@ -36,5 +32,10 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Long> implem
     @Override
     public Usuario obtenerId(String username) {
         return usuarioRepository.buscarId(username);
+    }
+
+    @Override
+    public List<Usuario> listaAdminDatos() {
+        return usuarioRepository.listaAdminDatos();
     }
 }

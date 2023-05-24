@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.entity.Encabezado_Evaluar;
 import com.sistema.examenes.entity.Ponderacion;
 import com.sistema.examenes.services.Ponderacion_Service;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,25 @@ public class Ponderacion_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+ 
+
+@PostMapping("/crearLista")
+public ResponseEntity<List<Ponderacion>> crear(@RequestBody List<Ponderacion> ponderaciones) {
+    try {
+        List<Ponderacion> resultados = new ArrayList<>();
+
+        for (Ponderacion ponderacion : ponderaciones) {
+            ponderacion.setVisible(true);
+            resultados.add(Service.save(ponderacion));
+        }
+
+        return new ResponseEntity<>(resultados, HttpStatus.CREATED);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
 
     @GetMapping("/listar")
     public ResponseEntity<List<Ponderacion>> obtenerLista() {

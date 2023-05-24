@@ -70,6 +70,7 @@ public class Criterio_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Criterio criterio = Service.findById(id);
@@ -87,8 +88,8 @@ public class Criterio_Controller {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Criterio> actualizar(@PathVariable Long id,@RequestBody Criterio p) {
-       Criterio criterio = Service.findById(id);
+    public ResponseEntity<Criterio> actualizar(@PathVariable Long id, @RequestBody Criterio p) {
+        Criterio criterio = Service.findById(id);
         if (criterio == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -104,12 +105,20 @@ public class Criterio_Controller {
         }
     }
 
-
-
     @GetMapping("/obtenerCriteriosUltimoModelo")
     public ResponseEntity<List<Criterio>> obtenerCriteriosUltimoModelo() {
         try {
             return new ResponseEntity<>(Service.obtenerCriteriosUltimoModelo(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // List<Criterio> listarCriterioPorIndicador(Long id_indicador);
+    @GetMapping("/listarCriterioPorIndicador/{id}")
+    public ResponseEntity<List<Criterio>> listarCriterioPorIndicador(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.listarCriterioPorIndicador(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

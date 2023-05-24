@@ -1,5 +1,7 @@
 package com.sistema.examenes.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +14,8 @@ public class Rol {
     private Long rolId;
     private String rolNombre;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "rol")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "rol")
+    @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
     public Rol(){
