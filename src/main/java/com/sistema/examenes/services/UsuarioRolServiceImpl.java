@@ -22,4 +22,11 @@ public class UsuarioRolServiceImpl extends GenericServiceImpl<UsuarioRol, Long> 
     public List<UsuarioRol> listarv() {
         return usuarioRolRepository.listarv();
     }
+
+    @Override
+    public UsuarioRol findByUsuario_UsuarioId(Long usuarioId) {
+        return usuarioRolRepository.findByUsuario_Id(usuarioId);
+    }
+
+
 }

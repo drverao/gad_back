@@ -10,4 +10,7 @@ public interface UsuarioRolRepository extends JpaRepository<UsuarioRol,Long> {
 
     @Query("SELECT ur FROM UsuarioRol ur JOIN FETCH ur.usuario u WHERE u.visible = true")
     List<UsuarioRol> listarv();
+
+    UsuarioRol findByUsuario_Id(Long usuarioId);
+
 }
