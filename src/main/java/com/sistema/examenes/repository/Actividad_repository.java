@@ -34,14 +34,13 @@ public interface Actividad_repository extends JpaRepository<Actividad, Long> {
     List<Actividad> listarActividadCumplidas();
     
     @Query(value = "SELECT ac.id_actividad, ac.descripcion, ac.fecha_fin, ac.fecha_inicio, ac.nombre, ac.visible, ac.id_evidencia, ac.usuario_id\n" +
-"FROM modelo m, actividad ac \n" +
-"JOIN evidencia e ON ac.id_evidencia = e.id_evidencia\n" +
-"JOIN indicador i ON e.indicador_id_indicador = i.id_indicador\n" +
-"JOIN asignacion_indicador ag ON ag.indicador_id_indicador = i.id_indicador\n" +
-"LEFT JOIN detalle_evaluacion d ON d.evidencia_id_evidencia = e.id_evidencia\n" +
-"WHERE ag.modelo_id_modelo = (SELECT MAX(id_modelo) FROM modelo)\n" +
-"AND d.estado IS NULL OR d.estado = 'false'\n" +
-"AND CURRENT_DATE < (SELECT fecha_fin FROM modelo WHERE id_modelo = (SELECT MAX(id_modelo) FROM modelo));", nativeQuery = true)
+"FROM actividad ac, evidencia e, detalle_evaluacion d, asignacion_indicador ag, indicador i\n" +
+"WHERE ac.id_evidencia = e.id_evidencia\n" +
+"AND e.indicador_id_indicador = i.id_indicador\n" +
+"AND d.evidencia_id_evidencia = ac.id_evidencia\n" +
+"AND ag.indicador_id_indicador = i.id_indicador\n" +
+"AND d.estado = false\n" +
+"AND ag.modelo_id_modelo = (SELECT MAX(id_modelo) FROM modelo)", nativeQuery = true)
     List<Actividad> listarEvideRechazadasFecha();
     
 
