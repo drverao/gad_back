@@ -45,6 +45,14 @@ public class Persona_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/findByCedula/{cedula}")
+    public ResponseEntity<Persona> findByCedula(@PathVariable("cedula") String cedula) {
+        try {
+            return new ResponseEntity<>(Service.findByCedula(cedula), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Persona> getById(@PathVariable("id") Long id) {
         try {

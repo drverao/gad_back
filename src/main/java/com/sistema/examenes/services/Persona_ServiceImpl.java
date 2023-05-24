@@ -26,4 +26,9 @@ public class Persona_ServiceImpl extends GenericServiceImpl<Persona, Long> imple
         return repository.obtenerPersonaUsuario(id);    
     }
 
+    @Override
+    public Persona findByCedula(String cedula) {
+        return repository.findByCedula(cedula);
+    }
+
 }
