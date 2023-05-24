@@ -12,7 +12,7 @@ public class UsuarioRol {
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Rol rol;
 
     public Long getUsuarioRolId() {

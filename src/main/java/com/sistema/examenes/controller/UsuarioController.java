@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.entity.*;
 import com.sistema.examenes.repository.UsuarioRepository;
 import com.sistema.examenes.services.RolService;
+import com.sistema.examenes.services.UsuarioRolService;
 import com.sistema.examenes.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository uR;
+    @Autowired
+    private UsuarioRolService userrol;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -153,10 +156,12 @@ public class UsuarioController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Usuario> actualizarCliente(@PathVariable Long id, @RequestBody Usuario p) {
         Usuario usu = usuarioService.findById(id);
+        UsuarioRol urol=userrol.findByUsuario_UsuarioId(id);
         if (usu == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                usu.setPassword(this.bCryptPasswordEncoder.encode(p.getPassword()));
                 return new ResponseEntity<>(usuarioService.save(usu), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
