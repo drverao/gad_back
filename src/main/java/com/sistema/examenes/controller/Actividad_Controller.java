@@ -149,6 +149,15 @@ public class Actividad_Controller {
         current.setFecha_fin(t.getFecha_fin());
         return new ResponseEntity<>(Service.save(current), HttpStatus.OK);
     }
+    
+    @GetMapping("/buscarByUsuario/{id}")
+    public ResponseEntity <List<Actividad>> listarByUsuario(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.listaActByUsuario(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     /*@PutMapping("/actualizar/{id}")
     public ResponseEntity<Actividad> actualizar(@PathVariable Long id, @RequestBody Actividad p) {
