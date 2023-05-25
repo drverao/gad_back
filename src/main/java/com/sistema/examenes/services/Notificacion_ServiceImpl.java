@@ -33,6 +33,11 @@ public class Notificacion_ServiceImpl extends GenericServiceImpl<Notificacion,Lo
     }
 
     @Override
+    public List<Notificacion> listarulNoti(Long us) {
+        return notificacionRepository.listarulNoti(us);
+    }
+
+    @Override
     public List<Notificacion> all(String roluser) {
         return notificacionRepository.all(roluser);
     }

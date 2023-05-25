@@ -24,8 +24,8 @@ public class Observacion_ServiceImpl extends GenericServiceImpl<Observacion, Lon
     }
 
     @Override
-    public List<Observacion> observacionUsuario(String user) {
-        return repository.observacionUsuario(user);
+    public List<Observacion> observacionUsuario(String user, Long id) {
+        return repository.observacionUsuario(user, id);
     }
 
     @Transactional
