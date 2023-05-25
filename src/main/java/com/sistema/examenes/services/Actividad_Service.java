@@ -15,6 +15,7 @@ public interface Actividad_Service extends GenericService<Actividad, Long>{
     List<Actividad> findByNombreContainingIgnoreCase(String nombre);
     public List<Actividad>listarporEvidencia(Long idEvidencia );
     public List<Actividad> listaEvidAtrasada();
+    public List<Actividad> listaActByUsuario(Long id);
 
 
 }
