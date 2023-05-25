@@ -40,6 +40,7 @@ public class Actividad implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
+
    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_evidencia")
     private Evidencia evidencia;
