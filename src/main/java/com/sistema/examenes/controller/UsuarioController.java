@@ -3,6 +3,7 @@ package com.sistema.examenes.controller;
 import com.sistema.examenes.entity.*;
 import com.sistema.examenes.repository.UsuarioRepository;
 import com.sistema.examenes.services.RolService;
+import com.sistema.examenes.services.UsuarioRolService;
 import com.sistema.examenes.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -28,6 +27,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository uR;
+    @Autowired
+    private UsuarioRolService userrol;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -108,6 +109,7 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/listarv")
     public ResponseEntity<List<Usuario>> obtenerListav() {
         try {
@@ -117,20 +119,20 @@ public class UsuarioController {
         }
     }
 
-
-    @GetMapping("/listarResponsableAdmin")
-    public ResponseEntity<List<Usuario>> obtenerListaResponsableAdmin() {
-        try {
-            return new ResponseEntity<>(uR.listaResponsablesAdmin(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
     @GetMapping("/listarResDatos")
     public ResponseEntity<List<Usuario>> obtenerListaRespoDatos() {
         try {
 
             return new ResponseEntity<>(uR.listaResponsablesDatos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/listarResponsableAdmin")
+    public ResponseEntity<List<Usuario>> obtenerListaResponsableAdmin() {
+        try {
+            return new ResponseEntity<>(uR.listaResponsablesAdmin(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -145,6 +147,7 @@ public class UsuarioController {
     public Usuario obtenerIdUsuario(@PathVariable("username") String username) {
         return usuarioService.obtenerId(username);
     }
+
     @DeleteMapping("/{usuarioId}")
     public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId) {
         usuarioService.delete(usuarioId);
@@ -153,10 +156,12 @@ public class UsuarioController {
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Usuario> actualizarCliente(@PathVariable Long id, @RequestBody Usuario p) {
         Usuario usu = usuarioService.findById(id);
+        UsuarioRol urol=userrol.findByUsuario_UsuarioId(id);
         if (usu == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
+                usu.setPassword(this.bCryptPasswordEncoder.encode(p.getPassword()));
                 return new ResponseEntity<>(usuarioService.save(usu), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -181,6 +186,15 @@ public class UsuarioController {
         }
     }
 
+    // public List<Usuario> listaAdminDatos();
+    @GetMapping("/listarAdminDatos")
+    public ResponseEntity<List<Usuario>> obtenerListaAdminDatos() {
+        try {
 
+            return new ResponseEntity<>(uR.listaAdminDatos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

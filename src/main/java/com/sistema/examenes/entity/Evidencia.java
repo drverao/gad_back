@@ -23,6 +23,8 @@ public class Evidencia implements Serializable {
     private String nombre;
     @Column(name = "descripcion", length = 10000)
     private String descripcion;
+    @Column(name = "estado")
+    private String estado;
     //Columna para el eliminado logico no borrar
     @Column(name = "visible")
     private Boolean visible;

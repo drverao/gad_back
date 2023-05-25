@@ -96,4 +96,13 @@ public class Observacion_Controller {
 
         }
     }
+    
+    @GetMapping("/buscarObserByActiv/{id}")
+    public ResponseEntity<List<Observacion>> getByActivi(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.listarObservacActivi(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

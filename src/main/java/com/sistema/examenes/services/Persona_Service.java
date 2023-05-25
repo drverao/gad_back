@@ -9,5 +9,6 @@ public interface Persona_Service extends GenericService<Persona, Long>{
     public Persona obtenerPersona(String username);
     
     public Persona obtenerPersonaPorIdUsuario(Long id);
+    public Persona findByCedula(String cedula);
 
 }

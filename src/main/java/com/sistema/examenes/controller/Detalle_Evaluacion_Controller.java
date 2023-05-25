@@ -62,6 +62,14 @@ public class Detalle_Evaluacion_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/listarporEviApro/{idEvi}/{idUsua}")
+    public ResponseEntity<List<Detalle_Evaluacion>> listarPorUsuarioYEvidenciaAprobada(@PathVariable("idEvi") Long idEvidencia,  @PathVariable("idUsua") Long idUsuario) {
+        try {
+            return new ResponseEntity<>(Service.listarDetalleEvaluacionAprobada(idEvidencia, idUsuario), HttpStatus.OK);
+        } catch (Exception e) {;
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Detalle_Evaluacion detalle_evaluacion) {

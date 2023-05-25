@@ -33,4 +33,9 @@ public class Observacion_ServiceImpl extends GenericServiceImpl<Observacion, Lon
         repository.borrar(id);
     }
 
+    @Override
+    public List<Observacion> listarObservacActivi(Long id) {
+        return repository.observacionActividad(id);
+    }
+
 }
