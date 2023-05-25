@@ -52,10 +52,10 @@ public class Observacion_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/buscarobs/{username}")
-    public ResponseEntity<List<Observacion>> getByUsuario(@PathVariable("username") String username) {
+    @GetMapping("/buscarobs/{username}/{id}")
+    public ResponseEntity<List<Observacion>> getByUsuario(@PathVariable("username") String username,@PathVariable("id") Long id) {
         try {
-            return new ResponseEntity<>(Service.observacionUsuario(username), HttpStatus.OK);
+            return new ResponseEntity<>(Service.observacionUsuario(username, id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -94,6 +94,15 @@ public class Observacion_Controller {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
+        }
+    }
+    
+    @GetMapping("/buscarObserByActiv/{id}")
+    public ResponseEntity<List<Observacion>> getByActivi(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(Service.listarObservacActivi(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

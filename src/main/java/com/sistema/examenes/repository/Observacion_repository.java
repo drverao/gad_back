@@ -13,10 +13,16 @@ public interface Observacion_repository extends JpaRepository<Observacion, Long>
     @Query(value = "SELECT * from observacion where visible =true",nativeQuery = true)
     List<Observacion> listarObservacion();
 
-    @Query(value = "SELECT * from observacion o JOIN usuarios u ON u.id=o.usuario_id  where o.visible =true and u.username=:user",nativeQuery = true)
-    List<Observacion> observacionUsuario(String user);
+    @Query(value = "SELECT * from observacion o JOIN usuarios u ON u.id=o.usuario_id " +
+            "JOIN actividad ac ON ac.id_actividad=o.actividad_id_actividad WHERE o.visible =true and u.username=:user " +
+            "and ac.id_actividad=:id",nativeQuery = true)
+    List<Observacion> observacionUsuario(String user, Long id);
 
     @Modifying
     @Query(value = "DELETE FROM observacion WHERE id_observacion=:id", nativeQuery = true)
     void borrar(Long id);
+    
+    @Query(value = "SELECT * FROM observacion WHERE actividad_id_actividad=:idact",nativeQuery = true)
+    List<Observacion> observacionActividad(Long idact);
+    
 }
