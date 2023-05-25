@@ -44,6 +44,14 @@ public class Notificacion_Controller {
         }
     }
 
+    @GetMapping("/notificacionsinleer/{id}")
+    public ResponseEntity<List<Notificacion>>noleidos(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(service.listarulNoti(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/listartodo/{roluser}")
     public ResponseEntity<List<Notificacion>>obtenerLista(@PathVariable("roluser") String roluser) {
         try {
@@ -69,7 +77,7 @@ public class Notificacion_Controller {
 
         }
     }
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 9 * * ?")
     public void eliminarNotificacionesAntiguas() {
         LocalDate hoy = LocalDate.now();
         LocalDate fechaLimite = hoy.minusDays(30);
@@ -79,8 +87,8 @@ public class Notificacion_Controller {
             service.eliminar(notificacion.getId());
         }
     }
-
-    @Scheduled(cron = "0 0 8 * * ?") // Ejecutar todos los días a las 8 AM
+//@Scheduled(cron = "segundo minuto hora día-del-mes mes día-de-la-semana")
+    @Scheduled(cron = "0 0 13 * * ?") // Ejecutar todos los días a las 1 PM
     public void CrearNotificaciones() {
         List<Actividad> actividades = act.findByAll();
         for (Actividad actividad : actividades) {

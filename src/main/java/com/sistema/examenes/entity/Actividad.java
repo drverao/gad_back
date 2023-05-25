@@ -24,6 +24,8 @@ public class Actividad implements Serializable {
     private String descripcion;
     @Column(name = "nombre")
     private String nombre;
+    @Column(name = "estado")
+    private String estado;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_inicio")
@@ -38,6 +40,7 @@ public class Actividad implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
+
    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_evidencia")
     private Evidencia evidencia;

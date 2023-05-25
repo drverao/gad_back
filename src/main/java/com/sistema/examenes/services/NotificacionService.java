@@ -8,4 +8,6 @@ public interface NotificacionService extends GenericService<Notificacion, Long> 
     public List<Notificacion> all(String roluserer);
     public void eliminar(Long id);
     public List<Notificacion> listarNotifi(String fecha);
+
+    public List<Notificacion> listarulNoti(Long us);
 }

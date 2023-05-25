@@ -104,6 +104,7 @@ public class Evidencia_Controller {
         } else {
             try {
                 a.setDescripcion(p.getDescripcion());
+                a.setEstado(p.getEstado());
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
