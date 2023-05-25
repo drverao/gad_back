@@ -147,6 +147,7 @@ public class Actividad_Controller {
         current.setDescripcion(t.getDescripcion());
         current.setFecha_inicio(t.getFecha_inicio());
         current.setFecha_fin(t.getFecha_fin());
+        current.setEstado(t.getEstado());
         return new ResponseEntity<>(Service.save(current), HttpStatus.OK);
     }
 
