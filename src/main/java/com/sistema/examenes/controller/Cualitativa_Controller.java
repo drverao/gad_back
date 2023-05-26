@@ -36,7 +36,6 @@ public class Cualitativa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @GetMapping("/listarv")
     public ResponseEntity<List<Cualitativa>> obtenerListav() {
         try {
@@ -45,7 +44,6 @@ public class Cualitativa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Cualitativa> getById(@PathVariable("id") Long id) {
         try {
@@ -54,12 +52,10 @@ public class Cualitativa_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Cualitativa cualitativa) {
         return Service.delete(id);
     }
-
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
         Cualitativa a = Service.findById(id);
@@ -83,8 +79,6 @@ public class Cualitativa_Controller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setEscala(p.getEscala());
-                a.setValor(p.getValor());
                 return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
