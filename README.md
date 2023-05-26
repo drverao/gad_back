@@ -28,6 +28,13 @@ Pasos de instalación:
 Descarga el proyecto:
 
 Descarga el proyecto backend desde el repositorio o el archivo proporcionado.
+
+Configura las credenciales de la cuenta de correo:
+Desde tu cuenta de gmail, crea una contraseña de aplicación.
+En el archivo aplication.properties localiza email.sender y email.password,
+en el primero "sender" debera colocar la cuenta de correo que estas configurando,
+en el segundo "password" debera colocar la contraseña generada.
+
 Configura la base de datos:
 
 Crea una base de datos vacía en tu servidor de base de datos.
