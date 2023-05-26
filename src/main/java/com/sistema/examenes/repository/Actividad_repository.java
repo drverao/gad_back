@@ -13,7 +13,7 @@ public interface Actividad_repository extends JpaRepository<Actividad, Long> {
     List<Actividad> listarActividad();
 
 
-    @Query(value = "SELECT ac.id_actividad, ac.descripcion, ac.fecha_fin, ac.fecha_inicio, ac.nombre, ac.visible, ac.id_evidencia, ac.usuario_id\n"
+    @Query(value = "SELECT ac.*\n"
             + "FROM actividad ac \n"
             + "JOIN evidencia e ON ac.id_evidencia = e.id_evidencia\n"
             + "JOIN indicador i ON e.indicador_id_indicador = i.id_indicador\n"
@@ -25,22 +25,24 @@ public interface Actividad_repository extends JpaRepository<Actividad, Long> {
     List<Actividad> listarActividadAtrasadas();
 
     @Query(value = "SELECT ac.*\n" +
-"FROM actividad ac, evidencia e, detalle_evaluacion d, asignacion_indicador ag, indicador i\n" +
-"WHERE ac.id_evidencia = e.id_evidencia\n" +
-"AND e.indicador_id_indicador = i.id_indicador\n" +
-"AND d.evidencia_id_evidencia = ac.id_evidencia\n" +
-"AND ag.indicador_id_indicador = i.id_indicador\n" +
-"AND d.estado = true\n" +
+"FROM actividad ac JOIN evidencia e\n" +
+"ON ac.id_evidencia = e.id_evidencia\n" +
+"JOIN indicador i\n" +
+"ON e.indicador_id_indicador = i.id_indicador\n" +
+"JOIN asignacion_indicador ag\n" +
+"ON ag.indicador_id_indicador = i.id_indicador\n" +
+"WHERE ac.estado = 'Aprobada'\n" +
 "AND ag.modelo_id_modelo = (SELECT MAX(id_modelo) FROM modelo)", nativeQuery = true)
     List<Actividad> listarActividadCumplidas();
     
     @Query(value = "SELECT ac.*\n" +
-"FROM actividad ac, evidencia e, detalle_evaluacion d, asignacion_indicador ag, indicador i\n" +
-"WHERE ac.id_evidencia = e.id_evidencia\n" +
-"AND e.indicador_id_indicador = i.id_indicador\n" +
-"AND d.evidencia_id_evidencia = ac.id_evidencia\n" +
-"AND ag.indicador_id_indicador = i.id_indicador\n" +
-"AND d.estado = false\n" +
+"FROM actividad ac JOIN evidencia e\n" +
+"ON ac.id_evidencia = e.id_evidencia\n" +
+"JOIN indicador i\n" +
+"ON e.indicador_id_indicador = i.id_indicador\n" +
+"JOIN asignacion_indicador ag\n" +
+"ON ag.indicador_id_indicador = i.id_indicador\n" +
+"WHERE ac.estado = 'Rechazada'\n" +
 "AND ag.modelo_id_modelo = (SELECT MAX(id_modelo) FROM modelo)", nativeQuery = true)
     List<Actividad> listarEvideRechazadasFecha();
     
