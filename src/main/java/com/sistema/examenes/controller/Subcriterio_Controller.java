@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = { "*" })
 @RestController
@@ -87,4 +90,27 @@ public class Subcriterio_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listaSubcriteriosPorCriterio/{id_criterio}")
+    public ResponseEntity<List<Map<String, Object>>> listaSubcriteriosPorCriterio(@PathVariable("id_criterio") Long id_criterio) {
+        try {
+            List<Map<String, Object>> subcriteriosData = Service.listarSubcriterioPorCriterioConDatosEspecificos(id_criterio);
+            List<Map<String, Object>> responseList = new ArrayList<>();
+
+            for (Map<String, Object> subcriterioData : subcriteriosData) {
+                Map<String, Object> responseData = new HashMap<>();
+                responseData.put("id_subcriterio", subcriterioData.get("id_subcriterio"));
+                responseData.put("descripcion", subcriterioData.get("descripcion"));
+                responseData.put("nombreSubcriterio", subcriterioData.get("nombreSubcriterio"));
+                responseData.put("nombreCriterio", subcriterioData.get("nombreCriterio"));
+
+                responseList.add(responseData);
+            }
+
+            return new ResponseEntity<>(responseList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
