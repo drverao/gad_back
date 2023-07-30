@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class Subcriterio_ServiceImpl extends GenericServiceImpl<Subcriterio, Long> implements Subcriterio_Service {
@@ -29,4 +30,8 @@ public class Subcriterio_ServiceImpl extends GenericServiceImpl<Subcriterio, Lon
         return repository.listarSubcriterioPorCriterio(id_criterio);
     }
 
+    @Override
+    public List<Map<String, Object>> listarSubcriterioPorCriterioConDatosEspecificos(Long id_criterio) {
+        return repository.listarSubcriterioPorCriterioConDatosEspecificos(id_criterio);
+    }
 }
