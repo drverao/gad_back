@@ -2,6 +2,7 @@ package com.sistema.examenes.repository;
 
 import java.util.List;
 
+import com.sistema.examenes.entity.IndicadorDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -39,6 +40,11 @@ public interface Indicador_repository extends JpaRepository<Indicador, Long> {
             "JOIN Asignacion_Indicador ai ON ai.indicador = i " +
             "WHERE ai.modelo.id_modelo = (SELECT MAX(m.id_modelo) FROM Modelo m) " +
             "AND (c.id_criterio IN :idCriterios OR COALESCE(:idCriterios, NULL) IS NULL)")
+
     List<Indicador> indicadoresPorCriterios(List<Long> idCriterios);
+
+    //Encontrar por id_subcriterio y por visible: true
+    @Query(value = "SELECT * from indicador where subcriterio_id_subcriterio = :id_subcriterio and visible = true", nativeQuery = true)
+    List<Indicador> listarIndicadorPorSubcriterioYVisible(Long id_subcriterio);
 
 }

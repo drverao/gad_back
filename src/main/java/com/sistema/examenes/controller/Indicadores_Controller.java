@@ -1,6 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Indicador;
+import com.sistema.examenes.entity.IndicadorDTO;
 import com.sistema.examenes.services.Indicador_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -117,6 +118,17 @@ public class Indicadores_Controller {
         }
     }
 
+    // consumir metodo listarPorSubcriterio y que visible sea true
+    @GetMapping("/listarPorSubcriterioYVisible/{id_subcriterio}")
+    public ResponseEntity<List<IndicadorDTO>> listarPorSubcriterioYVisible(@PathVariable("id_subcriterio") Long id_subcriterio) {
+        try {
+            return new ResponseEntity<>(Service.listarPorSubcriterioYVisible(id_subcriterio), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     // consumir metodo listarIndicadorPorCriterioModelo
     @GetMapping("/listarIndicadorPorCriterioModelo/{id_criterio}/{id_modelo}")
     public ResponseEntity<List<Indicador>> listarIndicadorPorCriterioModelo(
@@ -138,4 +150,5 @@ public class Indicadores_Controller {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+
     }
