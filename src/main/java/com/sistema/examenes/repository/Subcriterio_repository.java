@@ -22,7 +22,8 @@ public interface Subcriterio_repository extends JpaRepository<Subcriterio, Long>
             "sc.nombre as nombreSubcriterio, c.nombre as nombreCriterio " +
             "FROM subcriterio sc " +
             "JOIN criterio c ON sc.id_criterio = c.id_criterio " +
-            "WHERE sc.id_criterio = :id_criterio AND sc.visible = true", nativeQuery = true)
+            "WHERE sc.id_criterio = :id_criterio AND sc.visible = true " +
+            "ORDER BY nombreSubcriterio ASC", nativeQuery = true)
     List<Map<String, Object>> listarSubcriterioPorCriterioConDatosEspecificos(Long id_criterio);
 
 }
