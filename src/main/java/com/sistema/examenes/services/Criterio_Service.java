@@ -18,4 +18,6 @@ public interface Criterio_Service extends GenericService<Criterio, Long> {
 
     // listarCriterioPorIndicador de repositorio
     public List<Criterio> listarCriterioPorIndicador(Long id_indicador);
+
+    public List<Criterio> obtenerCriterioPertenecientesAModelo(Long id);
 }

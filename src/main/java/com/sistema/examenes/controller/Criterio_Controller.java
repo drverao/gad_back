@@ -123,4 +123,15 @@ public class Criterio_Controller {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/criteriosmodelo/{id_modelo}")
+    public ResponseEntity<List<Criterio>> obtenerCriterioPertenecienteAModelo(@PathVariable("id_modelo") Long id) {
+        try {
+            return new ResponseEntity<>(Service.obtenerCriterioPertenecientesAModelo(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

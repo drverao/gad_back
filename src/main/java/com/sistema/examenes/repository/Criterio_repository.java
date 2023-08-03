@@ -3,6 +3,7 @@ package com.sistema.examenes.repository;
 import com.sistema.examenes.entity.Criterio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -69,5 +70,16 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
         // WHERE i.id_indicador=1;
         @Query(value = "SELECT c.* FROM public.criterio c join public.subcriterio s ON s.id_criterio = c.id_criterio join public.indicador i ON i.subcriterio_id_subcriterio = s.id_subcriterio WHERE i.id_indicador=:id_indicador", nativeQuery = true)
         List<Criterio> listarCriterioPorIndicador(Long id_indicador);
+
+        //LISTAR CRITERIOS DE UN MODELO EN ESPECIFICO
+        @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, FROM asignacion_indicador ag\n"
+                + "JOIN indicador i ON ag.indicador_id_indicador = i.id_indicador\n"
+                + "JOIN subcriterio s ON s.id_subcriterio = i.subcriterio_id_subcriterio \n"
+                + "JOIN criterio c ON c.id_criterio = s.id_criterio \n"
+                + "WHERE ag.modelo_id_modelo = :modelo AND c.visible = true\n"
+                + "GROUP BY c.id_criterio, c.nombre, c.descripcion, c.visible\n"
+                + "ORDER BY c.nombre ASC;", nativeQuery = true)
+        List<Criterio> obtenerCriteriosPertenecientesAModelo(@Param("modelo") Long modelo);
+
 
 }

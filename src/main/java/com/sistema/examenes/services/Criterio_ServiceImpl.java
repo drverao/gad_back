@@ -40,11 +40,13 @@ public class Criterio_ServiceImpl extends GenericServiceImpl<Criterio, Long> imp
         return repository.obtenerCriteriosModelo();
     }
 
-    @Override
     public List<Criterio> obtenerCriterioIdModelo(Long id) {
         return repository.obtenerCriteriosModeloId(id);
     }
 
+    public List<Criterio> obtenerCriterioPertenecientesAModelo(Long id) {
+        return repository.obtenerCriteriosPertenecientesAModelo(id);
+    }
     @Override
     public List<Criterio> listarCriterioPorIndicador(Long id_indicador) {
         return repository.listarCriterioPorIndicador(id_indicador);
