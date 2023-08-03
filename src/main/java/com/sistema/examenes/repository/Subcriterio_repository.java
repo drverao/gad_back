@@ -19,11 +19,11 @@ public interface Subcriterio_repository extends JpaRepository<Subcriterio, Long>
     //Listar subcriterio por un criterio trayendo datos especificos
     //Se hace Map ya q accedemos a datos de dos entidades distintas
     @Query(value = "SELECT sc.id_subcriterio as id_subcriterio, sc.descripcion as descripcion, " +
-            "sc.nombre as nombreSubcriterio, c.nombre as nombreCriterio " +
+            "sc.nombre as nombre, c.nombre as nombreCriterio " +
             "FROM subcriterio sc " +
             "JOIN criterio c ON sc.id_criterio = c.id_criterio " +
             "WHERE sc.id_criterio = :id_criterio AND sc.visible = true " +
-            "ORDER BY nombreSubcriterio ASC", nativeQuery = true)
+            "ORDER BY nombre ASC", nativeQuery = true)
     List<Map<String, Object>> listarSubcriterioPorCriterioConDatosEspecificos(Long id_criterio);
 
 }
