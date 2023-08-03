@@ -101,7 +101,7 @@ public class Subcriterio_Controller {
                 Map<String, Object> responseData = new HashMap<>();
                 responseData.put("id_subcriterio", subcriterioData.get("id_subcriterio"));
                 responseData.put("descripcion", subcriterioData.get("descripcion"));
-                responseData.put("nombreSubcriterio", subcriterioData.get("nombreSubcriterio"));
+                responseData.put("nombre", subcriterioData.get("nombre"));
                 responseData.put("nombreCriterio", subcriterioData.get("nombreCriterio"));
 
                 responseList.add(responseData);
