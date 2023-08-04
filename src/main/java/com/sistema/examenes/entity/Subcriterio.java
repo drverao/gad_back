@@ -32,4 +32,8 @@ public class Subcriterio implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "subcriterio")
     @JsonIgnore
     private Set<Indicador> lista_indicadores = new HashSet<>();
+
+    public Subcriterio(){
+        lista_indicadores = new HashSet<>();
+    }
 }

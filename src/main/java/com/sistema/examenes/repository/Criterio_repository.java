@@ -81,5 +81,18 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
                 + "ORDER BY c.nombre ASC;", nativeQuery = true)
         List<Criterio> obtenerCriteriosPertenecientesAModelo(@Param("modelo") Long modelo);
 
+        @Query(value = "SELECT c.id_criterio, c.nombre AS nombre_criterio, c.descripcion AS descripcion_criterio, c.visible AS visible_criterio, " +
+                "sc.id_subcriterio, sc.nombre AS nombre_subcriterio, sc.descripcion AS descripcion_subcriterio, " +
+                "i.id_indicador, i.nombre AS nombre_indicador, i.descripcion AS descripcion_indicador, i.peso, i.estandar, " +
+                "i.valor_obtenido, i.porc_obtenido, i.porc_utilida_obtenida, i.tipo " +
+                "FROM criterio c " +
+                "JOIN subcriterio sc ON c.id_criterio = sc.id_criterio " +
+                "JOIN indicador i ON sc.id_subcriterio = i.subcriterio_id_subcriterio " +
+                "JOIN asignacion_indicador ag ON i.id_indicador = ag.indicador_id_indicador " +
+                "WHERE ag.modelo_id_modelo = :modelo AND c.visible = true " +
+                "ORDER BY c.nombre ASC, sc.nombre ASC, i.nombre ASC", nativeQuery = true)
+        List<Object[]> obtenerCriteriosConSubcriteriosEIndicadores(@Param("modelo") Long modelo);
+
+
 
 }

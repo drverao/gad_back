@@ -133,5 +133,13 @@ public class Criterio_Controller {
         }
     }
 
+    @GetMapping("/criterios/{id_modelo}")
+    public ResponseEntity<List<Criterio>> getCriteriosConSubcriteriosEIndicadores(@PathVariable("id_modelo") Long id) {
+        List<Criterio> criterios = Service.obtenerCriteriosConSubcriteriosEIndicadores(id);
+        if (!criterios.isEmpty()) {
+            return new ResponseEntity<>(criterios, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }
