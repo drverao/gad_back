@@ -72,7 +72,7 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
         List<Criterio> listarCriterioPorIndicador(Long id_indicador);
 
         //LISTAR CRITERIOS DE UN MODELO EN ESPECIFICO
-        @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, FROM asignacion_indicador ag\n"
+        @Query(value = "SELECT c.id_criterio, c.nombre, c.descripcion, c.visible FROM asignacion_indicador ag\n"
                 + "JOIN indicador i ON ag.indicador_id_indicador = i.id_indicador\n"
                 + "JOIN subcriterio s ON s.id_subcriterio = i.subcriterio_id_subcriterio \n"
                 + "JOIN criterio c ON c.id_criterio = s.id_criterio \n"
