@@ -179,4 +179,13 @@ public class Actividad_Controller {
 
         }
     }*/
+
+    @GetMapping("/actividadesRecientesNoEnRevision")
+    public ResponseEntity<List<Actividad>> obtenerActividadesRecientesNoEnRevision() {
+        try {
+            return new ResponseEntity<>(Service.listarActividadesRecientesNoEnRevision(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

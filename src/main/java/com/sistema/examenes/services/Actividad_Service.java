@@ -17,6 +17,6 @@ public interface Actividad_Service extends GenericService<Actividad, Long>{
     public List<Actividad> listaEvidAtrasada();
     public List<Actividad> listaActByUsuario(Long id);
 
-
+    List<Actividad> listarActividadesRecientesNoEnRevision();
 }
 

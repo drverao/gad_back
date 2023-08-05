@@ -57,4 +57,16 @@ public interface Actividad_repository extends JpaRepository<Actividad, Long> {
     @Query(value = "SELECT * FROM actividad WHERE usuario_id = :idUsuario ;",nativeQuery = true)
     List<Actividad>listarByUsuario(Long idUsuario);
 
+    @Query(value = "SELECT ac.*, i.nombre as nombre_indicador, sc.nombre as nombre_subcriterio, c.nombre as nombre_criterio\n"
+            + "FROM actividad ac \n"
+            + "JOIN evidencia e ON ac.id_evidencia = e.id_evidencia\n"
+            + "JOIN indicador i ON e.indicador_id_indicador = i.id_indicador\n"
+            + "JOIN subcriterio sc ON i.subcriterio_id_subcriterio = sc.id_subcriterio\n"
+            + "JOIN criterio c ON sc.id_criterio = c.id_criterio\n"
+            + "WHERE ac.estado != 'En revisión'\n"
+            + "AND ac.fecha_inicio >= CURRENT_DATE\n"
+            + "ORDER BY ac.fecha_inicio DESC", nativeQuery = true)
+    List<Actividad> listarActividadesRecientesNoEnRevision();
+
+
 }

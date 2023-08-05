@@ -59,5 +59,9 @@ public class Actividad_ServiceImpl extends GenericServiceImpl<Actividad, Long> i
     public List<Actividad> listaActByUsuario(Long id) {
         return repository.listarByUsuario(id);
     }
-    
+
+    @Override
+    public List<Actividad> listarActividadesRecientesNoEnRevision() {
+        return repository.listarActividadesRecientesNoEnRevision();
+    }
 }
