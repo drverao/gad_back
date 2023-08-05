@@ -1,6 +1,7 @@
 package com.sistema.examenes.repository;
 
 import com.sistema.examenes.entity.Criterio;
+import com.sistema.examenes.entity.CriterioDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -81,7 +82,8 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
                 + "ORDER BY c.nombre ASC;", nativeQuery = true)
         List<Criterio> obtenerCriteriosPertenecientesAModelo(@Param("modelo") Long modelo);
 
-        @Query(value = "SELECT c.id_criterio, c.nombre AS nombre_criterio, c.descripcion AS descripcion_criterio, c.visible AS visible_criterio, " +
+        //CONSULTA PARA TRAER LOS CAMPOS DE CRITERIO, SUBCRITERIO, INDICADORES DE MODELO
+        @Query(value = "SELECT c.id_criterio, c.nombre AS nombre_criterio, c.descripcion AS descripcion_criterio, " +
                 "sc.id_subcriterio, sc.nombre AS nombre_subcriterio, sc.descripcion AS descripcion_subcriterio, " +
                 "i.id_indicador, i.nombre AS nombre_indicador, i.descripcion AS descripcion_indicador, i.peso, i.estandar, " +
                 "i.valor_obtenido, i.porc_obtenido, i.porc_utilida_obtenida, i.tipo " +
@@ -91,7 +93,7 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
                 "JOIN asignacion_indicador ag ON i.id_indicador = ag.indicador_id_indicador " +
                 "WHERE ag.modelo_id_modelo = :modelo AND c.visible = true " +
                 "ORDER BY c.nombre ASC, sc.nombre ASC, i.nombre ASC", nativeQuery = true)
-        List<Object[]> obtenerCriteriosConSubcriteriosEIndicadores(@Param("modelo") Long modelo);
+        List<Object[]> obtenerCSI(@Param("modelo") Long modelo);
 
 
 
