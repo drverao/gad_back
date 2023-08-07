@@ -20,7 +20,7 @@ public class Persona_Controller {
     @PostMapping("/crear")
     public ResponseEntity<Persona> crear(@RequestBody Persona r) {
         try {
-
+r.setVisible(true);
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
