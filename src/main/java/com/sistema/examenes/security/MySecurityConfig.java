@@ -55,7 +55,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/generate-token","/usuarios/crear/*","/swagger-ui/**","/v3/**","/archivo/upload","/archivo/{filename}","/archivo/listar","/send-email","/api/subcriterio/listaSubcriteriosPorCriterio/{id_criterio}").permitAll()
+                .antMatchers("/generate-token","/usuarios/crear/*","/swagger-ui/**","/v3/**","/archivo/upload","/archivo/{filename}","/archivo/listar","/send-email","/api/subcriterio/listaSubcriteriosPorCriterio/{id_criterio}","/api/criterio/criteriosmodelo/{id_modelo}").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and()
