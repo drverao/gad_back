@@ -1,6 +1,7 @@
 package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Criterio;
+import com.sistema.examenes.entity.CriterioDTO;
 import com.sistema.examenes.services.Criterio_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -121,6 +122,27 @@ public class Criterio_Controller {
             return new ResponseEntity<>(Service.listarCriterioPorIndicador(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //LISTAR CRITERIOS POR UN MODELO
+    @GetMapping("/criteriosmodelo/{id_modelo}")
+    public ResponseEntity<List<Criterio>> obtenerCriterioPertenecienteAModelo(@PathVariable("id_modelo") Long id) {
+        try {
+            return new ResponseEntity<>(Service.obtenerCriterioPertenecientesAModelo(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //LISTAR CRITERIOS - SUBCRITERIO E INDICADORES DE UN MODELO
+    @GetMapping("/LISTAcriterios/{id_modelo}")
+    public ResponseEntity<List<CriterioDTO>> getCriteriosConSubcriteriosEIndicadores(@PathVariable("id_modelo") Long id) {
+        List<CriterioDTO> criteriosDTO = Service.obtenerCSI(id);
+        if (!criteriosDTO.isEmpty()) {
+            return new ResponseEntity<>(criteriosDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

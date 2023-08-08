@@ -33,6 +33,7 @@ public class Criterio implements Serializable {
     private Set<Subcriterio> lista_subcriterios = new HashSet<>();
 
     public Criterio() {
+        lista_subcriterios = new HashSet<>();
     }
 
     public Criterio(Long id) {
