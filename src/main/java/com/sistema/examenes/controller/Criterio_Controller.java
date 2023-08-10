@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Criterio;
 import com.sistema.examenes.entity.CriterioDTO;
+import com.sistema.examenes.entity.ModeloDTO;
 import com.sistema.examenes.services.Criterio_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -135,12 +136,14 @@ public class Criterio_Controller {
         }
     }
 
-    //LISTAR CRITERIOS - SUBCRITERIO E INDICADORES DE UN MODELO
-    @GetMapping("/LISTAcriterios/{id_modelo}")
-    public ResponseEntity<List<CriterioDTO>> getCriteriosConSubcriteriosEIndicadores(@PathVariable("id_modelo") Long id) {
-        List<CriterioDTO> criteriosDTO = Service.obtenerCSI(id);
-        if (!criteriosDTO.isEmpty()) {
-            return new ResponseEntity<>(criteriosDTO, HttpStatus.OK);
+    //LISTA ACORDEON DE MODELO CON SUS CRITERIOS - SUBCRITERIO E INDICADORES
+    @GetMapping("/listaAcordeonModelo/{id_modelo}")
+    public ResponseEntity<ModeloDTO> getCriteriosConSubcriteriosEIndicadores(@PathVariable("id_modelo") Long id) {
+        List<ModeloDTO> modelosDTO = Service.obtenerCSIConModelo(id);
+
+        if (!modelosDTO.isEmpty()) {
+            ModeloDTO modeloDTO = modelosDTO.get(0);
+            return new ResponseEntity<>(modeloDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
