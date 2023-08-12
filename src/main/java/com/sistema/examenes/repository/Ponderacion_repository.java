@@ -64,4 +64,8 @@ public interface Ponderacion_repository extends JpaRepository<Ponderacion, Long>
 
     @Query(value = "SELECT p.* FROM ponderacion p JOIN modelo m ON p.modelo_id_modelo = m.id_modelo WHERE m.id_modelo = :id_modelo", nativeQuery = true)
     List<Ponderacion> listarPondeModelo(@Param("id_modelo") Long id_modelo);
+
+    @Query("SELECT p, s.criterio.id, s.criterio.nombre, s.id, s.nombre FROM Ponderacion p JOIN p.indicador i JOIN i.subcriterio s WHERE p.visible = true")
+    List<Object[]> listarPonderacionConCriterioYSubcriterio();
+
 }

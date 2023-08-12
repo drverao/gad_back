@@ -2,6 +2,7 @@ package com.sistema.examenes.controller;
 
 import com.sistema.examenes.entity.Encabezado_Evaluar;
 import com.sistema.examenes.entity.Ponderacion;
+import com.sistema.examenes.entity.PonderacionDTO;
 import com.sistema.examenes.services.Ponderacion_Service;
 
 import java.text.ParseException;
@@ -129,6 +130,16 @@ public class Ponderacion_Controller {
     public ResponseEntity<List<Ponderacion>> listarPorFecha(@PathVariable("fecha") String fecha) {
         List<Ponderacion> ponderaciones = Service.listarPorFecha(fecha);
         return new ResponseEntity<>(ponderaciones, HttpStatus.OK);
+    }
+
+    @GetMapping("/listarPonderacionConCriterioYSubcriterio")
+    public ResponseEntity<List<PonderacionDTO>> listarConCriterioYSubcriterio() {
+        try {
+            List<PonderacionDTO> dtos = Service.listarPonderacionConCriterioYSubcriterioDTO();
+            return new ResponseEntity<>(dtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
