@@ -3,7 +3,6 @@ package com.sistema.examenes.services;
 import com.sistema.examenes.entity.Criterio;
 import com.sistema.examenes.entity.CriterioDTO;
 import com.sistema.examenes.entity.IndicadorDTO;
-import com.sistema.examenes.entity.ModeloDTO;
 
 import java.util.List;
 
@@ -24,5 +23,5 @@ public interface Criterio_Service extends GenericService<Criterio, Long> {
 
     public List<Criterio> obtenerCriterioPertenecientesAModelo(Long id);
 
-    List<ModeloDTO> obtenerCSIConModelo(Long id_modelo);
+    List<CriterioDTO> obtenerCSI(Long id_modelo);
 }
