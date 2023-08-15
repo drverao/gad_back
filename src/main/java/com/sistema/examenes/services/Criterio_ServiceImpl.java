@@ -53,72 +53,77 @@ public class Criterio_ServiceImpl extends GenericServiceImpl<Criterio, Long> imp
         return repository.listarCriterioPorIndicador(id_indicador);
     }
 
-    @Override
-    public List<CriterioDTO> obtenerCSI(Long id_modelo) {
-        List<CriterioDTO> criteriosDTO = new ArrayList<>();
-        List<Object[]> resultados = repository.obtenerCSI(id_modelo);
+    public List<ModeloDTO> obtenerCSIConModelo(Long id_modelo) {
+        List<ModeloDTO> modelosDTO = new ArrayList<>();
+        List<Object[]> resultados = repository.obtenerCSIConModelo(id_modelo);
+
+        Map<Long, ModeloDTO> modelosMap = new HashMap<>();
 
         for (Object[] resultado : resultados) {
-            Long idCriterio = ((BigInteger) resultado[0]).longValue();
-            String nombreCriterio = (String) resultado[1];
-            String descripcionCriterio = (String) resultado[2];
+            Long idModelo = ((BigInteger) resultado[0]).longValue();
+            String nombreModelo = (String) resultado[1];
+            Date fechaInicioModelo = (Date) resultado[2];
+            Date fechaFinModelo = (Date) resultado[3];
+            Date fechaFinalActModelo = (Date) resultado[4];
 
-            Long idSubcriterio = ((BigInteger) resultado[3]).longValue();
-            String nombreSubcriterio = (String) resultado[4];
-            String descripcionSubcriterio = (String) resultado[5];
+            // Obtener o crear el modeloDTO
+            ModeloDTO modeloDTO = modelosMap.computeIfAbsent(idModelo, id -> {
+                ModeloDTO modelo = new ModeloDTO();
+                modelo.setId_modelo(idModelo);
+                modelo.setNombreModelo(nombreModelo);
+                modelo.setFechaInicio(fechaInicioModelo);
+                modelo.setFechaFin(fechaFinModelo);
+                modelo.setFechaFinalAct(fechaFinalActModelo);
+                modelo.setCriterios(new ArrayList<>());
+                return modelo;
+            });
 
-            Long idIndicador = ((BigInteger) resultado[6]).longValue();
-            String nombreIndicador = (String) resultado[7];
-            String descripcionIndicador = (String) resultado[8];
-            double peso = (double) resultado[9];
-            double estandar = (double) resultado[10];
-            double valorObtenido = (double) resultado[11];
-            double porcObtenido = (double) resultado[12];
-            double porcUtilidaObtenida = (double) resultado[13];
-            String tipo = (String) resultado[14];
+            CriterioDTO criterioDTO = new CriterioDTO();
+            Long idCriterio = ((BigInteger) resultado[5]).longValue();
+            criterioDTO.setId_criterio(idCriterio);
+            criterioDTO.setNombreCriterio((String) resultado[6]);
+            criterioDTO.setDescripcionCriterio((String) resultado[7]);
 
-            // Buscar el criterioDTO en la lista existente o crear uno nuevo si no existe
-            CriterioDTO criterioDTO = criteriosDTO.stream()
+            SubcriterioDTO subcriterioDTO = new SubcriterioDTO();
+            Long idSubcriterio = ((BigInteger) resultado[8]).longValue();
+            subcriterioDTO.setId_subcriterio(idSubcriterio);
+            subcriterioDTO.setNombreSubcriterio((String) resultado[9]);
+            subcriterioDTO.setDescripcionSubcriterio((String) resultado[10]);
+
+            IndicadorDTO indicadorDTO = new IndicadorDTO();
+            indicadorDTO.setId_indicador(((BigInteger) resultado[11]).longValue());
+            indicadorDTO.setNombre((String) resultado[12]);
+            indicadorDTO.setDescripcion((String) resultado[13]);
+            indicadorDTO.setPeso((double) resultado[14]);
+            indicadorDTO.setEstandar((double) resultado[15]);
+            indicadorDTO.setValor_obtenido((double) resultado[16]);
+            indicadorDTO.setPorc_obtenido((double) resultado[17]);
+            indicadorDTO.setPorc_utilida_obtenida((double) resultado[18]);
+            indicadorDTO.setTipo((String) resultado[19]);
+
+            CriterioDTO criterioExistente = modeloDTO.getCriterios().stream()
                     .filter(c -> c.getId_criterio().equals(idCriterio))
                     .findFirst()
-                    .orElse(new CriterioDTO());
-            criterioDTO.setId_criterio(idCriterio);
-            criterioDTO.setNombreCriterio(nombreCriterio);
-            criterioDTO.setDescripcionCriterio(descripcionCriterio);
+                    .orElse(criterioDTO);
 
             // Buscar el subcriterioDTO en la lista existente o crear uno nuevo si no existe
-            SubcriterioDTO subcriterioDTO = criterioDTO.getLista_subcriterios().stream()
+            SubcriterioDTO subcriterioExistente = criterioExistente.getLista_subcriterios().stream()
                     .filter(sc -> sc.getId_subcriterio().equals(idSubcriterio))
                     .findFirst()
-                    .orElse(new SubcriterioDTO());
-            subcriterioDTO.setId_subcriterio(idSubcriterio);
-            subcriterioDTO.setNombreSubcriterio(nombreSubcriterio);
-            subcriterioDTO.setDescripcionSubcriterio(descripcionSubcriterio);
+                    .orElse(subcriterioDTO);
 
-            // Crear un nuevo indicadorDTO y agregarlo a la lista de indicadores del subcriterioDTO
-            IndicadorDTO indicadorDTO = new IndicadorDTO();
-            indicadorDTO.setId_indicador(idIndicador);
-            indicadorDTO.setNombre(nombreIndicador);
-            indicadorDTO.setDescripcion(descripcionIndicador);
-            indicadorDTO.setPeso(peso);
-            indicadorDTO.setEstandar(estandar);
-            indicadorDTO.setValor_obtenido(valorObtenido);
-            indicadorDTO.setPorc_obtenido(porcObtenido);
-            indicadorDTO.setPorc_utilida_obtenida(porcUtilidaObtenida);
-            indicadorDTO.setTipo(tipo);
+            // Agregar el indicadorDTO al subcriterioDTO
+            subcriterioExistente.getLista_indicadores().add(indicadorDTO);
 
-            // Agregar el indicadorDTO a la lista de indicadores del subcriterioDTO
-            subcriterioDTO.getLista_indicadores().add(indicadorDTO);
+            // Agregar el subcriterioDTO al criterioDTO
+            criterioExistente.getLista_subcriterios().add(subcriterioExistente);
 
-            // Agregar el subcriterioDTO a la lista de subcriterios del criterioDTO
-            criterioDTO.getLista_subcriterios().add(subcriterioDTO);
-
-            // Agregar el criterioDTO a la lista de criteriosDTO si es la primera vez que se encuentra
-            if (!criteriosDTO.contains(criterioDTO)) {
-                criteriosDTO.add(criterioDTO);
+            // Agregar el criterioDTO al modeloDTO si es la primera vez que se encuentra
+            if (!modeloDTO.getCriterios().contains(criterioDTO)) {
+                modeloDTO.getCriterios().add(criterioDTO);
             }
         }
-
-        return criteriosDTO;
+        return new ArrayList<>(modelosMap.values());
     }
+
 }

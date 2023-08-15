@@ -82,19 +82,21 @@ public interface Criterio_repository extends JpaRepository<Criterio, Long> {
                 + "ORDER BY c.nombre ASC;", nativeQuery = true)
         List<Criterio> obtenerCriteriosPertenecientesAModelo(@Param("modelo") Long modelo);
 
-        //CONSULTA PARA TRAER LOS CAMPOS DE CRITERIO, SUBCRITERIO, INDICADORES DE MODELO
-        @Query(value = "SELECT c.id_criterio, c.nombre AS nombre_criterio, c.descripcion AS descripcion_criterio, " +
+        //CONSULTA PARA TRAER EL MODELO CON LOS CAMPOS DE CRITERIO, SUBCRITERIO, INDICADORES
+        @Query(value = "SELECT " +
+                "m.id_modelo, m.nombre AS nombre_modelo, m.fecha_inicio, m.fecha_fin, m.fecha_final_act," +
+                "c.id_criterio, c.nombre AS nombre_criterio, c.descripcion AS descripcion_criterio, " +
                 "sc.id_subcriterio, sc.nombre AS nombre_subcriterio, sc.descripcion AS descripcion_subcriterio, " +
                 "i.id_indicador, i.nombre AS nombre_indicador, i.descripcion AS descripcion_indicador, i.peso, i.estandar, " +
                 "i.valor_obtenido, i.porc_obtenido, i.porc_utilida_obtenida, i.tipo " +
-                "FROM criterio c " +
+                "FROM modelo m " +
+                "JOIN criterio c ON m.id_modelo = :modelo " +
                 "JOIN subcriterio sc ON c.id_criterio = sc.id_criterio " +
                 "JOIN indicador i ON sc.id_subcriterio = i.subcriterio_id_subcriterio " +
                 "JOIN asignacion_indicador ag ON i.id_indicador = ag.indicador_id_indicador " +
                 "WHERE ag.modelo_id_modelo = :modelo AND c.visible = true " +
                 "ORDER BY c.nombre ASC, sc.nombre ASC, i.nombre ASC", nativeQuery = true)
-        List<Object[]> obtenerCSI(@Param("modelo") Long modelo);
-
+        List<Object[]> obtenerCSIConModelo(@Param("modelo") Long modelo);
 
 
 }
