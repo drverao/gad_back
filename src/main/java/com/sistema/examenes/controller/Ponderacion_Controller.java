@@ -131,11 +131,10 @@ public class Ponderacion_Controller {
         List<Ponderacion> ponderaciones = Service.listarPorFecha(fecha);
         return new ResponseEntity<>(ponderaciones, HttpStatus.OK);
     }
-
-    @GetMapping("/listarPonderacionConCriterioYSubcriterio")
-    public ResponseEntity<List<PonderacionDTO>> listarConCriterioYSubcriterio() {
+    @GetMapping("/listarPonderacionConCriterioYSubcriterioPorModelo/{id_modelo}")
+    public ResponseEntity<List<PonderacionDTO>> listarConCriterioYSubcriterioPorModelo(@PathVariable("id_modelo") Long id_modelo) {
         try {
-            List<PonderacionDTO> dtos = Service.listarPonderacionConCriterioYSubcriterioDTO();
+            List<PonderacionDTO> dtos = Service.listarPonderacionConCriterioYSubcriterioDTOPorModelo(id_modelo);
             return new ResponseEntity<>(dtos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

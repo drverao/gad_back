@@ -15,5 +15,5 @@ public interface Ponderacion_Service extends GenericService<Ponderacion, Long> {
 
     public List<Ponderacion> listarPorFecha(String fecha);
 
-    List<PonderacionDTO> listarPonderacionConCriterioYSubcriterioDTO();
+    List<PonderacionDTO> listarPonderacionConCriterioYSubcriterioDTOPorModelo(Long id_modelo);
 }

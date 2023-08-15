@@ -42,8 +42,8 @@ public class Ponderacion_ServiceImpl extends GenericServiceImpl<Ponderacion, Lon
         return repository.listarPonderacionPorFecha(fecha);
     }
     @Override
-    public List<PonderacionDTO> listarPonderacionConCriterioYSubcriterioDTO() {
-        List<Object[]> results = repository.listarPonderacionConCriterioYSubcriterio();
+    public List<PonderacionDTO> listarPonderacionConCriterioYSubcriterioDTOPorModelo(Long id_modelo) {
+        List<Object[]> results = repository.listarPonderacionConCriterioYSubcriterioPorModelo(id_modelo);
         List<PonderacionDTO> dtos = new ArrayList<>();
 
         for (Object[] result : results) {
@@ -71,5 +71,4 @@ public class Ponderacion_ServiceImpl extends GenericServiceImpl<Ponderacion, Lon
 
         return dtos;
     }
-
 }
