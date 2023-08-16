@@ -53,7 +53,7 @@ public class Criterio_ServiceImpl extends GenericServiceImpl<Criterio, Long> imp
         return repository.listarCriterioPorIndicador(id_indicador);
     }
 
-    public List<ModeloDTO> obtenerCSIConModelo(Long id_modelo) {
+    public List<ModeloDTO> obtenerCSIConModel(Long id_modelo) {
         List<ModeloDTO> modelosDTO = new ArrayList<>();
         List<Object[]> resultados = repository.obtenerCSIConModelo(id_modelo);
 
@@ -125,5 +125,80 @@ public class Criterio_ServiceImpl extends GenericServiceImpl<Criterio, Long> imp
         }
         return new ArrayList<>(modelosMap.values());
     }
+
+
+    public List<ModeloDTO> obtenerCSIConModelo(Long id_modelo) {
+        List<ModeloDTO> modelosDTO = new ArrayList<>();
+        List<Object[]> resultados = repository.obtenerCSIConModelo(id_modelo);
+
+        Map<Long, ModeloDTO> modelosMap = new HashMap<>();
+
+        for (Object[] resultado : resultados) {
+            Long idModelo = ((BigInteger) resultado[0]).longValue();
+            String nombreModelo = (String) resultado[1];
+            Date fechaInicioModelo = (Date) resultado[2];
+            Date fechaFinModelo = (Date) resultado[3];
+            Date fechaFinalActModelo = (Date) resultado[4];
+
+            // Obtener o crear el modeloDTO
+            ModeloDTO modeloDTO = modelosMap.computeIfAbsent(idModelo, id -> {
+                ModeloDTO modelo = new ModeloDTO();
+                modelo.setId_modelo(idModelo);
+                modelo.setNombreModelo(nombreModelo);
+                modelo.setFechaInicio(fechaInicioModelo);
+                modelo.setFechaFin(fechaFinModelo);
+                modelo.setFechaFinalAct(fechaFinalActModelo);
+                modelo.setCriterios(new ArrayList<>());
+                return modelo;
+            });
+
+            Long idCriterio = ((BigInteger) resultado[5]).longValue();
+            CriterioDTO criterioDTO = modeloDTO.getCriterios().stream()
+                    .filter(c -> c.getId_criterio().equals(idCriterio))
+                    .findFirst()
+                    .orElse(null);
+
+            if (criterioDTO == null) {
+                criterioDTO = new CriterioDTO();
+                criterioDTO.setId_criterio(idCriterio);
+                criterioDTO.setNombreCriterio((String) resultado[6]);
+                criterioDTO.setDescripcionCriterio((String) resultado[7]);
+                criterioDTO.setLista_subcriterios(new ArrayList<>());
+                modeloDTO.getCriterios().add(criterioDTO);
+            }
+
+            Long idSubcriterio = ((BigInteger) resultado[8]).longValue();
+            SubcriterioDTO subcriterioDTO = criterioDTO.getLista_subcriterios().stream()
+                    .filter(sc -> sc.getId_subcriterio().equals(idSubcriterio))
+                    .findFirst()
+                    .orElse(null);
+
+            if (subcriterioDTO == null) {
+                subcriterioDTO = new SubcriterioDTO();
+                subcriterioDTO.setId_subcriterio(idSubcriterio);
+                subcriterioDTO.setNombreSubcriterio((String) resultado[9]);
+                subcriterioDTO.setDescripcionSubcriterio((String) resultado[10]);
+                subcriterioDTO.setLista_indicadores(new ArrayList<>());
+                criterioDTO.getLista_subcriterios().add(subcriterioDTO);
+            }
+
+            // Crear y configurar el DTO para el indicador
+            IndicadorDTO indicadorDTO = new IndicadorDTO();
+            indicadorDTO.setId_indicador(((BigInteger) resultado[11]).longValue());
+            indicadorDTO.setNombre((String) resultado[12]);
+            indicadorDTO.setDescripcion((String) resultado[13]);
+            indicadorDTO.setPeso((double) resultado[14]);
+            indicadorDTO.setEstandar((double) resultado[15]);
+            indicadorDTO.setValor_obtenido((double) resultado[16]);
+            indicadorDTO.setPorc_obtenido((double) resultado[17]);
+            indicadorDTO.setPorc_utilida_obtenida((double) resultado[18]);
+            indicadorDTO.setTipo((String) resultado[19]);
+
+            subcriterioDTO.getLista_indicadores().add(indicadorDTO);
+        }
+        return new ArrayList<>(modelosMap.values());
+    }
+
+
 
 }
