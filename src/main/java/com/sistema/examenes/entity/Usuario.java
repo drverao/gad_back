@@ -47,6 +47,15 @@ public class Usuario implements UserDetails {
     @JsonIgnore
     private Set<Observacion> lista_observacion = new HashSet<>();
 
+    //NUEVO
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<ModeloPOA> lista_modelospoa = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Poa> lista_poas = new HashSet<>();
+
     public Usuario() {
     }
 
