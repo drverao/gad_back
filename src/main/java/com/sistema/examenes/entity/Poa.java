@@ -20,7 +20,7 @@ public class Poa implements Serializable {
     @Column(name = "id_poa")
     private Long id_poa;
     @Column(name = "meta_alcanzar")
-    private double nombre;
+    private double meta_alcanzar;
     @Column(name = "meta_fisica")
     private double meta_fisica;
     @Column(name = "avance_real")

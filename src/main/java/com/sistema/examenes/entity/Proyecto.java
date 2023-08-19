@@ -42,6 +42,8 @@ public class Proyecto implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Indicadores indicadores;
     @ManyToOne(fetch = FetchType.EAGER)
+    private Componente componente;
+    @ManyToOne(fetch = FetchType.EAGER)
     private Competencia competencia;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "proyecto")

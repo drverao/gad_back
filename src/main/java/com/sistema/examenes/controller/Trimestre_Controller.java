@@ -1,7 +1,7 @@
 package com.sistema.examenes.controller;
 
-import com.sistema.examenes.entity.Indicadores;
-import com.sistema.examenes.services.Indicadores_Service;
+import com.sistema.examenes.entity.Trimestre;
+import com.sistema.examenes.services.Trimestre_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/indicadores")
-public class Indicadores_Controller {
+@RequestMapping("/api/trimestre")
+public class Trimestre_Controller {
     @Autowired
-    Indicadores_Service Service;
+    Trimestre_Service Service;
 
     @PostMapping("/crear")
-    public ResponseEntity<Indicadores> crear(@RequestBody Indicadores r) {
+    public ResponseEntity<Trimestre> crear(@RequestBody Trimestre r) {
         try {
             r.setVisible(true);
             return new ResponseEntity<>(Service.save(r), HttpStatus.CREATED);
@@ -27,7 +27,7 @@ public class Indicadores_Controller {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Indicadores>> obtenerLista() {
+    public ResponseEntity<List<Trimestre>> obtenerLista() {
         try {
             return new ResponseEntity<>(Service.listar(), HttpStatus.OK);
         } catch (Exception e) {
@@ -35,7 +35,7 @@ public class Indicadores_Controller {
         }
     }
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Indicadores> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Trimestre> getById(@PathVariable("id") Long id) {
         try {
             return new ResponseEntity<>(Service.findById(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -44,13 +44,13 @@ public class Indicadores_Controller {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Indicadores Indicadores) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id, @RequestBody Trimestre Trimestre) {
         return Service.delete(id);
     }
 
     @PutMapping("/eliminarlogic/{id}")
     public ResponseEntity<?> eliminarlogic(@PathVariable Long id) {
-        Indicadores a = Service.findById(id);
+        Trimestre a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -65,16 +65,13 @@ public class Indicadores_Controller {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Indicadores> actualizar(@PathVariable Long id, @RequestBody Indicadores p) {
-        Indicadores a = Service.findById(id);
+    public ResponseEntity<Trimestre> actualizar(@PathVariable Long id, @RequestBody Trimestre p) {
+        Trimestre a = Service.findById(id);
         if (a == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             try {
-                a.setPresupuesto_referencial(p.getPresupuesto_referencial());
-                a.setFecha_cumplimiento(p.getFecha_cumplimiento());
-                a.setTipo_evaluacion(p.getTipo_evaluacion());
-                a.setMetapdot(p.getMetapdot());
+                a.setNombre(p.getNombre());
                 a.setVisible(p.isVisible());
                  return new ResponseEntity<>(Service.save(a), HttpStatus.CREATED);
             } catch (Exception e) {
